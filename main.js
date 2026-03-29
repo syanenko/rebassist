@@ -1,3 +1,9 @@
+// TODO:
+//
+// 1. Icons
+// 2. Convert sources to paths
+// 3. Parse and download
+//
 import * as THREE from 'three';
 import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
