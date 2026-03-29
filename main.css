@@ -160,10 +160,6 @@ background-color:white;
   cursor: pointer;
 }
 
-#container{
-  z-index: 99;  
-}
-
 #progress-container {
   position: absolute;
   left: 50%;
