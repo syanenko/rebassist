@@ -1,0 +1,9 @@
+{
+  "name": "svg2pov",
+  "version": "0.01",
+  "description": "SVG to Rebelle Motion IO converter",
+  "main": "main.js",
+  "dependencies": {
+    "lil-gui": "^0.19.2"
+  }
+}

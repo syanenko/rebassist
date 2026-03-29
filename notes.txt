@@ -1,0 +1,52 @@
+-- Layout and examples like in jewelry
+
+-- GUI
+https://lil-gui.georgealways.com/examples/kitchen-sink/
+
+-- SVG parsers
+https://www.w3.org/TR/SVG/paths.html#PathDataCubicBezierCommands
+https://www.npmjs.com/package/svg-parser
+https://www.npmjs.com/package/svg-path-parser
+
+-- SVG editor
+https://www.svgplayground.com/
+
+-- Bezier
+https://www.google.com/search?newwindow=1&sca_esv=b692c664f4ad5dff&rlz=1C1CHBD_ruRU828RU828&sxsrf=ANbL-n5hDvsxVQiFopBPFhb0wFicNhHxNw%3A1774747289980&q=Bezier.js&spell=1&sa=X&ved=2ahUKEwjA3ujw-MOTAxXdSPEDHXlkDq4QgK4QegQICBAB&biw=1920&bih=975&dpr=1&mstk=AUtExfBhV4wTErgHBTriMqFSOpEDtq669cGhA9r_GpqNQ89r8JWCjQpfVOeisGvKFGUQbd-HdIE99yE0H4uwgpXW9WgxLCl1U_mkzkXtqe_WNtUJDX62-mOqKPjW2Dxgn9ajMr9JK7zDi8lPFlze2FR1y6tZMXQBn-ZqkIYBGKF1ALCYs7Wfh4wpJcgzNzNCQIoJlQfd5Drf8D4sL22zp-iO1jRdvyJtwqtaqrM7uRDGtDAFyoOaYONs4sij9zzemnTDrwCShcco5Wx_wI72JQyVm_5cKOV5puYhKGyMWrYW9_-VJw&csui=3
+https://github.com/Pomax/bezierjs
+https://pomax.github.io/bezierjs/
+
+
+<script src="https://cdn.jsdelivr.net"></script>
+
+// Assume an SVG path element with id "curve1" exists
+// Example path d attribute: "M 48 84 Q 100 187 166 37"
+let curveEl = document.getElementById('curve1');
+let curve = Bezier.fromSVG(curveEl.getAttribute('d')); //
+
+// Array to store the line points
+let linePoints = [];
+const numSegments = 10; // More segments = smoother curve
+
+// Sample points along the curve
+for (let i = 0; i <= numSegments; i++) {
+    let t = i / numSegments;
+    let point = curve.get(t); // Get point at t value (0 to 1)
+    linePoints.push(point);
+}
+
+// Convert the points into a new SVG path string using 'M' and 'L' commands
+function pointsToLineD(points) {
+    let d = `M ${points[0].x} ${points[0].y} `;
+    for (let i = 1; i < points.length; i++) {
+        d += `L ${points[i].x} ${points[i].y} `;
+    }
+    return d;
+}
+
+let linearPathD = pointsToLineD(linePoints);
+
+// Update an existing path element or create a new one with the line segments
+let linearEl = document.getElementById('linearPath');
+linearEl.setAttribute('d', linearPathD);
+
