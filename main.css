@@ -1,12 +1,12 @@
 html, body {
   margin: 0;
-  background-image: linear-gradient(rgb(0, 0, 0), rgb(88, 88, 88));
+  /*background-image: linear-gradient(rgb(0, 0, 0), rgb(88, 88, 88));*/
   height: 100%;
   width: 100%;
   background-repeat: no-repeat;
   background-size: cover;
-	background-color: #000;
-	color: #fff;
+	background-color: #fff;
+	color: #000;
   font-family: Monospace;
 	font-size: 13px;
 	line-height: 24px;
@@ -155,7 +155,7 @@ background-color:white;
 	user-select: none;
   font-size: 180%;
   font-style: italic;
-  color: #cccdce;
+  color: #000;
   z-index: 2;
   cursor: pointer;
 }
