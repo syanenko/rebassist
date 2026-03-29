@@ -3,6 +3,7 @@
 // 1. Icons
 // 2. Convert sources to paths
 // 3. Parse and download
+// 4. GUI with settings
 //
 import * as THREE from 'three';
 import * as BufferGeometryUtils from 'three/addons/utils/BufferGeometryUtils.js';

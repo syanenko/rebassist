@@ -139,14 +139,14 @@
 
     <!-- Controls -->
     <div style='position: absolute; top:60px; left:10px; width:800px; z-index:4;'>
-      <input id="upload_button" type="image" src='data/images/upload_icon.png' style='margin: 3px;'>
-      <input type="image" src='data/images/upload_icon.png' style='margin: 3px;' onclick="loadSVG('./data/svg/bull.svg')">
-      <input type="image" src='data/images/upload_icon.png' style='margin: 3px;' onclick="loadSVG('./data/svg/rebelle.svg')">
-      <input type="image" src='data/images/upload_icon.png' style='margin: 3px;' onclick="loadSVG('./data/svg/yes.svg')">
+      <input id="upload_button" type="image" src='data/images/upload_icon.png' class="icon">
+      <input type="image" src='data/svg/bull.svg' class='icon' onclick="loadSVG('./data/svg/bull.svg')">
+      <input type="image" src='data/svg/rebelle.svg' class='icon' onclick="loadSVG('./data/svg/rebelle.svg')">
+      <input type="image" src='data/svg/yes.svg' class='icon' onclick="loadSVG('./data/svg/yes.svg')">
     </div>
 
     <div style='position: absolute; top:165px; left:10px; width:90px; z-index:4;'>
-      <input id="download_button" type="image" src='data/images/download_icon.png' onclick="download_dlg.inert=true; download_dlg.showModal(); download_dlg.inert=false;" style='margin: 3px;'>
+      <input id="download_button" type="image" src='data/images/download_icon.png' onclick="download_dlg.inert=true; download_dlg.showModal(); download_dlg.inert=false;" class="icon">
     </div>
 
     <script>
