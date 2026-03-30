@@ -1,9 +1,9 @@
 // TODO:
 //
-// 1. Studio links icons
-// 2. Convert sources to paths
-// 3. Parse and download
-// 4. GUI with settings
+// 1. Colorize GUI
+// 2. Color selector in GUI
+// 3. Parse SVG and paths
+// 4. Convert sources to paths
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
@@ -19,9 +19,7 @@ const set = {
 
   // Paper
   paper_preset: "Default/HM01 Handmade",
-  paper_r: 255,
-  paper_g: 255,
-  paper_b: 255,
+  paper_color: { r: 0, g: 0, b: 0},
   paper_deckled_edges: true,
   paper_scale: 150,
 
@@ -33,9 +31,7 @@ const set = {
   brush_opacity: 10,
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
-  brush_r: 255,
-  brush_g: 255,
-  brush_b: 255,
+  brush_color: { r: 0, g: 0, b: 0},
 
   // Download
   download() {download()}
@@ -52,9 +48,8 @@ artwork.add( set, 'dpi', 72, 600, 1 ).name( 'DPI' );
 // Paper
 const paper = gui.addFolder( 'Paper' );
 paper.add( set, 'paper_preset', [ 'Default/HM01 Handmade', 'Default/HM02 Handmade 2' ] ).name( 'Preset' );
-paper.add( set, 'paper_r', 0, 255, 1 ).name( 'Red' );
-paper.add( set, 'paper_g', 0, 255, 1 ).name( 'Green' );
-paper.add( set, 'paper_b', 0, 255, 1 ).name( 'Blue' );
+const pc = paper.addColor( set, 'paper_color', 255 ).name('Color');
+pc.domElement.querySelector('input[type="text"]').style.display = 'none';
 paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
 paper.add( set, 'paper_scale', 1, 200, 1 ).name( 'Scale' );
 
@@ -67,9 +62,8 @@ brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
 brush.add( set, 'brush_opacity', 1, 128, 1 ).name( 'Opacity' );
 brush.add( set, 'brush_paint_type', ["PAINT"] ).name( 'Paint type' );
 brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
-brush.add( set, 'brush_r', 0, 255, 1 ).name( 'Red' );
-brush.add( set, 'brush_g', 0, 255, 1 ).name( 'Green' );
-brush.add( set, 'brush_b', 0, 255, 1 ).name( 'Blue' );
+const bc = brush.addColor( set, 'brush_color', 255 ).name('Color');
+bc.domElement.querySelector('input[type="text"]').style.display = 'none';
 
 // Buttons
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
@@ -94,7 +88,7 @@ function makeContent() {
   "dpi": ${set.dpi},
   "paper": {
       "preset": "${set.paper_preset}",
-      "color": { "r": ${set.paper_r}, "g": ${set.paper_g}, "b": ${set.paper_b} },
+      "color": { "r": ${set.paper_color.r}, "g": ${set.paper_color.g}, "b": ${set.paper_color.b} },
       "deckled_edges": ${set.paper_deckled_edges},
       "paper_scale": ${set.paper_scale}
     }
@@ -108,7 +102,7 @@ function makeContent() {
   "opacity": ${set.brush_opacity},
   "paint_type": "${set.brush_paint_type}",
   "glaze_mode": "${set.glaze_mode}",
-  "color": { "r": ${set.brush_r}, "g": ${set.brush_g}, "b": ${set.brush_b} }
+  "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} }
 }
 ]}
 ]}`

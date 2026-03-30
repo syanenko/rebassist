@@ -67,6 +67,10 @@ a, button, input, select {
   right: 14px !important;
 }
 
+.lil-gui.color.input {
+    display: none !important;
+}
+
 #about
 {
   width: 500px;
