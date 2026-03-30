@@ -32,10 +32,8 @@ gui.add( prtsGems, 'fastChroma').name( 'Fast CA' );
 gui.add( prtsGems, 'antialias').name( 'Antialis SMAA' );
 gui.add( prtsGems, 'gamma').name( 'Gamma correction' );
 gui.add( prtsGems, 'speed', -5, 5, 1 ).name( 'Rotate' );
-gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ocontrols.reset()});
+gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
-
-//----------------------
 // Download
 const link = document.createElement( 'a' );
 link.style.display = 'none';
