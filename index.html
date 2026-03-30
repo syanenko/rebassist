@@ -128,18 +128,13 @@
     </script>
 
     <!-- Controls -->
-    <div style='position: absolute; top:60px; left:10px; width:800px; z-index:4;'>
-      <input id="upload_button" type="image" src='data/images/upload_icon.png' class="icon">
+    <div style='position: absolute; top:65px; left:10px; width:90px; z-index:4;'>
       <input type="image" src='data/svg/bull.svg' class='icon' onclick="loadSVG('./data/svg/bull.svg')">
       <input type="image" src='data/svg/yes.svg' class='icon' onclick="loadSVG('./data/svg/yes.svg')">
       <input type="image" src='data/svg/rebelle.svg' class='icon' onclick="loadSVG('./data/svg/rebelle.svg')">
     </div>
 
     <script>
-      ub = document.getElementById("upload_button");
-      ub.onclick = function() { let form = document.getElementById("form_upload");
-                                form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible"; }
-
       window.onload = function() {
         loadSVG("./data/svg/bull.svg");
       };

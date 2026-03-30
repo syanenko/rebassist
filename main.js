@@ -62,11 +62,13 @@ const set = {
   brush_color: { r: 0, g: 0, b: 0},
 
   // Download
-  download() {download()}
+  download() {download()},
+  upload()   {upload()}
 };
 
 const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
 // Buttons
+gui.add( set, 'upload' ).name( 'Upload' );
 gui.add( set, 'download' ).name( 'Download' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
@@ -138,6 +140,12 @@ function makeContent() {
 ]}`
 }
 
+// Upload
+function upload() {
+  let form = document.getElementById("form_upload");
+  form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible";
+}
+
 // Download
 function download() {
   makeContent();
@@ -147,4 +155,3 @@ function download() {
   link.download = filename;
   link.click();
 }
-window.download = download;
