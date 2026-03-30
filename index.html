@@ -54,22 +54,6 @@
     <!-- Container -->
     <div id="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)">QQ</div>
     <script>
-      function loadSVG(svg) {
-        const container = document.getElementById('container');
-        fetch(svg)
-          .then(response => response.text())
-          .then(svgText => {
-            const parser = new DOMParser();
-            const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-            const svgElement = svgDoc.querySelector('svg');
-
-            if (svgElement && container) {
-              container.replaceChildren();
-              container.appendChild(svgElement);
-            }
-          });
-      }
-
       var form = document.getElementById('form_upload');
       form.addEventListener('submit', function(e) {
         // Display progress bar

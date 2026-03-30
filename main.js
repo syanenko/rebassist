@@ -98,8 +98,20 @@ brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
 brush.add( set, 'brush_opacity', 1, 128, 1 ).name( 'Opacity' );
 brush.add( set, 'brush_paint_type', ["PAINT"] ).name( 'Paint type' );
 brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
-const bc = brush.addColor( set, 'brush_color', 255 ).name('Color');
+const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
 bc.domElement.querySelector('input[type="text"]').style.display = 'none';
+
+// Set preview stroke color 
+function setStrokeColor() {
+  const svg = document.getElementById("container").children[0];
+  if(!svg)
+    return;
+  const color = "rgb(" + set.brush_color.r + "," + 
+                       + set.brush_color.g + "," + 
+                       + set.brush_color.b + ")";
+  svg.setAttribute("stroke", color);
+  svg.setAttribute("fill", color);
+}
 
 // Parse SVG
 function parseSVG() {
@@ -165,3 +177,23 @@ function download() {
   link.download = filename;
   link.click();
 }
+
+// Load SVG
+function loadSVG(svg) {
+  const container = document.getElementById('container');
+  fetch(svg)
+    .then(response => response.text())
+    .then(svgText => {
+      const parser = new DOMParser();
+      const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
+      const svgElement = svgDoc.querySelector('svg');
+
+      if (svgElement && container) {
+        container.replaceChildren();
+        container.appendChild(svgElement);
+      }
+    });
+
+  gui.reset();
+}
+window.loadSVG = loadSVG;
