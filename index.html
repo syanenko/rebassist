@@ -23,7 +23,7 @@
     <div>
       <img id="logo" src="data/images/rebelle_logo.png" alt="Logo" height="40" onclick="about.inert=true; about.showModal(); about.inert=false;">
     <div id="text" onclick="about.inert=true;  about.showModal(); about.inert=false;">SVG to MotionIO converter</div>
-      <img id="help" class="buttons" src="data/images/help_36x36.png" style="opacity: 0.7" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
+      <img id="help" class="buttons" src="data/images/help_36x36.png" style="opacity: 0.65" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
     </div>
     <hr>
 
@@ -152,17 +152,14 @@
       };
     </script>
 
-    <!-- Stat
-    <div style='position: absolute; bottom:15px; left:20px; z-index:4; font-size: 130%;'>
-      <div id="status">Please upload SVG file</div>
-    </div>
-    -->
-
     <!-- Progress -->
     <div id="progress-container">
       <label id="progress-label" for="progress-bar"></label>
       <progress id="progress-bar" value="0" max="100"></progress>
     </div>
+
+    <!-- Studio -->
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer" style="position: absolute; bottom:15px; left:20px; z-index:4; color:#333;  font-size: 135%; font-style: italic; text-decoration: none;" >(с) Yesbird studio 2026</a>
 
   </body>
 </html>

@@ -1,3 +1,10 @@
+// TODO:
+//
+// 1. Studio links icons
+// 2. Convert sources to paths
+// 3. Parse and download
+// 4. GUI with settings
+//
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
 // GUI

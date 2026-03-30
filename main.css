@@ -15,8 +15,8 @@ html, body {
 }
 
 a {
-  color: #ff0;
-  text-decoration: none;
+  color: #eee;
+  /*text-decoration: none;*/
 }
 
 a:hover {
