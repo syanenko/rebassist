@@ -1,9 +1,10 @@
 // TODO:
 //
-// 1. Brush - complete params
-// 2. Colorize GUI
-// 3. Convert sources to paths
-// 4. Parse SVG and paths
+// 1. Brush: complete params
+// 2. Fill all selectors with options
+// 3. Colorize GUI
+// 4. Convert sources to paths
+// 5. Parse SVG and paths
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
@@ -100,15 +101,15 @@ brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
 const bc = brush.addColor( set, 'brush_color', 255 ).name('Color');
 bc.domElement.querySelector('input[type="text"]').style.display = 'none';
 
-// Download
-const link = document.createElement( 'a' );
-link.style.display = 'none';
-document.body.appendChild( link );
+// Parse SVG
+function parseSVG() {
+  content += ",{}\n";
+  content += ",{}\n";
+  content += ",{}\n";
+}
 
 // Prepare JSON
 function makeContent() {
-  const width = 512;
-  const height = 212;
   content = `{"frames":[
 {"events":[
 {
@@ -136,7 +137,12 @@ function makeContent() {
   "glaze_mode": "${set.brush_glaze_mode}",
   "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} }
 }
-]}
+`;
+
+  parseSVG();
+
+  content +=
+`]}
 ]}`
 }
 
@@ -147,6 +153,10 @@ function upload() {
 }
 
 // Download
+const link = document.createElement( 'a' );
+link.style.display = 'none';
+document.body.appendChild( link );
+
 function download() {
   makeContent();
   let filename = "mio.json"
