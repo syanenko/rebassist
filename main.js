@@ -16,6 +16,7 @@ const set = {
   height: 600,
   units: "px",
   dpi: 200,
+
   // Paper
   paper_preset: "Default/HM01 Handmade",
   paper_r: 255,
@@ -27,17 +28,16 @@ const set = {
   // Brush
   brush_tool: "WATERCOLOR",
   brush_preset: "Gouache/Gouache Filbert",
-
   brush_size : 40,
   brush_water: 55,
   brush_opacity: 10,
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
-
   brush_r: 255,
   brush_g: 255,
   brush_b: 255,
 
+  // Download
   download() {download()}
 };
 
@@ -58,7 +58,7 @@ paper.add( set, 'paper_b', 0, 255, 1 ).name( 'Blue' );
 paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
 paper.add( set, 'paper_scale', 1, 200, 1 ).name( 'Scale' );
 
-// Paper
+// Brush
 const brush = gui.addFolder( 'Brush' );
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
 brush.add( set, 'brush_preset', [ 'Default/HM01 Handmade', 'Default/HM02 Handmade 2' ] ).name( 'Preset' );
@@ -67,11 +67,11 @@ brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
 brush.add( set, 'brush_opacity', 1, 128, 1 ).name( 'Opacity' );
 brush.add( set, 'brush_paint_type', ["PAINT"] ).name( 'Paint type' );
 brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
-
 brush.add( set, 'brush_r', 0, 255, 1 ).name( 'Red' );
 brush.add( set, 'brush_g', 0, 255, 1 ).name( 'Green' );
 brush.add( set, 'brush_b', 0, 255, 1 ).name( 'Blue' );
 
+// Buttons
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 gui.add( set, 'download' ).name( 'Download' );
 
