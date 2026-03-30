@@ -48,12 +48,12 @@ a, button, input, select {
 }
 
 .lil-gui {
-  --background-color:rgba(44, 44, 44, 0.6);
-  --title-background-color:rgba(44, 44, 44, 0.6);
-  --widget-color: rgba(75, 75, 75, 0.7);
-  --number-color: #ff9127;
-  --title-text-color: #ff9127;
-  --text-color: rgb(190, 190, 190);
+  --background-color: #393939;
+  --title-background-color: #262626;
+  --widget-color: #4B4B4B;
+  --number-color: #ddd;
+  --title-text-color: #fff;
+  --text-color: #ddd;
   --name-width: 20%;
   --widget-height: 24px;
   --slider-knob-width: 5px;
@@ -63,6 +63,8 @@ a, button, input, select {
   --input-font-size: 16px;
   --font-family: Monospace;
   z-index: 2 !important;
+  top: 60px !important;
+  right: 14px !important;
 }
 
 #about

@@ -10,6 +10,7 @@
   </head>
 
   <body>
+<!--
     <script type="importmap"> { 
       "imports": {
         "three": "/node_modules/three/build/three.module.js",
@@ -17,11 +18,14 @@
         "three/nodes": "/node_modules/three/examples/jsm/nodes/Nodes.js"
         }
     }
+-->
     </script> 
     <div>
     <img id="logo" src="data/images/rebelle_logo.png" alt="Logo" height="40" onclick="about.inert=true; about.showModal(); about.inert=false;">
     <div id="text" onclick="about.inert=true;  about.showModal(); about.inert=false;">SVG to MotionIO converter</div>
+<!--
     <img id="help" class="buttons" src="data/images/help_36x36.png" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
+-->
     </div>
     <hr>
 
@@ -146,7 +150,10 @@
     </div>
 
     <div style='position: absolute; top:165px; left:10px; width:90px; z-index:4;'>
+<!--
       <input id="download_button" type="image" src='data/images/download_icon.png' onclick="download_dlg.inert=true; download_dlg.showModal(); download_dlg.inert=false;" class="icon">
+ -->
+      <input id="download_button" type="image" src='data/images/download_icon.png' onclick="window.download()" class="icon">
     </div>
 
     <script>
