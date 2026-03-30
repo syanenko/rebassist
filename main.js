@@ -57,7 +57,7 @@ const set = {
   brush_preset: "Gouache/Gouache Filbert",
   brush_size : 40,
   brush_water: 55,
-  brush_opacity: 10,
+  brush_opacity: 255,
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
   brush_color: { r: 0, g: 0, b: 0},
@@ -83,7 +83,7 @@ artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400',
 // Paper
 const paper = gui.addFolder( 'Paper' );
 paper.add( set, 'paper_preset', [ 'EX00 White Simple', 'CA01 Canvas Artist', 'HP01 Hot Pressed', 'RH00 Aquarelle', 'WK01 Washi' ] ).name( 'Preset' );
-const pc = paper.addColor( set, 'paper_color', 255 ).name('Color');
+const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
 pc.domElement.querySelector('input[type="text"]').style.display = 'none';
 paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
 paper.add( set, 'paper_scale', 10, 400, 10 ).name( 'Scale' );
@@ -95,11 +95,24 @@ brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
 brush.add( set, 'brush_preset', [ 'Default/HM01 Handmade', 'Default/HM02 Handmade 2' ] ).name( 'Preset' );
 brush.add( set, 'brush_size', 1, 128, 1 ).name( 'Size' );
 brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
-brush.add( set, 'brush_opacity', 1, 128, 1 ).name( 'Opacity' );
+brush.add( set, 'brush_opacity', 1, 255, 1 ).name( 'Opacity' ).onChange( setOpacity );;
 brush.add( set, 'brush_paint_type', ["PAINT"] ).name( 'Paint type' );
 brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
 const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
 bc.domElement.querySelector('input[type="text"]').style.display = 'none';
+
+// Set preview paper color 
+function setBackgroundColor() {
+  const svg = document.getElementById("container").children[0];
+  if(!svg)
+    return;
+
+  const color = "rgb(" + set.paper_color.r + "," + 
+                       + set.paper_color.g + "," + 
+                       + set.paper_color.b + ")";
+  document.body.style.backgroundColor = color;
+  svg.setAttribute("fill", document.body.style.backgroundColor);
+}
 
 // Set preview stroke color 
 function setStrokeColor() {
@@ -110,7 +123,15 @@ function setStrokeColor() {
                        + set.brush_color.g + "," + 
                        + set.brush_color.b + ")";
   svg.setAttribute("stroke", color);
-  svg.setAttribute("fill", color);
+  svg.setAttribute("fill", document.body.style.backgroundColor);
+}
+
+// Set stroke opacity
+function setOpacity() {
+  const svg = document.getElementById("container").children[0];
+  if(!svg)
+    return;
+  svg.setAttribute("opacity", set.brush_opacity / 255);
 }
 
 // Parse SVG
@@ -191,9 +212,10 @@ function loadSVG(svg) {
       if (svgElement && container) {
         container.replaceChildren();
         container.appendChild(svgElement);
+        gui.reset();
+        setStrokeColor();
+        setBackgroundColor();
       }
     });
-
-  gui.reset();
 }
 window.loadSVG = loadSVG;
