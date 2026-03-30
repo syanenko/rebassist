@@ -1,10 +1,8 @@
 // TODO:
 //
 // 1. Brush: complete params
-// 2. Fill all selectors with options
-// 3. Colorize GUI
-// 4. Convert sources to paths
-// 5. Parse SVG and paths
+// 2. Parse SVG
+// 3. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
@@ -59,7 +57,7 @@ const set = {
   brush_water: 55,
   brush_opacity: 255,
   brush_paint_type: "PAINT",
-  brush_glaze_mode: "OPAQUE",
+  brush_glaze_mode: "TRANSPARENT",
   brush_color: { r: 0, g: 0, b: 0},
 
   // Download
@@ -92,12 +90,12 @@ paper.add( set, 'paper_visible' ).name( 'Visible' );
 // Brush
 const brush = gui.addFolder( 'Brush' );
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
-brush.add( set, 'brush_preset', [ 'Default/HM01 Handmade', 'Default/HM02 Handmade 2' ] ).name( 'Preset' );
+brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Gouache/Gouache Filbert', 'Sumi-e/Sumi-e  soft' ] ).name( 'Preset' );
 brush.add( set, 'brush_size', 1, 128, 1 ).name( 'Size' );
 brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
 brush.add( set, 'brush_opacity', 1, 255, 1 ).name( 'Opacity' ).onChange( setOpacity );;
-brush.add( set, 'brush_paint_type', ["PAINT"] ).name( 'Paint type' );
-brush.add( set, 'brush_glaze_mode', ["OPAQUE"] ).name( 'Glaze mode' );
+brush.add( set, 'brush_paint_type', ["PAINT", "BLEND", "PAINT_BLEND" , "PAINT_MIX", "ERASE"] ).name( 'Paint type' );
+brush.add( set, 'brush_glaze_mode', [ "TRANSPARENT", "SEMI-OPAQUE", "OPAQUE"] ).name( 'Glaze mode' );
 const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
 bc.domElement.querySelector('input[type="text"]').style.display = 'none';
 
