@@ -46,10 +46,10 @@ const set = {
   dpi: 200,
 
   // Paper
-  paper_preset: "Default/HM01 Handmade",
-  paper_color: { r: 0, g: 0, b: 0},
+  paper_preset: "EX00 White Simple",
+  paper_color: { r: 255, g: 255, b: 255},
   paper_deckled_edges: true,
-  paper_scale: 150,
+  paper_scale: 100,
   paper_visible: true,
 
   // Brush
@@ -75,18 +75,18 @@ gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
-artwork.add( set, 'width', 64, 1024, 1 ).name( 'Width' );
-artwork.add( set, 'height', 64, 1024, 1 ).name( 'Heght' );
-artwork.add( set, 'units', [ 'px', 'mm' ] ).name( 'Units' );
-artwork.add( set, 'dpi', 72, 600, 1 ).name( 'DPI' );
+artwork.add( set, 'width', 64, 32000, 1 ).name( 'Width' );
+artwork.add( set, 'height', 64, 32000, 1 ).name( 'Heght' );
+artwork.add( set, 'units', [ 'px', 'cm', 'in' ] ).name( 'Units' );
+artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
 
 // Paper
 const paper = gui.addFolder( 'Paper' );
-paper.add( set, 'paper_preset', [ 'Default/HM01 Handmade', 'Default/HM02 Handmade 2' ] ).name( 'Preset' );
+paper.add( set, 'paper_preset', [ 'EX00 White Simple', 'CA01 Canvas Artist', 'HP01 Hot Pressed', 'RH00 Aquarelle', 'WK01 Washi' ] ).name( 'Preset' );
 const pc = paper.addColor( set, 'paper_color', 255 ).name('Color');
 pc.domElement.querySelector('input[type="text"]').style.display = 'none';
 paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
-paper.add( set, 'paper_scale', 1, 200, 1 ).name( 'Scale' );
+paper.add( set, 'paper_scale', 10, 400, 10 ).name( 'Scale' );
 paper.add( set, 'paper_visible' ).name( 'Visible' );
 
 // Brush
@@ -119,7 +119,7 @@ function makeContent() {
   "units": "${set.units}", 
   "dpi": ${set.dpi},
   "paper": {
-      "preset": "${set.paper_preset}",
+      "preset": "Default/${set.paper_preset}",
       "color": { "r": ${set.paper_color.r}, "g": ${set.paper_color.g}, "b": ${set.paper_color.b} },
       "deckled_edges": ${set.paper_deckled_edges},
       "paper_scale": ${set.paper_scale},
