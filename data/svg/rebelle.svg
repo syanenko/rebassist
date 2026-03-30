@@ -25,8 +25,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="0.7652427"
-     inkscape:cx="397.25959"
-     inkscape:cy="352.17585"
+     inkscape:cx="258.74144"
+     inkscape:cy="424.04848"
      inkscape:window-width="1920"
      inkscape:window-height="1061"
      inkscape:window-x="-4"
@@ -37,13 +37,18 @@
      id="defs2" />
   <text
      xml:space="preserve"
-     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;line-height:1;font-family:'CommercialScript BT';-inkscape-font-specification:'CommercialScript BT';letter-spacing:0px;word-spacing:0px;stroke-width:0.264583"
-     x="5.8777599"
-     y="111.33179"
+     style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.5729px;line-height:1;font-family:'CommercialScript BT';-inkscape-font-specification:'CommercialScript BT';letter-spacing:0px;word-spacing:0px;stroke-width:0.443468"
+     x="15.558784"
+     y="91.638802"
      id="text649"><tspan
        sodipodi:role="line"
        id="tspan647"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:25.4px;font-family:'CommercialScript BT';-inkscape-font-specification:'CommercialScript BT';stroke-width:0.264583"
-       x="5.8777599"
-       y="111.33179">Rebelle, I love you !</tspan></text>
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.5729px;font-family:'CommercialScript BT';-inkscape-font-specification:'CommercialScript BT';stroke-width:0.443468"
+       x="15.558784"
+       y="91.638802">I love you ,</tspan><tspan
+       sodipodi:role="line"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:42.5729px;font-family:'CommercialScript BT';-inkscape-font-specification:'CommercialScript BT';stroke-width:0.443468"
+       x="15.558784"
+       y="134.21172"
+       id="tspan397"> Rebelle!</tspan></text>
 </svg>

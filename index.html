@@ -21,32 +21,21 @@
 -->
     </script> 
     <div>
-    <img id="logo" src="data/images/rebelle_logo.png" alt="Logo" height="40" onclick="about.inert=true; about.showModal(); about.inert=false;">
+      <img id="logo" src="data/images/rebelle_logo.png" alt="Logo" height="40" onclick="about.inert=true; about.showModal(); about.inert=false;">
     <div id="text" onclick="about.inert=true;  about.showModal(); about.inert=false;">SVG to MotionIO converter</div>
-<!--
-    <img id="help" class="buttons" src="data/images/help_36x36.png" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
--->
+      <img id="help" class="buttons" src="data/images/help_36x36.png" style="opacity: 0.7" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
     </div>
     <hr>
 
     <!-- About -->
     <dialog id="about" style="width:500px;">
-      <div style="font-size: 24px; color:#ff9127">SVG to MotionIO converter</div><br>
+      <div style="font-size: 24px; color:#fff">SVG to MotionIO converter</div><br>
       Text text text text text text text text text text text text text text text text text text 
       text text text text text text text text.<br><br>
       <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">Yesbird studio</a>
             <form method="dialog" style="text-align:center">
         <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
       </form>
-    </dialog>
-
-    <!-- Download -->
-    <dialog id="download_dlg" class="dialog" style="text-align: center;">
-      <div style="font-size: 20px; font-style: italic; color:#ff9127; padding-bottom: 10px;">Download</div>
-      <button id="glb"  class="control" onclick="download(this.id);download_dlg.close()" title="GLB">GLB</button>
-      <button id="gltf" class="control" onclick="download(this.id);download_dlg.close()" title="GLTF">GLTF</button>
-      <button id="pov"  class="control" onclick="download(this.id);download_dlg.close()" title="POV">POV</button>
-      <button id="cancel" class="control" onclick="download_dlg.close()" title="Cancel">Cancel</button>
     </dialog>
 
     <!-- Main -->
@@ -137,9 +126,6 @@
         form.style.visibility = 'hidden';
       });
     </script>
-
-    <!-- Model -->
-    <div id="container"></div>
 
     <!-- Controls -->
     <div style='position: absolute; top:60px; left:10px; width:800px; z-index:4;'>
