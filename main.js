@@ -1,14 +1,13 @@
 // TODO:
 //
-// 1. Colorize GUI
-// 2. Color selector in GUI
-// 3. Parse SVG and paths
-// 4. Convert sources to paths
+// 1. Brush - complete params
+// 2. Colorize GUI
+// 3. Convert sources to paths
+// 4. Parse SVG and paths
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
 let content;
-
 /*
 {
     "event_type": "SET_BRUSH",
@@ -66,7 +65,7 @@ const set = {
   download() {download()}
 };
 
-const gui = new GUI( {width: 300, title:"Control"} );
+const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
 // Buttons
 gui.add( set, 'download' ).name( 'Download' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
