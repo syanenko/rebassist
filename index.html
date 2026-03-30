@@ -135,13 +135,6 @@
       <input type="image" src='data/svg/rebelle.svg' class='icon' onclick="loadSVG('./data/svg/rebelle.svg')">
     </div>
 
-    <div style='position: absolute; top:165px; left:10px; width:90px; z-index:4;'>
-<!--
-      <input id="download_button" type="image" src='data/images/download_icon.png' onclick="download_dlg.inert=true; download_dlg.showModal(); download_dlg.inert=false;" class="icon">
- -->
-      <input id="download_button" type="image" src='data/images/download_icon.png' onclick="window.download()" class="icon">
-    </div>
-
     <script>
       ub = document.getElementById("upload_button");
       ub.onclick = function() { let form = document.getElementById("form_upload");

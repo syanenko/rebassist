@@ -21,6 +21,7 @@ const set = {
   b: 255,
   deckled_edges: true,
   scale: 150,
+  download() {download()}
 };
 
 const gui = new GUI( {width: 300, title:"Settings", closeFolders:true} );
@@ -37,6 +38,7 @@ gui.add( set, 'deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
 gui.add( set, 'scale', 1, 200, 1 ).name( 'Scale' );
 
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
+gui.add( set, 'download' ).name( 'Download' );
 
 // Download
 const link = document.createElement( 'a' );

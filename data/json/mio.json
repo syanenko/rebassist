@@ -2,15 +2,15 @@
 {"events":[
 {
   "event_type": "NEW_ARTWORK",
-  "width": 1024,
-  "height": 64,
+  "width": 800,
+  "height": 600,
   "units": "px",
-  "dpi": 395,
+  "dpi": 200,
   "paper": {
       "preset": "Default/HM01 Handmade",
       "color": { "r": 255, "g": 255, "b": 255 },
       "deckled_edges": true,
-      "paper_scale": 18
+      "paper_scale": 47
   }
 }
 ]}
