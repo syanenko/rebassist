@@ -8,9 +8,10 @@
   "dpi": 200,
   "paper": {
       "preset": "Default/HM01 Handmade",
-      "color": { "r": 16, "g": 234, "b": 52 },
-      "deckled_edges": true,
-      "paper_scale": 150
+      "color": { "r": 48, "g": 166, "b": 62 },
+      "deckled_edges": false,
+      "paper_scale": 150,
+      "visible": true
     }
 },
 {
@@ -21,8 +22,8 @@
   "water": 55,
   "opacity": 10,
   "paint_type": "PAINT",
-  "glaze_mode": "undefined",
-  "color": { "r": 230, "g": 10, "b": 10 }
+  "glaze_mode": "OPAQUE",
+  "color": { "r": 28, "g": 85, "b": 109 }
 }
 ]}
 ]}
