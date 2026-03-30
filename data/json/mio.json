@@ -4,14 +4,25 @@
   "event_type": "NEW_ARTWORK",
   "width": 800,
   "height": 600,
-  "units": "px",
+  "units": "px", 
   "dpi": 200,
   "paper": {
       "preset": "Default/HM01 Handmade",
       "color": { "r": 255, "g": 255, "b": 255 },
-      "deckled_edges": true,
-      "paper_scale": 47
-  }
+      "deckled_edges": false,
+      "paper_scale": 150
+    }
+},
+{
+  "event_type": "SET_BRUSH",
+  "tool": "WATERCOLOR",
+  "preset": "Gouache/Gouache Filbert",
+  "size" : 97,
+  "water": 55,
+  "opacity": 10,
+  "paint_type": "PAINT",
+  "glaze_mode": "undefined",
+  "color": { "r": 255, "g": 255, "b": 255 }
 }
 ]}
 ]}
