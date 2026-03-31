@@ -1,8 +1,7 @@
 // TODO:
 //
-// 1. Brush: complete params
-// 2. Parse SVG
-// 3. Colorize GUI (?)
+// 1. Draw events
+// 2. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -159,7 +158,8 @@ function setOpacity() {
   svg.setAttribute("opacity", set.brush_opacity / 255);
 }
 
-// Parse SVG
+// Traverse object
+let x, y, last_x = 0, last_y = 0;
 function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -173,10 +173,22 @@ function traverse(obj) {
             console.log(`${i}: ${s.key} ${s.data}`);
             if(s.key == 'M') {
               console.log(s.data);
-              content += `,{"Move": 0.0}\n`;
+              last_x = x;
+              last_y = y;
+              x = s.data[0];
+              y = s.data[1];
+              content +=
+`,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }},
+{ "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }},
+{ "event_type": "POINTER_PRESS", "pos": { "x": ${x}, "y": ${y} }}
+`;
             } else if(s.key == 'L') {
               console.log(s.data);
-              content += `,{"Line": 1.1}\n`;
+              x = s.data[0];
+              y = s.data[1];
+              content +=
+`,{ "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }}
+`;
             }
           });
         }
@@ -236,9 +248,7 @@ function makeContent() {
   "opacity_multiplier": ${set.opacity_multiplier}
 }
 `;
-
   parseSVG();
-
   content +=
 `]}
 ]}`
