@@ -21,8 +21,8 @@ let content;
     "smudge_only_wet": false,// SMUDGE
     "keep_layer_wet": false,// available for tools with erase paint_type
     "keep_water": true,     // available for tools with erase paint_type
-    "paint_type": "PAINT",  // BLEND|PAINT|PAINT_BLEND|PAINT_MIX|ERASE, not all tools support all paint types
     "only_water": true, // only paint water. Rgba and bump aren't painted. Only applicable to WATERCOLOR and INK_PEN tools. Usable for a "multilayer simulation".
+    "paint_type": "PAINT",  // BLEND|PAINT|PAINT_BLEND|PAINT_MIX|ERASE, not all tools support all paint types
     "glaze_mode": "TRANSPARENT",    // Watercolor tool supports TRANSPARENT, SEMI-OPAQUE and OPAQUE glazing modes, default value is TRANSPARENT, don’t set this parameter for other tools
     "color": { "r": 255, "g": 128, "b": 0 }, // Setting the color turns off reveal_mask
 
@@ -55,10 +55,22 @@ const set = {
   brush_preset: "Gouache/Gouache Filbert",
   brush_size : 40,
   brush_water: 55,
-  brush_opacity: 255,
+  brush_opacity: 100,
+  brush_pressure: 100,
+  brush_dirty_brush: false,
+  smudge_only_wet: false,
+  keep_layer_wet: false,
+  keep_water: true,
+  only_water: true,
+
   brush_paint_type: "PAINT",
   brush_glaze_mode: "TRANSPARENT",
   brush_color: { r: 0, g: 0, b: 0},
+  multi_color_brush: true,
+  rotate_multi_color_brush: true,
+  smudge: true,  
+  spacing: 50,
+  opacity_multiplier: 2,
 
   // Download
   download() {download()},
@@ -91,13 +103,24 @@ paper.add( set, 'paper_visible' ).name( 'Visible' );
 const brush = gui.addFolder( 'Brush' );
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
 brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Gouache/Gouache Filbert', 'Sumi-e/Sumi-e  soft' ] ).name( 'Preset' );
-brush.add( set, 'brush_size', 1, 128, 1 ).name( 'Size' );
-brush.add( set, 'brush_water', 1, 128, 1 ).name( 'Water' );
-brush.add( set, 'brush_opacity', 1, 255, 1 ).name( 'Opacity' ).onChange( setOpacity );;
+brush.add( set, 'brush_size', 1, 100, 1 ).name( 'Size' );
+brush.add( set, 'brush_water', 1, 100, 1 ).name( 'Water' );
+brush.add( set, 'brush_opacity', 1, 100, 1 ).name( 'Opacity' ).onChange( setOpacity );
+brush.add( set, 'brush_pressure', 1, 100, 1 ).name( 'Pressure' );
+brush.add( set, 'brush_dirty_brush').name( 'Dirty brush' );
+brush.add( set, 'smudge_only_wet').name( 'Smudge only wet' );
+brush.add( set, 'keep_layer_wet').name( 'Keep layer wet' );
+brush.add( set, 'keep_water').name( 'Keep water' );
+brush.add( set, 'only_water').name( 'Only water' );
 brush.add( set, 'brush_paint_type', ["PAINT", "BLEND", "PAINT_BLEND" , "PAINT_MIX", "ERASE"] ).name( 'Paint type' );
 brush.add( set, 'brush_glaze_mode', [ "TRANSPARENT", "SEMI-OPAQUE", "OPAQUE"] ).name( 'Glaze mode' );
 const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
 bc.domElement.querySelector('input[type="text"]').style.display = 'none';
+brush.add( set, 'multi_color_brush').name( 'Multi color brush' );
+brush.add( set, 'rotate_multi_color_brush').name( 'Rotate multi color brush' );
+brush.add( set, 'smudge').name( 'Smudge' );
+brush.add( set, 'spacing', 1, 100, 1 ).name( 'Spacing' );
+brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
 
 // Set preview paper color 
 function setBackgroundColor() {
@@ -164,9 +187,20 @@ function makeContent() {
   "size" : ${set.brush_size},
   "water": ${set.brush_water},
   "opacity": ${set.brush_opacity},
+  "pressure": ${set.brush_pressure},
+  "brush_dirty_brush": ${set.brush_dirty_brush},
+  "smudge_only_wet": ${set.smudge_only_wet},
+  "keep_layer_wet": ${set.keep_layer_wet},
+  "keep_water": ${set.keep_water},
+  "only_water": ${set.only_water},
   "paint_type": "${set.brush_paint_type}",
   "glaze_mode": "${set.brush_glaze_mode}",
-  "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} }
+  "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} },
+  "multi_color_brush": ${set.multi_color_brush},
+  "rotate_multi_color_brush": ${set.rotate_multi_color_brush},
+  "smudge": ${set.smudge},
+  "spacing": ${set.spacing},
+  "opacity_multiplier": ${set.opacity_multiplier}
 }
 `;
 

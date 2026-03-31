@@ -7,10 +7,10 @@
   "units": "px", 
   "dpi": 200,
   "paper": {
-      "preset": "Default/HM01 Handmade",
-      "color": { "r": 43, "g": 191, "b": 88 },
+      "preset": "Default/EX00 White Simple",
+      "color": { "r": 255, "g": 255, "b": 255 },
       "deckled_edges": true,
-      "paper_scale": 150,
+      "paper_scale": 100,
       "visible": true
     }
 },
@@ -20,10 +20,24 @@
   "preset": "Gouache/Gouache Filbert",
   "size" : 40,
   "water": 55,
-  "opacity": 10,
+  "opacity": 100,
+  "pressure": 100,
+  "brush_dirty_brush": false,
+  "smudge_only_wet": false,
+  "keep_layer_wet": false,
+  "keep_water": true,
+  "only_water": true,
   "paint_type": "PAINT",
-  "glaze_mode": "OPAQUE",
-  "color": { "r": 0, "g": 0, "b": 0 }
+  "glaze_mode": "TRANSPARENT",
+  "color": { "r": 0, "g": 0, "b": 0 },
+  "multi_color_brush": true,
+  "rotate_multi_color_brush": true,
+  "smudge": true,
+  "spacing": 46,
+  "opacity_multiplier": 7
 }
+,{}
+,{}
+,{}
 ]}
 ]}
