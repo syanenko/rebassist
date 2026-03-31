@@ -5,6 +5,8 @@
 // 3. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
+import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
+import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
 
 let content;
 /*
@@ -74,13 +76,15 @@ const set = {
 
   // Download
   download() {download()},
-  upload()   {upload()}
+  upload()   {upload()},
+  parse()    {parseSVG()}
 };
 
 const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
 gui.add( set, 'download' ).name( 'Download' );
+gui.add( set, 'parse' ).name( 'Parse' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
@@ -156,10 +160,36 @@ function setOpacity() {
 }
 
 // Parse SVG
+function traverseObject(obj) {
+  for (const key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      const value = obj[key];
+      if (typeof value === 'object' && value !== null) {
+        // Recurse if the value is an object
+        traverseObject(value);
+      } else {
+        // Process the leaf value
+        if(key=='d') {
+          const segments = parsePath(value);
+          segments.forEach(function(s, i) {
+              console.log(`${i}: ${s.key} ${s.data}`);
+          });
+        }
+      }
+    }
+  }
+}
+
 function parseSVG() {
-  content += ",{}\n";
-  content += ",{}\n";
-  content += ",{}\n";
+  const svg = document.getElementById("container").children[0];
+  if(!svg)
+    return;
+
+  const parsed = parse(svg.outerHTML);
+  traverseObject(parsed)
+  // console.log(parsed);
+
+  // content += ",{}\n";
 }
 
 // Prepare JSON
@@ -247,6 +277,7 @@ function loadSVG(svg) {
         gui.reset();
         setStrokeColor();
         setBackgroundColor();
+        parseSVG(); // DEBUG
       }
     });
 }
