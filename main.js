@@ -160,19 +160,24 @@ function setOpacity() {
 }
 
 // Parse SVG
-function traverseObject(obj) {
+function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
       if (typeof value === 'object' && value !== null) {
-        // Recurse if the value is an object
-        traverseObject(value);
+        traverse(value);
       } else {
-        // Process the leaf value
-        if(key=='d') {
+        if((key=='d') ){
           const segments = parsePath(value);
           segments.forEach(function(s, i) {
-              console.log(`${i}: ${s.key} ${s.data}`);
+            console.log(`${i}: ${s.key} ${s.data}`);
+            if(s.key == 'M') {
+              console.log(s.data);
+              content += `,{"Move": 0.0}\n`;
+            } else if(s.key == 'L') {
+              console.log(s.data);
+              content += `,{"Line": 1.1}\n`;
+            }
           });
         }
       }
@@ -180,16 +185,14 @@ function traverseObject(obj) {
   }
 }
 
+// Parse SVG
 function parseSVG() {
   const svg = document.getElementById("container").children[0];
   if(!svg)
     return;
-
   const parsed = parse(svg.outerHTML);
-  traverseObject(parsed)
   // console.log(parsed);
-
-  // content += ",{}\n";
+  traverse(parsed)
 }
 
 // Prepare JSON
