@@ -10,7 +10,7 @@ import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
 
-let SCALE = 3.779528; // Inkscape px per user units
+let SCALE = 3.779528; // For Inkscape 'px' per user units
 let content;
 
 // GUI
@@ -64,9 +64,11 @@ gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
-const guiWidth = artwork.add( set, 'width', 64, 32000, 1 ).name( 'Width' );
-const guiHeight = artwork.add( set, 'height', 64, 32000, 1 ).name( 'Heght' );
-artwork.add( set, 'units', [ 'px', 'cm', 'in' ] ).name( 'Units' );
+const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+const guiHeight = artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+
+//  Only 'px' supported, need to check scale in Inkscape 
+artwork.add( set, 'units', [ 'px' ] ).name( 'Units' ); // [ 'px', 'cm', 'in' ]
 artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
 
 // Paper
