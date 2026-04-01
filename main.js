@@ -54,7 +54,7 @@ const set = {
   // Brush
   brush_tool: "WATERCOLOR",
   brush_preset: "Gouache/Gouache Filbert",
-  brush_size : 40,
+  brush_size : 4,
   brush_water: 55,
   brush_opacity: 100,
   brush_pressure: 100,
@@ -62,7 +62,7 @@ const set = {
   smudge_only_wet: false,
   keep_layer_wet: false,
   keep_water: true,
-  only_water: true,
+  only_water: false,
 
   brush_paint_type: "PAINT",
   brush_glaze_mode: "TRANSPARENT",
@@ -246,7 +246,9 @@ function makeContent() {
   "smudge": ${set.smudge},
   "spacing": ${set.spacing},
   "opacity_multiplier": ${set.opacity_multiplier}
-}
+},
+{ "event_type": "POINTER_PRESS", "pos": { "x": 0, "y": -1 }},
+{ "event_type": "POINTER_MOVE",  "pos": { "x": 0, "y": 0 }}
 `;
   parseSVG();
   content +=
