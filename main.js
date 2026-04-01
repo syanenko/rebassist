@@ -1,9 +1,5 @@
-// TODO:
 //
-// 0. Close seq. with RELEASE
 // 1. Yes ?
-// 2. GUI: Scale (?)
-// 3. GUI - Tools and presets setup
 // 5. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
@@ -156,16 +152,16 @@ function traverse(obj) {
               console.log(s.data);
               last_x = x;
               last_y = y;
-              x = s.data[0] * SCALE;
-              y = s.data[1] * SCALE;
+              x = Math.round(s.data[0] * SCALE);
+              y = Math.round(s.data[1] * SCALE);
               content +=
 `,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}
 ,{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}
 `;
             } else if(s.key == 'L') {
               console.log(s.data);
-              x = s.data[0] * SCALE;
-              y = s.data[1] * SCALE;
+              x = Math.round(s.data[0] * SCALE);
+              y = Math.round(s.data[1] * SCALE);
               content +=
 `,{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}
 `;
