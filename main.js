@@ -179,15 +179,15 @@ function traverse(obj) {
               x = s.data[0] * SCALE;
               y = s.data[1] * SCALE;
               content +=
-`,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }},
-{ "event_type": "POINTER_PRESS", "pos": { "x": ${x}, "y": ${y} }}
+`,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}
+,{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}
 `;
             } else if(s.key == 'L') {
               console.log(s.data);
               x = s.data[0] * SCALE;
               y = s.data[1] * SCALE;
               content +=
-`,{ "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }}
+`,{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}
 `;
             }
           });
@@ -246,9 +246,9 @@ function makeContent() {
   "smudge": ${set.smudge},
   "spacing": ${set.spacing},
   "opacity_multiplier": ${set.opacity_multiplier}
-},
-{ "event_type": "POINTER_PRESS", "pos": { "x": 0, "y": -1 }},
-{ "event_type": "POINTER_MOVE",  "pos": { "x": 0, "y": 0 }}
+}
+,{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}
+,{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}
 `;
   parseSVG();
   content +=
