@@ -1,46 +1,22 @@
 // TODO:
 //
-// 1. Draw events
-// 2. Colorize GUI (?)
+// 1. Yes ?
+// 2. GUI: Scale (?)
+// 2. GUI - Tools and presets setup
+// 3. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
 
+let SCALE = 3.779528; // Inkscape px per user units
 let content;
-/*
-{
-    "event_type": "SET_BRUSH",
-    "tool": "WATERCOLOR",
-    "preset": "Default/Fan 1", // may be absolute path to preset too
-    "size" : 20,
-    "size_px" : 20, // use either size or size_px
-    "water": 55,
-    "opacity": 60,
-    "pressure": 100,
-    "dirty_brush": false,   // only works for OIL_AND_ACRYLIC, ignored for other tools
-    "smudge_only_wet": false,// SMUDGE
-    "keep_layer_wet": false,// available for tools with erase paint_type
-    "keep_water": true,     // available for tools with erase paint_type
-    "only_water": true, // only paint water. Rgba and bump aren't painted. Only applicable to WATERCOLOR and INK_PEN tools. Usable for a "multilayer simulation".
-    "paint_type": "PAINT",  // BLEND|PAINT|PAINT_BLEND|PAINT_MIX|ERASE, not all tools support all paint types
-    "glaze_mode": "TRANSPARENT",    // Watercolor tool supports TRANSPARENT, SEMI-OPAQUE and OPAQUE glazing modes, default value is TRANSPARENT, don’t set this parameter for other tools
-    "color": { "r": 255, "g": 128, "b": 0 }, // Setting the color turns off reveal_mask
-
-    // since Rebelle 5:
-    "multi_color_brush": true,  // turns on multi colored brush feature, this allows multiple colors to be painted within single brush stroke, multiple colors and other parameters are set using "multi_color" object, see SET_BRUSH_COLOR event for further details
-    "rotate_multi_color_brush": true,   // rotate multi color texture with brush rotation, also affects dirty brush effect. Supported in Motion IO only, not in WebSockets.
-    "smudge": true, // override preset's smudge checkbox (in the Brush Creator). "preset" has to be set also.
-    "spacing": 50, // override preset's spacing (in the Brush Creator). "preset" has to be set also.
-    "opacity_multiplier": 2, // override preset's opacity multiplier (in the Brush Creator). "preset" has to be set also.
-}
-*/
 
 // GUI
 const set = {
   // Artwork
   width: 800,
-  height: 600,
+  height: 800,
   units: "px",
   dpi: 200,
 
@@ -160,7 +136,6 @@ function setOpacity() {
 
 // Traverse object
 let x, y, last_x = 0, last_y = 0;
-let SCALE = 4; // DEBUG
 function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
