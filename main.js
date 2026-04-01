@@ -2,9 +2,9 @@
 // 1. Yes ?
 // 5. Colorize GUI (?)
 //
-import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
-import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
-import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
+import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
+import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
+import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
 let SCALE = 3.779528; // For Inkscape 'px' per user units
 let content;
@@ -147,9 +147,9 @@ function traverse(obj) {
         if((key=='d') ){
           const segments = parsePath(value);
           segments.forEach(function(s, i) {
-            console.log(`${i}: ${s.key} ${s.data}`);
+            // console.log(`${i}: ${s.key} ${s.data}`); // DEBUG
             if(s.key == 'M') {
-              console.log(s.data);
+              // console.log(s.data);  // DEBUG
               last_x = x;
               last_y = y;
               x = Math.round(s.data[0] * SCALE);
@@ -159,7 +159,7 @@ function traverse(obj) {
 ,{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}
 `;
             } else if(s.key == 'L') {
-              console.log(s.data);
+              // console.log(s.data);  // DEBUG
               x = Math.round(s.data[0] * SCALE);
               y = Math.round(s.data[1] * SCALE);
               content +=
