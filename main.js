@@ -160,6 +160,7 @@ function setOpacity() {
 
 // Traverse object
 let x, y, last_x = 0, last_y = 0;
+let SCALE = 4; // DEBUG
 function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -175,8 +176,8 @@ function traverse(obj) {
               console.log(s.data);
               last_x = x;
               last_y = y;
-              x = s.data[0];
-              y = s.data[1];
+              x = s.data[0] * SCALE;
+              y = s.data[1] * SCALE;
               content +=
 `,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }},
 { "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }},
@@ -184,8 +185,8 @@ function traverse(obj) {
 `;
             } else if(s.key == 'L') {
               console.log(s.data);
-              x = s.data[0];
-              y = s.data[1];
+              x = s.data[0] * SCALE;
+              y = s.data[1] * SCALE;
               content +=
 `,{ "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }}
 `;
