@@ -1,9 +1,10 @@
 // TODO:
 //
+// 0. Close seq. with RELEASE
 // 1. Yes ?
 // 2. GUI: Scale (?)
-// 2. GUI - Tools and presets setup
-// 3. Colorize GUI (?)
+// 3. GUI - Tools and presets setup
+// 5. Colorize GUI (?)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -29,7 +30,7 @@ const set = {
 
   // Brush
   brush_tool: "WATERCOLOR",
-  brush_preset: "Gouache/Gouache Filbert",
+  brush_preset: "Watercolor/Liner",
   brush_size : 4,
   brush_water: 1,
   brush_opacity: 100,
@@ -42,7 +43,7 @@ const set = {
 
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
-  brush_color: { r: 0, g: 0, b: 0},
+  brush_color: { r: 48, g: 136, b: 199},
   multi_color_brush: true,
   rotate_multi_color_brush: true,
   smudge: true,  
@@ -52,20 +53,19 @@ const set = {
   // Download
   download() {download()},
   upload()   {upload()},
-  parse()    {parseSVG()}
 };
+
 
 const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
 gui.add( set, 'download' ).name( 'Download' );
-gui.add( set, 'parse' ).name( 'Parse' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
-artwork.add( set, 'width', 64, 32000, 1 ).name( 'Width' );
-artwork.add( set, 'height', 64, 32000, 1 ).name( 'Heght' );
+const guiWidth = artwork.add( set, 'width', 64, 32000, 1 ).name( 'Width' );
+const guiHeight = artwork.add( set, 'height', 64, 32000, 1 ).name( 'Heght' );
 artwork.add( set, 'units', [ 'px', 'cm', 'in' ] ).name( 'Units' );
 artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
 
@@ -81,7 +81,10 @@ paper.add( set, 'paper_visible' ).name( 'Visible' );
 // Brush
 const brush = gui.addFolder( 'Brush' );
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
-brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Gouache/Gouache Filbert', 'Sumi-e/Sumi-e  soft' ] ).name( 'Preset' );
+brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Watercolor/Watercolor/Fan', 'Watercolor/Filbert Dry',
+                                  'Watercolor/Flat 2', 'Watercolor/Flat Dry', 'Watercolor/Flat', 'Watercolor/Liner 2',
+                                  'Watercolor/Liner', 'Watercolor/Mop', 'Watercolor/Round 2', 'Watercolor/Round 3', 
+                                  'Watercolor/Round 4', 'Watercolor/Round', 'Watercolor/Wash Flat', 'Watercolor/Wash Round' ] ).name( 'Preset' );
 brush.add( set, 'brush_size', 1, 100, 1 ).name( 'Size' );
 brush.add( set, 'brush_water', 1, 100, 1 ).name( 'Water' );
 brush.add( set, 'brush_opacity', 1, 100, 1 ).name( 'Opacity' ).onChange( setOpacity );
@@ -177,6 +180,11 @@ function parseSVG() {
   const svg = document.getElementById("container").children[0];
   if(!svg)
     return;
+  set.width = svg.getAttribute("width");
+  set.height = svg.getAttribute("height");
+  guiWidth.updateDisplay();
+  guiHeight.updateDisplay();
+
   const parsed = parse(svg.outerHTML);
   // console.log(parsed);
   traverse(parsed)
@@ -227,7 +235,8 @@ function makeContent() {
 `;
   parseSVG();
   content +=
-`]}
+`,{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}
+]}
 ]}`
 }
 
