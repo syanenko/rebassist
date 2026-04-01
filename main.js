@@ -1,6 +1,5 @@
 //
-// 1. Yes ?
-// 5. Colorize GUI (?)
+// 1. Colorize GUI (blue)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
