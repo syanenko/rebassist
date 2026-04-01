@@ -55,17 +55,17 @@ const set = {
   brush_tool: "WATERCOLOR",
   brush_preset: "Gouache/Gouache Filbert",
   brush_size : 4,
-  brush_water: 55,
+  brush_water: 1,
   brush_opacity: 100,
   brush_pressure: 100,
   brush_dirty_brush: false,
   smudge_only_wet: false,
   keep_layer_wet: false,
-  keep_water: true,
+  keep_water: false,
   only_water: false,
 
   brush_paint_type: "PAINT",
-  brush_glaze_mode: "TRANSPARENT",
+  brush_glaze_mode: "OPAQUE",
   brush_color: { r: 0, g: 0, b: 0},
   multi_color_brush: true,
   rotate_multi_color_brush: true,
@@ -180,7 +180,6 @@ function traverse(obj) {
               y = s.data[1] * SCALE;
               content +=
 `,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }},
-{ "event_type": "POINTER_MOVE", "pos": { "x": ${x}, "y": ${y} }},
 { "event_type": "POINTER_PRESS", "pos": { "x": ${x}, "y": ${y} }}
 `;
             } else if(s.key == 'L') {
