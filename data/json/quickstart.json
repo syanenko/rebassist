@@ -1,0 +1,46 @@
+{"frames":[
+    {"events":[
+        {
+            "event_type": "NEW_ARTWORK",
+            "width": 640,
+            "height": 480,
+            "units": "px",
+            "dpi": 200,
+            "paper": {
+                "preset": "Default/HM01 Handmade",
+                "color": { "r": 255, "g": 255, "b": 255 },
+                "deckled_edges": true,
+                "paper_scale":  150
+            }
+        },
+        {
+            "event_type": "SET_BRUSH",
+            "tool": "WATERCOLOR",
+            "preset": "Gouache/Gouache Filbert",
+            "size" : 40,
+            "water": 55,
+            "opacity": 10,
+            "paint_type": "PAINT",
+            "glaze_mode": "OPAQUE",
+            "color": { "r": 64, "g": 127, "b": 200 }
+        },
+        { "event_type": "POINTER_PRESS"  , "pos": { "x": 100, "y": 100 } },
+        { "event_type": "POINTER_MOVE"   , "pos": { "x": 200, "y": 200 } },
+        { "event_type": "POINTER_MOVE"   , "pos": { "x": 300, "y": 100 } },
+        { "event_type": "POINTER_MOVE"   , "pos": { "x": 400, "y": 300 } },
+        { "event_type": "POINTER_RELEASE", "pos": { "x": 400, "y": 300 } }
+    ]},
+    {"events":[
+        { "event_type": "SIMULATION", "repeats": 10 }
+    ]},
+    {"events":[
+        { "event_type": "SIMULATION", "repeats": 10 }
+    ]},
+    {"events":[
+        { "event_type": "SIMULATION", "repeats": 10 }
+    ]},
+    {"events":[
+        { "event_type": "SIMULATION", "repeats": 10 }
+    ]}
+]}
+
