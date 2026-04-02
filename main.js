@@ -1,6 +1,7 @@
 //
 // 1. Colorize GUI (blue)
 // 2. Global var svg
+// 3. Send to websocket (content as array)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -9,6 +10,7 @@ import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 const colorTitle = "hsl(205 61% 65%)";
 let SCALE = 3.779528; // For Inkscape 'px' per user units
 let content;
+let events = [];
 
 // GUI
 const set = {
@@ -142,7 +144,7 @@ function setOpacity() {
 }
 
 // Traverse object
-let x, y, last_x = 0, last_y = 0;
+let x = 0, y = 0, last_x = 0, last_y = 0;
 function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -160,17 +162,13 @@ function traverse(obj) {
               last_y = y;
               x = Math.round(s.data[0] * SCALE);
               y = Math.round(s.data[1] * SCALE);
-              content +=
-`,{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}
-,{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}
-`;
+              events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
+              events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
             } else if(s.key == 'L') {
               // console.log(s.data);  // DEBUG
               x = Math.round(s.data[0] * SCALE);
               y = Math.round(s.data[1] * SCALE);
-              content +=
-`,{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}
-`;
+              events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
             }
           });
         }
@@ -196,9 +194,8 @@ function parseSVG() {
 
 // Prepare JSON
 function makeContent() {
-  content = `{"frames":[
-{"events":[
-{
+  events.push(
+`{
   "event_type": "NEW_ARTWORK",
   "width": ${set.width},
   "height": ${set.height},
@@ -211,8 +208,11 @@ function makeContent() {
       "paper_scale": ${set.paper_scale},
       "visible": ${set.paper_visible}
     }
-},
-{
+}`
+);
+
+  events.push(
+`{
   "event_type": "SET_BRUSH",
   "tool": "${set.brush_tool}",
   "preset": "${set.brush_preset}",
@@ -233,15 +233,22 @@ function makeContent() {
   "smudge": ${set.smudge},
   "spacing": ${set.spacing},
   "opacity_multiplier": ${set.opacity_multiplier}
-}
-,{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}
-,{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}
-`;
+}`
+);
+
+  events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}`);
+  events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}`);
   parseSVG();
-  content +=
-`,{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}
-]}
-]}`
+  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}`);
+  // console.log(events);
+
+  content = '\n{"frames":[\n{"events":[';
+  const len =  events.length-1;
+  for(let i=0; i<len; i++) {
+    content += (events[i] + ',\n');
+  };
+  content += (events[len] + '\n');
+  content += ']}\n]}';
 }
 
 // Upload
@@ -280,7 +287,7 @@ function loadSVG(svg) {
         gui.reset();
         setStrokeColor();
         setBackgroundColor();
-        parseSVG(); // DEBUG
+        // parseSVG(); // DEBUG
       }
     });
 }
