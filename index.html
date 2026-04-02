@@ -17,93 +17,21 @@
       <div id="text" onclick="window.location.reload()">Rebelle assistant</div>
       <img id="help" class="buttons" src="data/images/help_36x36.png" style="opacity: 0.65" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
     </div>
-
     <hr>
 
-    <!-- About -->
     <dialog id="about" style="width:420px;">
       <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle assistant</div><br>
-      Converts SVG files with flattened paths<br>('M' and 'L' commands) to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events and sends them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle</i></a> via websocket.<br><br>
+      Converts SVG files with flattened paths<br>('M' and 'L' commands) to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events and sends to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle</i></a> via websocket.<br><br>
       <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
         <form method="dialog" style="text-align:center">
         <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
         </form>
     </dialog>
 
-    <!-- Main -->
     <script type="module" src="main.js"></script>
- 
-    <!-- Upload model -->
-    <div id="form_upload" style="width:320px">
-      <form encType="multipart/form-data" style="text-align:left">
-        <h3>Upload SVG file</h3>
-        <input type="file" id="model" name="model"  accept=".svg"/><br/><br/>
-        <input type="submit"  id="Upload" value="Upload" />&nbsp;&nbsp;&nbsp;&nbsp;
-        <input type="button"  id="Cancel" value="Cancel" onclick="parentElement.parentElement.style.visibility = 'hidden'"/>
-      </form>
-    </div>
 
-    <!-- Container -->
     <div id="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%)"></div>
-    <script>
-      var form = document.getElementById('form_upload');
-      form.addEventListener('submit', function(e) {
-        // Display progress bar
-        // document.getElementById('progress-label').innerHTML = "Loading...";
-        // document.getElementById('progress-container').style.display = 'flex';
-        let progress = document.getElementById('progress-bar');
-        
-        // Prevent the default form submission behavior
-        e.preventDefault();
 
-        // Create a new FormData object
-        var formData = new FormData();
-
-        // Get the selected file
-        var model = form.querySelector('[name="model"]').files[0];
-
-        // Add the file to the FormData object
-        formData.append('model', model);
-
-        // XMLHttpRequest object
-        var xhr = new XMLHttpRequest();
-
-        // Set the request url - check it before publishing
-        xhr.open('POST', 'https://127.0.0.1:8089/upload.php');
-        // xhr.open('POST', 'https://yesbird.online/rebelle/svg2mio/upload.php');
-
-        // Set the request onload event listener
-        xhr.responseType = 'json';
-
-        xhr.upload.addEventListener('progress', (event) => {
-        if (event.lengthComputable) {
-            const percent = Math.round((event.loaded / event.total) * 100);
-            progress.value = percent;
-            progress.textContent = `${percent}%`;
-        }
-        });
-
-        xhr.onload = function() {
-          if (xhr.status === 200) {
-            loadSVG(xhr.response.model);
-          } else {
-              alert("Error loading model: " + xhr.status);
-              document.getElementById('progress-container').style.display = 'none';
-          }
-        }
-
-        xhr.onerror = function() {
-          alert("Error loading model, see console for details");
-          document.getElementById('progress-container').style.display = 'none';
-        }
-
-        // Send the request
-        xhr.send(formData);
-        form.style.visibility = 'hidden';
-      });
-    </script>
-
-    <!-- Controls -->
     <div style='position: absolute; top:65px; left:10px; width:90px; z-index:4;'>
       <input type="image" src='data/svg/rebelle_logo.svg' class='icon' onclick="loadSVG('./data/svg/rebelle_logo.svg')">
       <input type="image" src='data/svg/bull.svg' class='icon' onclick="loadSVG('./data/svg/bull.svg')">
@@ -116,13 +44,6 @@
       };
     </script>
 
-    <!-- Progress -->
-    <div id="progress-container">
-      <label id="progress-label" for="progress-bar"></label>
-      <progress id="progress-bar" value="0" max="100"></progress>
-    </div>
-
-    <!-- Studio -->
     <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer" style="position: absolute; bottom:15px; left:20px; z-index:4; color:#333;  font-size: 135%; font-style: italic; text-decoration: none;" >(с) Yesbird studio 2026</a>
 
   </body>
