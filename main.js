@@ -1,10 +1,12 @@
 //
 // 1. Colorize GUI (blue)
+// 2. Global var svg
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
+const colorTitle = "hsl(205 61% 65%)";
 let SCALE = 3.779528; // For Inkscape 'px' per user units
 let content;
 
@@ -52,6 +54,8 @@ const set = {
 
 
 const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
+gui.domElement.querySelector('.title').style.color = colorTitle;
+
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
 gui.add( set, 'download' ).name( 'Download' );
@@ -59,6 +63,7 @@ gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
+artwork.domElement.querySelector('.title').style.color = colorTitle;
 const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
 const guiHeight = artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
 
@@ -68,6 +73,7 @@ artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400',
 
 // Paper
 const paper = gui.addFolder( 'Paper' );
+paper.domElement.querySelector('.title').style.color = colorTitle;
 paper.add( set, 'paper_preset', [ 'EX00 White Simple', 'CA01 Canvas Artist', 'HP01 Hot Pressed', 'RH00 Aquarelle', 'WK01 Washi' ] ).name( 'Preset' );
 const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
 pc.domElement.querySelector('input[type="text"]').style.display = 'none';
@@ -77,6 +83,7 @@ paper.add( set, 'paper_visible' ).name( 'Visible' );
 
 // Brush
 const brush = gui.addFolder( 'Brush' );
+brush.domElement.querySelector('.title').style.color = colorTitle;
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
 brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Watercolor/Watercolor/Fan', 'Watercolor/Filbert Dry',
                                   'Watercolor/Flat 2', 'Watercolor/Flat Dry', 'Watercolor/Flat', 'Watercolor/Liner 2',
