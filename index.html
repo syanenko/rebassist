@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>svg2mio</title>
+    <title>Rebelle assistant</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Pragma" content="no-cache">
@@ -14,7 +14,7 @@
     </script> 
     <div>
       <img id="logo" src="data/images/rebelle_logo.png" alt="Logo" height="40" onclick="window.location.reload()">
-      <div id="text" onclick="window.location.reload()">SVG to MotionIO converter</div>
+      <div id="text" onclick="window.location.reload()">Rebelle SVG assistant</div>
       <img id="help" class="buttons" src="data/images/help_36x36.png" style="opacity: 0.65" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
     </div>
 
@@ -22,8 +22,8 @@
 
     <!-- About -->
     <dialog id="about" style="width:420px;">
-      <div style="font-size: 24px; color:#fff; font-style: italic;">SVG to MotionIO converter</div><br>
-      Converts SVG files with flattened paths<br>('M' and 'L' commands) to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> format.<br><br>
+      <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle SVG assistant</div><br>
+      Converts SVG files with flattened paths<br>('M' and 'L' commands) to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events and sends them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle</i></a> via websocket.<br><br>
       <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
         <form method="dialog" style="text-align:center">
         <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
