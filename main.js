@@ -52,6 +52,7 @@ const set = {
   // Download
   download() {download()},
   upload()   {upload()},
+  send()     {send()},
 };
 
 
@@ -60,6 +61,7 @@ gui.domElement.querySelector('.title').style.color = colorTitle;
 
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
+gui.add( set, 'send' ).name( 'Send' );
 gui.add( set, 'download' ).name( 'Download' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
@@ -194,6 +196,8 @@ function parseSVG() {
 
 // Prepare JSON
 function makeContent() {
+  // Store events
+/*
   events.push(
 `{
   "event_type": "NEW_ARTWORK",
@@ -235,13 +239,14 @@ function makeContent() {
   "opacity_multiplier": ${set.opacity_multiplier}
 }`
 );
-
+*/
   events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}`);
   events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}`);
   parseSVG();
   events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}`);
   // console.log(events);
 
+  // Make content
   content = '\n{"frames":[\n{"events":[';
   const len =  events.length-1;
   for(let i=0; i<len; i++) {
@@ -287,8 +292,45 @@ function loadSVG(svg) {
         gui.reset();
         setStrokeColor();
         setBackgroundColor();
-        // parseSVG(); // DEBUG
       }
     });
 }
 window.loadSVG = loadSVG;
+
+//
+// Websocket
+//
+// Send
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+function send() {
+  console.log("send()");
+  makeContent();
+
+  const socket = new WebSocket('ws://localhost:8265');
+  socket.onopen = async (event) => {
+    console.log('Connected to server');
+    for(let i=0; i<events.length; i++){
+      console.log(events[i]);
+      socket.send(events[i]);
+      await sleep(100);
+    }
+    socket.close(1000, "Work complete"); 
+  };
+
+  socket.onmessage = (event) => {
+    console.log('Message from server:', event.data);
+  };
+
+  socket.onerror = (error) => {
+    console.error('WebSocket Error:', error);
+  };
+
+  socket.onclose = (event) => {
+    if (event.wasClean) {
+      console.log(`Closed cleanly, code=${event.code} reason=${event.reason}`);
+    } else {
+      console.log('Connection died');
+    }
+  };
+}
