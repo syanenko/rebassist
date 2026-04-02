@@ -1,15 +1,15 @@
 //
 // 0. Remove unwanted lines
-// 1. Colorize GUI (blue)
-// 2. Global var svg
+// 1. GUI Scale
+// 2. Repare download (content)
+// 3. Global var svg
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
-const colorTitle = "hsl(205 61% 65%)";
-// let SCALE = 3.779528; // For Inkscape 'px' per user units
-let SCALE = 4.779528; // For Inkscape 'px' per user units
+// const colorTitle = "hsl(205 61% 65%)";
+let SCALE = 3.779528; // For Inkscape 'px' per user units
 let content;
 let events = [];
 
@@ -58,7 +58,7 @@ const set = {
 
 
 const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
-gui.domElement.querySelector('.title').style.color = colorTitle;
+// gui.domElement.querySelector('.title').style.color = colorTitle;
 
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
