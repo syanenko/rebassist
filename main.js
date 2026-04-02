@@ -1,14 +1,15 @@
 //
+// 0. Remove unwanted lines
 // 1. Colorize GUI (blue)
 // 2. Global var svg
-// 3. Send to websocket (content as array)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
 const colorTitle = "hsl(205 61% 65%)";
-let SCALE = 3.779528; // For Inkscape 'px' per user units
+// let SCALE = 3.779528; // For Inkscape 'px' per user units
+let SCALE = 4.779528; // For Inkscape 'px' per user units
 let content;
 let events = [];
 
@@ -42,7 +43,7 @@ const set = {
 
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
-  brush_color: { r: 48, g: 136, b: 199},
+  brush_color: { r: 0, g: 0, b: 0},
   multi_color_brush: true,
   rotate_multi_color_brush: true,
   smudge: true,  
@@ -50,9 +51,9 @@ const set = {
   opacity_multiplier: 2,
 
   // Download
-  download() {download()},
   upload()   {upload()},
-  send()     {send()},
+  download() {download()},
+  paint()     {paint()}
 };
 
 
@@ -61,10 +62,11 @@ gui.domElement.querySelector('.title').style.color = colorTitle;
 
 // Buttons
 gui.add( set, 'upload' ).name( 'Upload' );
-gui.add( set, 'send' ).name( 'Send' );
 gui.add( set, 'download' ).name( 'Download' );
-gui.add( gui.reset(), 'reset' ).name( 'Reset' );
+gui.add( set, 'paint' ).name( 'Paint' );
 
+/*
+gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
 artwork.domElement.querySelector('.title').style.color = colorTitle;
@@ -112,6 +114,15 @@ brush.add( set, 'smudge').name( 'Smudge' );
 brush.add( set, 'spacing', 1, 100, 1 ).name( 'Spacing' );
 brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
 
+// Set stroke opacity
+function setOpacity() {
+  const svg = document.getElementById("container").children[0];
+  if(!svg)
+    return;
+  svg.setAttribute("opacity", set.brush_opacity / 255);
+}
+*/
+
 // Set preview paper color 
 function setBackgroundColor() {
   const svg = document.getElementById("container").children[0];
@@ -137,17 +148,11 @@ function setStrokeColor() {
   svg.setAttribute("fill", document.body.style.backgroundColor);
 }
 
-// Set stroke opacity
-function setOpacity() {
-  const svg = document.getElementById("container").children[0];
-  if(!svg)
-    return;
-  svg.setAttribute("opacity", set.brush_opacity / 255);
-}
-
 // Traverse object
 let x = 0, y = 0, last_x = 0, last_y = 0;
 function traverse(obj) {
+  //events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}`);
+  //events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}`);
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
       const value = obj[key];
@@ -159,7 +164,6 @@ function traverse(obj) {
           segments.forEach(function(s, i) {
             // console.log(`${i}: ${s.key} ${s.data}`); // DEBUG
             if(s.key == 'M') {
-              // console.log(s.data);  // DEBUG
               last_x = x;
               last_y = y;
               x = Math.round(s.data[0] * SCALE);
@@ -167,7 +171,6 @@ function traverse(obj) {
               events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
               events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
             } else if(s.key == 'L') {
-              // console.log(s.data);  // DEBUG
               x = Math.round(s.data[0] * SCALE);
               y = Math.round(s.data[1] * SCALE);
               events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
@@ -177,6 +180,7 @@ function traverse(obj) {
       }
     }
   }
+  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
 }
 
 // Parse SVG
@@ -184,10 +188,10 @@ function parseSVG() {
   const svg = document.getElementById("container").children[0];
   if(!svg)
     return;
-  set.width = svg.getAttribute("width");
-  set.height = svg.getAttribute("height");
-  guiWidth.updateDisplay();
-  guiHeight.updateDisplay();
+  // set.width = svg.getAttribute("width");
+  // set.height = svg.getAttribute("height");
+  // guiWidth.updateDisplay();
+  // guiHeight.updateDisplay();
 
   const parsed = parse(svg.outerHTML);
   // console.log(parsed);
@@ -196,6 +200,8 @@ function parseSVG() {
 
 // Prepare JSON
 function makeContent() {
+
+  events.length = 0; // Empty events
   // Store events
 /*
   events.push(
@@ -240,20 +246,18 @@ function makeContent() {
 }`
 );
 */
-  events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}`);
-  events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}`);
   parseSVG();
-  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}`);
+  //events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": 0, "y": 0 }}`);
   // console.log(events);
 
   // Make content
-  content = '\n{"frames":[\n{"events":[';
-  const len =  events.length-1;
-  for(let i=0; i<len; i++) {
-    content += (events[i] + ',\n');
-  };
-  content += (events[len] + '\n');
-  content += ']}\n]}';
+  // content = '\n{"frames":[\n{"events":[';
+  // const len =  events.length-1;
+  // for(let i=0; i<len; i++) {
+  //   content += (events[i] + ',\n');
+  // };
+  // content += (events[len] + '\n');
+  // content += ']}\n]}';
 }
 
 // Upload
@@ -303,8 +307,8 @@ window.loadSVG = loadSVG;
 // Send
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
-function send() {
-  console.log("send()");
+function paint() {
+  console.log("paint()");
   makeContent();
 
   const socket = new WebSocket('ws://localhost:8265');
@@ -313,7 +317,7 @@ function send() {
     for(let i=0; i<events.length; i++){
       console.log(events[i]);
       socket.send(events[i]);
-      await sleep(100);
+      // await sleep(1);
     }
     socket.close(1000, "Work complete"); 
   };
