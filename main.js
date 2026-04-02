@@ -21,11 +21,11 @@ const set = {
   download() {download()}
 };
 
-const gui = new GUI( {width: 300, title:"Control", closeFolders:true} );
+const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
 // gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
 
 // Buttons
-gui.add( set, 'scale', 1, 20, 1 ).name( 'Scale' ).onFinishChange( makeEvents );
+gui.add( set, 'scale', 1, 20, 0.1 ).name( 'Scale' ).onFinishChange( makeEvents );
 gui.add( set, 'paint' ).name( 'Paint' );
 gui.add( set, 'download' ).name( 'Download' );
 
@@ -116,7 +116,7 @@ document.body.appendChild( link );
 
 function download() {
   makeContent();
-  let filename = "mio.json"
+  let filename = "MotioIO.json"
   const blob = new Blob( [ content ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
   link.download = filename;
