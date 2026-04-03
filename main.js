@@ -6,11 +6,12 @@ import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
+const PORT = "8265";
+
 let svg;
 let x = 0, y = 0, last_x = 0, last_y = 0;
 let events = [];
 let content;
-const PORT = "8265";
 
 // GUI
 const set = {
@@ -124,7 +125,6 @@ function loadSVG(file) {
         svg = svgElement;
         container.replaceChildren();
         container.appendChild(svgElement);
-        gui.reset();
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
         makeEvents();
@@ -147,7 +147,7 @@ function paint() {
       // console.log(events[i]);
       socket.send(events[i]);
     }
-    socket.close(1000, "Work complete"); 
+    socket.close(1000, "Work complete");
   };
 
   socket.onmessage = (event) => {
