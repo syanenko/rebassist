@@ -25,27 +25,14 @@ const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
 // gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
 
 // Buttons
-gui.add( set, 'scale', 1, 20, 0.1 ).name( 'Scale' ).onFinishChange( makeEvents );
+gui.add( set, 'scale', 1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onScaleChange );
 gui.add( set, 'paint' ).name( 'Paint' );
 // gui.add( set, 'download' ).name( 'Download' );
 
-// TODO: Optimize it
-// Set preview paper color
-function setBackgroundColor() {
-  document.body.style.backgroundColor = "#fff";
-  svg.setAttribute("fill", document.body.style.backgroundColor);
-}
-
-// TODO: Optimize it
-// Set preview stroke color 
-function setStrokeColor() {
-  // const color = "rgb(" + set.brush_color.r + "," + 
-  //                      + set.brush_color.g + "," + 
-  //                      + set.brush_color.b + ")";
-  document.body.style.backgroundColor = "#fff";
-  svg.setAttribute("fill", document.body.style.backgroundColor);
-  svg.setAttribute("stroke", "#000");
-  svg.setAttribute("fill", document.body.style.backgroundColor);
+// On changing the scale
+function onScaleChange() {
+  makeEvents();
+  paint();
 }
 
 // Traverse object recursively
@@ -138,10 +125,6 @@ function loadSVG(file) {
         container.replaceChildren();
         container.appendChild(svgElement);
         gui.reset();
-        // setStrokeColor();
-        // setBackgroundColor();
-        // document.body.style.backgroundColor = "#fff";
-
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
         makeEvents();
