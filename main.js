@@ -27,7 +27,7 @@ const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
 // Buttons
 gui.add( set, 'scale', 1, 20, 0.1 ).name( 'Scale' ).onFinishChange( makeEvents );
 gui.add( set, 'paint' ).name( 'Paint' );
-gui.add( set, 'download' ).name( 'Download' );
+// gui.add( set, 'download' ).name( 'Download' );
 
 // TODO: Optimize it
 // Set preview paper color
