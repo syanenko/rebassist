@@ -1,25 +1,8 @@
-// TODO
-// 1. Remove unwanted lines (!)
+// TODO:
+// 1. Send to WS
 //
-// 2. Set color (as option)
-//  <path
-//  d="M 36.1204 64.8209 L 39.5406 ..."
-//  fill="none"
-//  stroke="#116600"
-//  stroke-width="2"
-//  id="path4" />
-//
-// "event_type": "SET_BRUSH_COLOR",
-// "color": { "r": 255, "g": 0, "b": 0 },
-//
-// 3. Use stroke width
-//
-// 4. Embed https://amphiluke.github.io/lindsvg/
-//
-// 5. Embroidery (!)
-//
-import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
-import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
+import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
+import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
 const PORT = "8265";
