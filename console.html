@@ -16,23 +16,27 @@
     <link type="text/css" rel="stylesheet" href="console.css">
   </head>
   <body>
+
+  <dialog id="about" style="width:420px;">
+    <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle Console</div><br>
+    Edit <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events send them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
+      <form method="dialog" style="text-align:center">
+      <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
+      </form>
+  </dialog>
+
+  <script type="module" src="console.js"></script>
+
   <div>
-    <img id="logo" src="./data/images/rebelle_logo.png" alt="Logo" height="45" onclick="window.location.reload()">
+    <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
     <div id="text" onclick="window.location.reload()" style="color: white">Rebelle Console</div>
-<!--
-    <img id="help" class="control" src="./data/images/help_36x36.png" style="opacity: 0.65" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
--->
+    <img id="upload" class="control" src="./data/images/upload_48x48.png" style="right:60px" alt="Upload" onclick="window.paint()">
+    <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true;  about.showModal(); about.inert=false;">
   </div>
   <hr>
   
-  <script type="module" src="console.js"></script>
-<!--
-  <img id='console_result' alt="Image">
--->
-  <form id="form_upload_code" encType="multipart/form-data" style="text-align:left">
-    <textarea id="code" name="code" wrap="off"></textarea>
-  </form>
-
+  <textarea id="code" name="code" wrap="off"></textarea>
   <!-- CodeMirror editor -->
   <script>
     var editor = CodeMirror.fromTextArea(code, {
@@ -46,90 +50,16 @@
     // Send by 'Ctrl-S'
     document.addEventListener("keydown", function keydown (event) {
         if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey && event.key === "s") {
-            event.preventDefault()
             console.log('Ctrl-S');
+            event.preventDefault()
+            window.setStatus("Sending events");
+            window.paint();
         }
     })
   </script>
 
   <!-- Menu -->
   <div class="buttons">
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
-    <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
-    <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
     <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
     <button id="2" onclick="loadScript('MotioIO.json')",   data-title="MotioIO">MotioIO - saved script</button>
     <button id="1" onclick="loadScript('quickstart.json')" data-title="Quick start">Quick start - test basic functions</button>
@@ -165,6 +95,7 @@
 
   </script>
 
+  <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Status: Ready</div>
   <script>
     window.onload = function() {
       const params = new URLSearchParams(window.location.search);

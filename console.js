@@ -143,10 +143,18 @@ window.loadSVG = loadSVG;
 // await sleep(1);
 //
 // Paint
+let status = document.getElementById("status");
+function setStatus(s) {
+    s = 'Status: ' + s;
+    status.innerHTML = s;
+    console.log(s);
+}
+window.setStatus = setStatus;
+
 function paint() {
   const socket = new WebSocket('ws://localhost:' + PORT);
   socket.onopen = (event) => {
-    console.log('Connected to server');
+    setStatus('Connected to server') 
     for(let i=0; i<events.length; i++){
       console.log(events[i]); // DEBUG
       socket.send(events[i]);
@@ -155,18 +163,19 @@ function paint() {
   };
 
   socket.onmessage = (event) => {
-    console.log('Message from server:', event.data);
+    setStatus(`Message from server: ${event.data}`);
   };
 
   socket.onerror = (error) => {
-    console.error('WebSocket Error:', error);
+    setStatus(`WebSocket Error: ${error}`);
   };
 
   socket.onclose = (event) => {
     if (event.wasClean) {
-      console.log(`Closed cleanly, code=${event.code} reason=${event.reason}`);
+      setStatus(`Connection closed cleanly, code=${event.code}, reason=${event.reason}`);
     } else {
-      console.log('Connection died');
+      setStatus(`Connection died, code=${event.code}`);
     }
   };
 }
+window.paint = paint;
