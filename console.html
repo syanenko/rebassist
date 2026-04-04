@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+    //
+    // Work mode
+    // 
+    //var mode = 'normal';
+    //var res = '1024x1024';
+    //var res = '4096x2048';
+    //var res = '1024x512';
+    //var res = '1280x720';
+    //var res = '4096x2048';
+    // var res = '640x480';
+    var res = '512x512';
+    </script>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-90TCG4QQ5H"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-90TCG4QQ5H');
+    </script>
+
+    <title>POV-Console</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="timestamp">
+
+    <!-- Codemirror -->
+    <script src="node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="node_modules/codemirror/mode/clike/clike.js"></script>
+    <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="node_modules/codemirror/theme/abcdef.css">
+
+    <link type="text/css" rel="stylesheet" href="index.css">
+  </head>
+  <body>
+  
+  <img id='console_result' alt="Image">
+  <form id="form_upload_code" encType="multipart/form-data" style="text-align:left">
+    <textarea id="code" name="code" wrap="off"></textarea>
+  </form>
+
+  <!-- CodeMirror editor -->
+  <script>
+    var editor = CodeMirror.fromTextArea(code, {
+      lineNumbers: true,
+      theme: 'abcdef',
+      mode:  "clike"
+    });
+  </script>
+ 
+  <script>
+    var form = document.getElementById('form_upload_code');
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      var formData = new FormData();
+      const code = document.getElementById("code")
+      const blob = new Blob([code.value], { type: "text/plain" });
+      formData.append("scene", blob, 'scene.pov');
+
+      var xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://povlab.yesbird.online/render.php?res=' + res);
+     /*
+      if( mode == 'site') {
+        xhr.open('POST', 'https://povlab.yesbird.online/render.php?res=1024'); // Site image: 1024x1024
+      } else if(mode == 'xr_preview') {
+        xhr.open('POST', 'https://povlab.yesbird.online/render.php?res=512'); // XR preview: 1024x512
+      } else if(mode == 'xr') {
+        xhr.open('POST', 'https://povlab.yesbird.online/render.php?res=2048'); // XR: 4096x2048
+      } else {
+        xhr.open('POST', 'https://povlab.yesbird.online/render.php'); // Default: 1280x720
+      }*/
+
+      xhr.responseType = 'json';
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          let result = document.getElementById("console_result");
+          result.src = "https://povlab.yesbird.online/" + xhr.response;
+          console.log(xhr.response);
+          result.style.visibility = 'visible';
+        } else {
+          console.error(xhr.response);
+        }
+      }
+      xhr.send(formData);
+    });
+
+    // Send by 'Ctrl-S'
+    document.addEventListener("keydown", function keydown (event) {
+        if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey && event.key === "s") {
+            event.preventDefault()
+            document.getElementById("form_upload_code").requestSubmit();
+        }
+    })
+
+    document.getElementById("form_upload_code").requestSubmit();
+  </script>
+
+  <!-- Video -->
+  <video id="video" playsinline></video>
+  <input id="video_button" type="image" src="./data/icons/outline_videocam_white_48dp.png" style='z-index:2'/>
+  <script>
+    vb = document.getElementById("video_button");
+    vb.onmouseenter = function () {
+      vb.style.opacity = '1.0';
+    };
+
+    vb.onmouseleave = function () {
+      vb.style.opacity = '0.5';
+    };
+  </script>
+ 
+  <input id="gallery_button" type="image" src="./data/icons/grid_view_FILL0_wght500_GRAD0_opsz48.png", style='z-index:2'/>
+  <script>
+    gb = document.getElementById("gallery_button");
+    gb.onmouseenter = function () {
+      gb.style.opacity = '1.0';
+    };
+
+    gb.onmouseleave = function () {
+      gb.style.opacity = '0.5';
+    };
+
+    gb.onclick = function () {
+      window.location = "https://xr.povlab.yesbird.online";
+    };
+  </script>
+
+  <input id="upload_button" type="image" src="/data/images/help_36x36.png", style='z-index:2'/>
+  <script>
+    ub = document.getElementById("upload_button");
+    ub.onmouseenter = function () {
+      ub.style.opacity = '1.0';
+    };
+
+    ub.onmouseleave = function () {
+      ub.style.opacity = '0.5';
+    };
+    
+    ub.onclick = function() {
+        document.getElementById("form_upload_code").requestSubmit();
+    }
+  </script>
+
+  <script type="module" src="index.js"></script>
+
+  <!-- Menu -->
+  <div class="scenes" style="bottom:18px">
+    <button onclick="loadScript('quickstart.json')"          data-title="Quick start">Quick start</button>
+    <button onclick="loadScript('MotioIO.json')",            data-title="MotioIO">MotioIO</button>
+    <button onclick="loadScript('surface_2.pov')",           data-title="Isosurface (6 sec)">ISO 2</button>
+    <button onclick="loadScript('surface_3.pov')",           data-title="Isosurface stereo (2.7 sec)">ISO 3</button>
+    <button onclick="loadScript('surface_4.pov')",           data-title="Isosurface (3 sec)">ISO 4</button>
+    <button onclick="loadScript('surface_5.pov')",           data-title="Isosurface (5.4 sec)">ISO 5</button>
+    <button onclick="loadScript('surface_6.pov')",           data-title="Isosurface (10 sec)">ISO 6</button>
+    <button onclick="loadScript('shell_1.pov')",             data-title="Isosurface (3.7 sec)">SHELL 1</button>
+    <button onclick="loadScript('csg.pov')",                 data-title="CSG (2 sec)">CSG</button>
+    <button onclick="loadScript('1TQN/1TQN_POV_scene.pov')", data-title="Molecular structure (6 sec)">MOL</button>
+    <button onclick="loadScript('radiosity_1.pov')",         data-title="Radiosity sphere (20 sec)">RAD</button>
+    <button onclick="loadScript('materials/samples_default.pov')", data-title="Materials (4.6 sec)">MAT</button>
+    <button onclick="loadScript('vol_1.pov')",               data-title="Volume (1.6 sec)">VOL 1</button>
+    <button onclick="loadScript('vol_2.pov')",               data-title="Volume (2.3 sec)">VOL 2</button>
+    <button onclick="loadScript('vol_3_slice.pov')",         data-title="Volume (2 sec)">VOL 3</button>
+    <button onclick="loadScript('diso_1.pov')",              data-title="Density as isosurface (2 sec)">VOL ISO</button>    
+    <button onclick="loadScript('dicom.pov')",               data-title="Volume (6.5 sec)">DICOM</button>
+    <button onclick="loadScript('dicom_iso.pov')",           data-title="Volume (17 sec)">DICOM ISO</button><br><br>
+  </div>
+
+  <div class="scenes" style="bottom:2px">
+    <button onclick="loadScript('gem_1.pov')",               data-title="Gem previre (11 sec)">GEM 1</button>
+    <button onclick="loadScript('gem_2.pov')",               data-title="Gem previre (11 sec)">GEM 2</button>
+    <button onclick="loadScript('gem_3.pov')",               data-title="Gem previre (11 sec)">GEM 3</button>
+    <button onclick="loadScript('art_1.pov')",               data-title="Artwork 1 (3 sec)">ART 1</button>
+    <button onclick="loadScript('art_2.pov')",               data-title="Artwork 2 (7.8 sec)">ART 2</button>
+    <button onclick="loadScript('art_3.pov')",               data-title="Artwork 3 (7.8 sec)">ART 3</button>
+    <button onclick="loadScript('art_4.pov')",               data-title="Artwork 4 (20 sec)">ART 4</button>
+    <button onclick="loadScript('jr_1.pov')",                data-title="JR Artwork 1 (1m 6sec)">JR 1</button>
+  </div>
+
+  <script>
+    function loadScript(url) {
+    url = "/data/json/" + url;
+    const options = {
+      headers: {
+      }
+    };
+
+    fetch(url, options)
+      .then(function(response) {
+        response.text().then(function(text) {
+          editor.getDoc().setValue(text);
+          code.scrollTo(0, 0);
+          document.getElementById("form_upload_code").requestSubmit();
+        });
+      });
+    }
+    
+    // Load default scene
+/*
+    if( mode == 'normal') {
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const scene = urlParams.get('scene')
+      if(scene != undefined) {
+        loadScript(scene) }
+      else {
+        loadScript('balls.pov') }
+    }
+*/
+  </script>
+
+  </body>
+</html>

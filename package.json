@@ -7,6 +7,7 @@
     "lil-gui": "^0.19.2",
     "path-data-parser": "^0.1.0",
     "svg-parser": "^2.0.4",
+    "codemirror": "^5.65.16",
     "servez": "^2.4.0"
   },
   "scripts": {
