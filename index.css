@@ -254,3 +254,32 @@ progress {color: white;}
   border: 1px solid #ddd;
   z-index:2
 }
+
+.scenes
+{
+  position: absolute;
+  top: 120px;
+  left:  10px;
+  padding: 10px;
+  box-sizing: border-box;
+  text-align: center;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  z-index: 2;
+}
+
+button {
+  height: 35px;
+  font-size: 15px;
+  background-color: #333;
+  border-radius: 6px;
+  /*
+    color: #ffac13;
+    color: #0f0;
+  */
+  color: #ddd;
+	cursor: pointer;
+}

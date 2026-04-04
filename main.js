@@ -37,7 +37,7 @@ const set = {
   trans_x: 0,
   trans_y: 0,
   paint()    {paint()},
-  download() {download()}
+  save() {save()}
 };
 
 const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
@@ -49,7 +49,7 @@ gui.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( o
 gui.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
 gui.add( set, 'paint' ).name( 'Paint' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
-// gui.add( set, 'download' ).name( 'Download' );
+gui.add( set, 'save' ).name( 'Save' );
 
 // On changing the scale
 function onSetChange() {
@@ -103,13 +103,13 @@ function makeEvents() {
 // Make JSON
 function makeContent() {
   // Make content
-  content = '{"frames":[\n{"events":[\n';
+  content = '[\n';
   const len =  events.length-1;
   for(let i=0; i<len; i++) {
     content += (events[i] + ',\n');
   };
   content += (events[len] + '\n');
-  content += ']}\n]}\n';
+  content += ']';
 }
 
 // Upload
@@ -123,7 +123,7 @@ const link = document.createElement( 'a' );
 link.style.display = 'none';
 document.body.appendChild( link );
 
-function download() {
+function save() {
   makeContent();
   let filename = "MotioIO.json"
   const blob = new Blob( [ content ], { type: 'text/plain' } );
