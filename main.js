@@ -1,4 +1,5 @@
 // TODO
+// 0. Remove duplicated enents
 // 1. Remove unwanted lines (!)
 //
 // 2. Set color (as option)

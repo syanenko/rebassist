@@ -1,5 +1,5 @@
 // TODO:
-// 1. Send to WS
+// 1. Sleep event (to prevent crash)
 //
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
