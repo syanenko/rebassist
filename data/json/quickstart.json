@@ -15,10 +15,10 @@
   {
     "event_type": "SET_BRUSH",
     "tool": "WATERCOLOR",
-    "preset": "Gouache/Gouache Filbert",
-    "size" : 40,
+    "preset": "Watercolor/Liner",
+    "size" : 10,
     "water": 55,
-    "opacity": 10,
+    "opacity": 100,
     "paint_type": "PAINT",
     "glaze_mode": "OPAQUE",
     "color": { "r": 64, "g": 127, "b": 200 }

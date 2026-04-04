@@ -145,21 +145,25 @@ window.loadSVG = loadSVG;
 // Paint
 let status = document.getElementById("status");
 function setStatus(s) {
-    s = 'Status: ' + s;
     status.innerHTML = s;
     console.log(s);
 }
 window.setStatus = setStatus;
 
 function paint() {
+  events.length = 0; // Empty events
+  events = JSON.parse(editor.getValue());
+
   const socket = new WebSocket('ws://localhost:' + PORT);
   socket.onopen = (event) => {
     setStatus('Connected to server') 
+    let e;
     for(let i=0; i<events.length; i++){
-      console.log(events[i]); // DEBUG
-      socket.send(events[i]);
+      e = JSON.stringify(events[i]);
+      // console.log(e); // DEBUG
+      socket.send(e);
     }
-    socket.close(1000, "Work complete");
+    socket.close(1000, "Sending complete");
   };
 
   socket.onmessage = (event) => {
@@ -172,7 +176,7 @@ function paint() {
 
   socket.onclose = (event) => {
     if (event.wasClean) {
-      setStatus(`Connection closed cleanly, code=${event.code}, reason=${event.reason}`);
+      setStatus(`Connection closed cleanly, code: ${event.code}, reason: ${event.reason}`);
     } else {
       setStatus(`Connection died, code=${event.code}`);
     }
