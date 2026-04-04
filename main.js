@@ -1,6 +1,22 @@
 // TODO
-// 1. Remove unwanted lines
-// 2. Pre-defined slots (sketches)
+// 1. Remove unwanted lines (!)
+//
+// 2. Set color (as option)
+//  <path
+//  d="M 36.1204 64.8209 L 39.5406 ..."
+//  fill="none"
+//  stroke="#116600"
+//  stroke-width="2"
+//  id="path4" />
+//
+// "event_type": "SET_BRUSH_COLOR",
+// "color": { "r": 255, "g": 0, "b": 0 },
+//
+// 3. Use stroke width
+//
+// 4. Embed https://amphiluke.github.io/lindsvg/
+//
+// 5. Embroidery (!)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -17,8 +33,10 @@ let content;
 const set = {
   paper_color: { r: 255, g: 255, b: 255},
   brush_color: { r: 0, g: 0, b: 0},
-  scale: 5,
-  paint()     {paint()},
+  scale: 1,
+  trans_x: 0,
+  trans_y: 0,
+  paint()    {paint()},
   download() {download()}
 };
 
@@ -26,14 +44,17 @@ const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
 // gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
 
 // Buttons
-gui.add( set, 'scale', 1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onScaleChange );
+gui.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
+gui.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
+gui.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
 gui.add( set, 'paint' ).name( 'Paint' );
+gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 // gui.add( set, 'download' ).name( 'Download' );
 
 // On changing the scale
-function onScaleChange() {
+function onSetChange() {
   makeEvents();
-  paint();
+  // paint();
 }
 
 // Traverse object recursively
@@ -51,13 +72,13 @@ function traverse(obj) {
             if(s.key == 'M') {
               last_x = x;
               last_y = y;
-              x = Math.round(s.data[0] * set.scale);
-              y = Math.round(s.data[1] * set.scale);
+              x = Math.round(s.data[0] * set.scale) + set.trans_x;
+              y = Math.round(s.data[1] * set.scale) + set.trans_y;
               events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
               events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
             } else if(s.key == 'L') {
-              x = Math.round(s.data[0] * set.scale);
-              y = Math.round(s.data[1] * set.scale);
+              x = Math.round(s.data[0] * set.scale) +  set.trans_x;
+              y = Math.round(s.data[1] * set.scale) +  set.trans_y;
               events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
             }
           });
@@ -144,7 +165,7 @@ function paint() {
   socket.onopen = (event) => {
     console.log('Connected to server');
     for(let i=0; i<events.length; i++){
-      // console.log(events[i]);
+      console.log(events[i]); // DEBUG
       socket.send(events[i]);
     }
     socket.close(1000, "Work complete");
