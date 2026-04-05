@@ -1,6 +1,8 @@
 // TODO
 //
 // 1. Icons
+// 2.  JSON validation (alert)
+// 3. Validate JSON before save (?)
 //
 const PORT = "8265";
 const SLEEP_TIME = 2000;
@@ -45,7 +47,8 @@ function paint() {
       socket.send(e);
       if(e.includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
          e.includes("SET_PAPER") ||
-         e.includes("SET_BRUSH")) {
+         e.includes("SET_BRUSH") ||
+         e.includes("SET_BRUSH_COLOR")) {
          await sleep(SLEEP_TIME);
       }
     }

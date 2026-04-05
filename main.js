@@ -59,7 +59,8 @@ const set = {
   spacing: 50,
   opacity_multiplier: 2,
 
-  // Common
+  // Sketch
+  sketch_send_colors: true,
   scale: 1,
   trans_x: 0,
   trans_y: 0,
@@ -125,9 +126,10 @@ brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
 // Sketch
 const sketch = gui.addFolder( 'Sketch' );
 sketch.domElement.querySelector('.title').style.color = colorTitle;
-sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
-sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
-sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
+sketch.add( set, 'sketch_send_colors').name( 'Send colors' );
+sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
+sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
+sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
 
 // Controls
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
@@ -167,11 +169,6 @@ function setOpacity() {
   svg.setAttribute("opacity", set.brush_opacity / 255);
 }
 
-// On changing the scale
-function onSetChange() {
-  makeEvents();
-}
-
 // Translate color from HEX/Name to RGBA
 function toRGBA(name) {
     var canvas = document.createElement('canvas');
@@ -190,13 +187,12 @@ function traverse(obj) {
       if (typeof value === 'object' && value !== null) {
         traverse(value);
       } else {
-        if((value=='path') ){ // Color
-          const stroke = obj.properties.stroke;
+        if((value=='path') && set.sketch_send_colorss){
+          const stroke = obj.properties.stroke; // Color
           color = toRGBA(stroke);
           events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
-        } else
-        if((key=='d') ){ // Path
-          const segments = parsePath(value);
+        } else if((key=='d') ){
+          const segments = parsePath(value); // Path
           segments.forEach(function(s, i) {
             // console.log(`${i}: ${s.key} ${s.data}`); // DEBUG
             if(s.key == 'M') {
@@ -333,11 +329,12 @@ async function paint() {
   socket.onopen = async (event) => {
     console.log('Connected to server');
     for(let i=0; i<events.length; i++){
-      console.log(events[i]); // DEBUG
+      // console.log(events[i]); // DEBUG
       socket.send(events[i]);
       if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
          events[i].includes("SET_PAPER")   ||
-         events[i].includes("SET_BRUSH")) {
+         events[i].includes("SET_BRUSH")   ||
+         events[i].includes("SET_BRUSH_COLOR")) {
          await sleep(SLEEP_TIME);
       }
     }
