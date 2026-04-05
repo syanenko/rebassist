@@ -187,7 +187,7 @@ function traverse(obj) {
       if (typeof value === 'object' && value !== null) {
         traverse(value);
       } else {
-        if((value=='path') && set.sketch_send_colorss){
+        if((value=='path') && set.sketch_send_colors){
           const stroke = obj.properties.stroke; // Color
           color = toRGBA(stroke);
           events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
