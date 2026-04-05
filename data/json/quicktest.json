@@ -7,20 +7,12 @@
   "dpi": 200
 },
 {
-  "event_type": "SLEEP",
-  "time": 2000
-},
-{
   "event_type": "SET_PAPER",
   "preset": "Default/RH00 Aquarelle",
   "color": { "r": 255, "g": 255, "b": 240 },
   "deckled_edges": true,
   "paper_scale":  50,
   "visible": true
-},
-{
-  "event_type": "SLEEP",
-    "time": 2000
 },
 {
   "event_type": "SET_BRUSH",
@@ -32,10 +24,6 @@
   "paint_type": "PAINT",
   "glaze_mode": "OPAQUE",
   "color": { "r": 64, "g": 127, "b": 20 }
-},
-{
-  "event_type": "SLEEP",
-    "time": 2000
 },
 { "event_type": "POINTER_PRESS"  , "pos": { "x": 100, "y": 100 } },
 { "event_type": "POINTER_MOVE"   , "pos": { "x": 200, "y": 200 } },
