@@ -1,4 +1,9 @@
+// TODO
+//
+// 1. Icons
+//
 const PORT = "8265";
+const SLEEP_TIME = 2000;
 let events = [];
 
 // Save
@@ -35,12 +40,13 @@ function paint() {
     setStatus('Connected to server') 
     let e;
     for(let i=0; i<events.length; i++) {
-      if(events[i].event_type == 'SLEEP') {
-        await sleep(events[i].time);
-        console.log(`Sleeping: ${events[i].time}`); // DEBUG
-      } else {
-        e = JSON.stringify(events[i]);
-        socket.send(e);
+      console.log(events[i]); // DEBUG
+      e = JSON.stringify(events[i]);
+      socket.send(e);
+      if(e.includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
+         events[i].includes("SET_PAPER") ||
+         events[i].includes("SET_BRUSH")) {
+         await sleep(SLEEP_TIME);
       }
     }
     socket.close(1000, "Sending complete");
