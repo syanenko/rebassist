@@ -1,10 +1,11 @@
 // TODO
 //
-// 0. Remove duplicated events (check)
-// 1. Remove unwanted lines (check)
-// 2. Position sketches at the center on load 
-// 3. Use stroke width (?)
-// 4. Embed https://amphiluke.github.io/lindsvg/
+// 1. Position sketches at the center on load 
+// 2. Artworks presets
+// 3. Remove duplicated events (check)
+// 4. Remove unwanted lines (check)
+// 5. Use stroke width (?)
+// 6. Embed https://amphiluke.github.io/lindsvg/
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
