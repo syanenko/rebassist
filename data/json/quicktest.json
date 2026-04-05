@@ -35,7 +35,7 @@
 },
 {
   "event_type": "SLEEP",
-    "time": 20
+    "time": 2000
 },
 { "event_type": "POINTER_PRESS"  , "pos": { "x": 100, "y": 100 } },
 { "event_type": "POINTER_MOVE"   , "pos": { "x": 200, "y": 200 } },
