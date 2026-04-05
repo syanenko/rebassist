@@ -24,6 +24,7 @@ import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from './node_modules/path-data-parser/lib/index.js';
 
 const PORT = "8265";
+const SLEEP_TIME = 2000;
 const colorTitle = "hsl(205 61% 65%)";
 
 let svg;
@@ -47,8 +48,8 @@ const set = {
 // GUI
 const set = {
   // Artwork
-  width: 800,
-  height: 800,
+  width: 1024,
+  height: 1024,
   units: "px",
   dpi: 200,
 
@@ -230,13 +231,44 @@ function traverse(obj) {
 // Make events
 function makeEvents() {
   events.length = 0; // Empty events
-  const parsed = parse(svg.outerHTML);
+  events.push(`{
+  "event_type": "NEW_ARTWORK",
+  "width": ${set.width},
+  "height": ${set.height},
+  "units": "${set.units}", 
+  "dpi": ${set.dpi}
+}`);
 
+  events.push(`{
+  "event_type": "SET_BRUSH",
+  "tool": "${set.brush_tool}",
+  "preset": "${set.brush_preset}",
+  "size" : ${set.brush_size},
+  "water": ${set.brush_water},
+  "opacity": ${set.brush_opacity},
+  "pressure": ${set.brush_pressure},
+  "brush_dirty_brush": ${set.brush_dirty_brush},
+  "smudge_only_wet": ${set.smudge_only_wet},
+  "keep_layer_wet": ${set.keep_layer_wet},
+  "keep_water": ${set.keep_water},
+  "only_water": ${set.only_water},
+  "paint_type": "${set.brush_paint_type}",
+  "glaze_mode": "${set.brush_glaze_mode}",
+  "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} },
+  "multi_color_brush": ${set.multi_color_brush},
+  "rotate_multi_color_brush": ${set.rotate_multi_color_brush},
+  "smudge": ${set.smudge},
+  "spacing": ${set.spacing},
+  "opacity_multiplier": ${set.opacity_multiplier}
+}`);
+
+  const parsed = parse(svg.outerHTML);
   // DEBUG
   //events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": 0, "y": -1 }}`);
   //events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": 0, "y": 0 }}`);
   traverse(parsed);
   events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
+  // console.log(events); // DEBUG
 }
 
 // Make JSON
@@ -287,27 +319,30 @@ function loadSVG(file) {
         container.appendChild(svgElement);
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
-        makeEvents();
+        // makeEvents();
       }
     });
 }
 window.loadSVG = loadSVG;
 
-//
-// Websocket
-// const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-// await sleep(1);
-//
+// Sleep for websocket
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
 // Paint
-function paint() {
+async function paint() {
+  makeEvents();
   const socket = new WebSocket('ws://localhost:' + PORT);
-  socket.onopen = (event) => {
+  socket.onopen = async (event) => {
     console.log('Connected to server');
     for(let i=0; i<events.length; i++){
       console.log(events[i]); // DEBUG
       socket.send(events[i]);
+      if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
+         events[i].includes("SET_BRUSH") ) {
+         await sleep(SLEEP_TIME);
+      }
     }
-    socket.close(1000, "Work complete");
+    socket.close(1000, "Sending complete");
   };
 
   socket.onmessage = (event) => {
