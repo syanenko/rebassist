@@ -1,6 +1,5 @@
 // TODO
 //
-// -- GUI: Move controls up
 // -- GUI switches for NEW_ARTWORK, SET_PAPER, SET_BRUSH  
 // -- Position sketches at the center on load
 //
@@ -40,12 +39,14 @@ let content;
 // GUI
 const set = {
   // Artwork
+  artwork_send: true,
   width: 1024,
   height: 1024,
   units: "px",
   dpi: 200,
 
   // Paper
+  paper_send: true,
   paper_preset: "Default/RH00 Aquarelle",
   paper_color: { r: 255, g: 255, b: 255},
   paper_deckled_edges: true,
@@ -53,6 +54,7 @@ const set = {
   paper_visible: true,
 
   // Brush
+  brush_send: true,
   brush_tool: "WATERCOLOR",
   brush_preset: "Watercolor/Liner",
   brush_size : 4,
@@ -90,8 +92,9 @@ gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
 artwork.domElement.querySelector('.title').style.color = colorTitle;
-const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
-const guiHeight = artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+artwork.add( set, 'artwork_send' ).name( 'Send' );
+artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
 
 //  Only 'px' supported, need to check scale in Inkscape 
 artwork.add( set, 'units', [ 'px' ] ).name( 'Units' ); // [ 'px', 'cm', 'in' ]
@@ -100,6 +103,7 @@ artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400',
 // Paper
 const paper = gui.addFolder( 'Paper' );
 paper.domElement.querySelector('.title').style.color = colorTitle;
+paper.add( set, 'paper_send' ).name( 'Send' );
 paper.add( set, 'paper_preset', [ 'Default/EX00 White Simple', 'Default/CA01 Canvas Artist', 'Default/HP01 Hot Pressed', 'Default/RH00 Aquarelle', 'Default/WK01 Washi' ] ).name( 'Preset' );
 const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
 pc.domElement.querySelector('input[type="text"]').style.display = 'none';
@@ -110,6 +114,7 @@ paper.add( set, 'paper_visible' ).name( 'Visible' );
 // Brush
 const brush = gui.addFolder( 'Brush' );
 brush.domElement.querySelector('.title').style.color = colorTitle;
+brush.add( set, 'brush_send' ).name( 'Send' );
 brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
 brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Watercolor/Watercolor/Fan', 'Watercolor/Filbert Dry',
                                   'Watercolor/Flat 2', 'Watercolor/Flat Dry', 'Watercolor/Flat', 'Watercolor/Liner 2',
@@ -189,7 +194,6 @@ function setOpacity() {
 // On changing the scale
 function onSetChange() {
   makeEvents();
-  // paint();
 }
 
 // Traverse object recursively
@@ -226,6 +230,8 @@ function traverse(obj) {
 // Make events
 function makeEvents() {
   events.length = 0; // Empty events
+
+  if(set.artwork_send) {
   events.push(`{
   "event_type": "NEW_ARTWORK",
   "width": ${set.width},
@@ -233,7 +239,9 @@ function makeEvents() {
   "units": "${set.units}", 
   "dpi": ${set.dpi}
 }`);
+  }
 
+  if(set.paper_send) {
   events.push(`{
   "event_type": "SET_PAPER",
   "preset": "${set.paper_preset}",
@@ -242,7 +250,9 @@ function makeEvents() {
   "paper_scale":  ${set.paper_scale},
   "visible": ${set.paper_visible}
 }`);
+  }
 
+  if(set.brush_send) {
   events.push(`{
   "event_type": "SET_BRUSH",
   "tool": "${set.brush_tool}",
@@ -265,6 +275,7 @@ function makeEvents() {
   "spacing": ${set.spacing},
   "opacity_multiplier": ${set.opacity_multiplier}
 }`);
+  }
 
   const parsed = parse(svg.outerHTML);
   // DEBUG
@@ -287,18 +298,13 @@ function makeContent() {
   content += ']';
 }
 
-// Upload
-function upload() {
-  let form = document.getElementById("form_upload");
-  form.style.visibility == "visible" ? form.style.visibility = 'hidden': form.style.visibility = "visible";
-}
-
 // Download
 const link = document.createElement( 'a' );
 link.style.display = 'none';
 document.body.appendChild( link );
 
 function save() {
+  makeEvents();
   makeContent();
   let filename = "events.json"
   const blob = new Blob( [ content ], { type: 'text/plain' } );
@@ -323,7 +329,6 @@ function loadSVG(file) {
         container.appendChild(svgElement);
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
-        makeEvents();
       }
     });
 }
