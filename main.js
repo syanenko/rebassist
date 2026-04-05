@@ -1,6 +1,9 @@
 // TODO
+//
+// -- GUI: Move controls up
+// -- Position sketches at center on load
 // 0. Remove duplicated enents
-// 1. Remove unwanted lines (?)
+// 1. Remove unwanted lines (check)
 //
 // 2. Set color (as option)
 //  <path
