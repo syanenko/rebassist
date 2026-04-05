@@ -1,6 +1,6 @@
 // TODO
 // 0. Remove duplicated enents
-// 1. Remove unwanted lines (!)
+// 1. Remove unwanted lines (?)
 //
 // 2. Set color (as option)
 //  <path
@@ -17,7 +17,7 @@
 //
 // 4. Embed https://amphiluke.github.io/lindsvg/
 //
-// 5. Embroidery (!)
+// 5. Embroidery (?)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -33,19 +33,6 @@ let events = [];
 let content;
 
 // GUI
-/*
-const set = {
-  paper_color: { r: 255, g: 255, b: 255},
-  brush_color: { r: 0, g: 0, b: 0},
-  scale: 1,
-  trans_x: 0,
-  trans_y: 0,
-  paint()    {paint()},
-  save() {save()}
-};
-*/
-
-// GUI
 const set = {
   // Artwork
   width: 1024,
@@ -54,7 +41,7 @@ const set = {
   dpi: 200,
 
   // Paper
-  paper_preset: "EX00 White Simple",
+  paper_preset: "Default/RH00 Aquarelle",
   paper_color: { r: 255, g: 255, b: 255},
   paper_deckled_edges: true,
   paper_scale: 100,
@@ -115,7 +102,7 @@ artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400',
 // Paper
 const paper = gui.addFolder( 'Paper' );
 paper.domElement.querySelector('.title').style.color = colorTitle;
-paper.add( set, 'paper_preset', [ 'EX00 White Simple', 'CA01 Canvas Artist', 'HP01 Hot Pressed', 'RH00 Aquarelle', 'WK01 Washi' ] ).name( 'Preset' );
+paper.add( set, 'paper_preset', [ 'Default/EX00 White Simple', 'Default/CA01 Canvas Artist', 'Default/HP01 Hot Pressed', 'Default/RH00 Aquarelle', 'Default/WK01 Washi' ] ).name( 'Preset' );
 const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
 pc.domElement.querySelector('input[type="text"]').style.display = 'none';
 paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
@@ -240,6 +227,15 @@ function makeEvents() {
 }`);
 
   events.push(`{
+  "event_type": "SET_PAPER",
+  "preset": "${set.paper_preset}",
+  "color": { "r": ${set.paper_color.r}, "g": ${set.paper_color.g}, "b": ${set.paper_color.b} },
+  "deckled_edges": ${set.paper_deckled_edges},
+  "paper_scale":  ${set.paper_scale},
+  "visible": ${set.paper_visible}
+}`);
+
+  events.push(`{
   "event_type": "SET_BRUSH",
   "tool": "${set.brush_tool}",
   "preset": "${set.brush_preset}",
@@ -319,7 +315,7 @@ function loadSVG(file) {
         container.appendChild(svgElement);
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
-        // makeEvents();
+        makeEvents();
       }
     });
 }
@@ -338,7 +334,8 @@ async function paint() {
       console.log(events[i]); // DEBUG
       socket.send(events[i]);
       if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
-         events[i].includes("SET_BRUSH") ) {
+         events[i].includes("SET_PAPER")   ||
+         events[i].includes("SET_BRUSH")) {
          await sleep(SLEEP_TIME);
       }
     }
