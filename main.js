@@ -1,6 +1,5 @@
 // TODO
 //
-// -- GUI switches for NEW_ARTWORK, SET_PAPER, SET_BRUSH  
 // -- Position sketches at the center on load
 //
 // 0. Remove duplicated events
@@ -145,18 +144,11 @@ sketch.domElement.querySelector('.title').style.color = colorTitle;
 sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
 sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
 sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
-sketch.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Controls
+gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 gui.add( set, 'paint' ).name( 'Paint' );
 gui.add( set, 'save' ).name( 'Save' );
-
-// Controls
-/*
-gui.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
-gui.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
-gui.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
-*/
 
 // Set preview paper color 
 function setBackgroundColor() {
@@ -321,12 +313,10 @@ function loadSVG(file) {
     .then(svgText => {
       const parser = new DOMParser();
       const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-      const svgElement = svgDoc.querySelector('svg');
-
-      if (svgElement && container) {
-        svg = svgElement;
+      svg = svgDoc.querySelector('svg');
+      if (svg && container) {
         container.replaceChildren();
-        container.appendChild(svgElement);
+        container.appendChild(svg);
         svg.setAttribute("fill", "#fff");
         svg.setAttribute("stroke", "#000");
       }
