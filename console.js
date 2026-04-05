@@ -40,12 +40,12 @@ function paint() {
     setStatus('Connected to server') 
     let e;
     for(let i=0; i<events.length; i++) {
-      console.log(events[i]); // DEBUG
       e = JSON.stringify(events[i]);
+      console.log(e); // DEBUG
       socket.send(e);
       if(e.includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
-         events[i].includes("SET_PAPER") ||
-         events[i].includes("SET_BRUSH")) {
+         e.includes("SET_PAPER") ||
+         e.includes("SET_BRUSH")) {
          await sleep(SLEEP_TIME);
       }
     }
