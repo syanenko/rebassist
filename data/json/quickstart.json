@@ -13,6 +13,10 @@
     }
   },
   {
+    "event_type": "SLEEP",
+     "time": 1000
+  },
+  {
     "event_type": "SET_BRUSH",
     "tool": "WATERCOLOR",
     "preset": "Watercolor/Liner",
@@ -22,6 +26,10 @@
     "paint_type": "PAINT",
     "glaze_mode": "OPAQUE",
     "color": { "r": 64, "g": 127, "b": 200 }
+  },
+  {
+    "event_type": "SLEEP",
+     "time": 500
   },
   { "event_type": "POINTER_PRESS"  , "pos": { "x": 100, "y": 100 } },
   { "event_type": "POINTER_MOVE"   , "pos": { "x": 200, "y": 200 } },

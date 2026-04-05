@@ -139,8 +139,8 @@ window.loadSVG = loadSVG;
 
 //
 // Websocket
-// const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
-// await sleep(1);
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+// await sleep(200);
 //
 // Paint
 let status = document.getElementById("status");
@@ -151,17 +151,21 @@ function setStatus(s) {
 window.setStatus = setStatus;
 
 function paint() {
-  events.length = 0; // Empty events
+  events.length = 0;
   events = JSON.parse(editor.getValue());
 
   const socket = new WebSocket('ws://localhost:' + PORT);
-  socket.onopen = (event) => {
+  socket.onopen = async (event) => {
     setStatus('Connected to server') 
     let e;
-    for(let i=0; i<events.length; i++){
-      e = JSON.stringify(events[i]);
-      // console.log(e); // DEBUG
-      socket.send(e);
+    for(let i=0; i<events.length; i++) {
+      if(events[i].event_type == 'SLEEP') {
+        await sleep(events[i].time);
+        console.log(`Sleeping: ${events[i].time}`); // DEBUG
+      } else {
+        e = JSON.stringify(events[i]);
+        socket.send(e);
+      }
     }
     socket.close(1000, "Sending complete");
   };
