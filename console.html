@@ -59,14 +59,10 @@
 
   <!-- Menu -->
   <div class="buttons">
-    <button id="1" onclick="loadScript('new_artwork.json')", title="Create new artwork">New artwork</button>
-    <button id="2" onclick="loadScript('set_paper.json')",   title="Select paper">Set paper</button>
-    <button id="3" onclick="loadScript('set_brush.json')",   title="Select brush">Set brush</button>
-    <button id="4" onclick="loadScript('liana_1.json')",     title="Liana 1">Liana 1</button>
-    <button id="5" onclick="loadScript('liana_2.json')",     title="Liana 2">Liana 2</button>
-    <button id="6" onclick="loadScript('bull.json')",        title="Bull">Bull</button>
-    <button id="7" onclick="loadScript('quickstart.json')"   title="Quick start">Quick start</button>
-
+    <button id="1" onclick="loadScript('quicktest.json')" title="Quick test">Quick test</button>
+    <button id="2" onclick="loadScript('bull.json')",     title="Bull">Bull</button>
+    <button id="3" onclick="loadScript('liana_1.json')",  title="Liana 1">Liana 1</button>
+    <button id="4" onclick="loadScript('liana_2.json')",  title="Liana 2">Liana 2</button>
   </div>
 
   <script>
@@ -96,7 +92,7 @@
       if(id) {
         document.getElementById(id).click();
       } else {
-        document.getElementById("7").click();
+        document.getElementById("1").click();
       }
     };
   </script>

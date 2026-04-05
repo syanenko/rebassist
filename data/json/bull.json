@@ -4,13 +4,7 @@
   "width": 1024,
   "height": 1024,
   "units": "px",
-  "dpi": 200,
-  "paper": {
-      "preset": "Default/HM01 Handmade",
-      "color": { "r": 255, "g": 255, "b": 255 },
-      "deckled_edges": true,
-      "paper_scale":  100
-  }
+  "dpi": 200
 },
 {
   "event_type": "SLEEP",
@@ -18,15 +12,15 @@
 },
 {
   "event_type": "SET_PAPER",
-  "preset": "Default/RH00 Aquarelle",
-  "color": { "r": 255, "g": 255, "b": 255 },
+  "preset": "Default/CA01 Canvas Artist",
+  "color": { "r": 255, "g": 255, "b": 245 },
   "deckled_edges": true,
   "paper_scale":  50,
   "visible": true
 },
 {
   "event_type": "SLEEP",
-   "time": 1000
+   "time": 2000
 },
 {
   "event_type": "SET_BRUSH",

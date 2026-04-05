@@ -1,4 +1,9 @@
--- Layout and examples like in jewelry
+-- Papers
+CA01 Canvas Artist
+EX00 White Simple
+HP01 Hot Pressed
+RH00 Aquarelle
+WK01 Washi
 
 -- GUI
 https://lil-gui.georgealways.com/examples/kitchen-sink/
