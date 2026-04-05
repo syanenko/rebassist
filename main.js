@@ -1,26 +1,10 @@
 // TODO
 //
-// -- Position sketches at the center on load
-//
-// 0. Remove duplicated events
+// 0. Remove duplicated events (check)
 // 1. Remove unwanted lines (check)
-//
-// 2. Set color (as option)
-//  <path
-//  d="M 36.1204 64.8209 L 39.5406 ..."
-//  fill="none"
-//  stroke="#116600"
-//  stroke-width="2"
-//  id="path4" />
-//
-// "event_type": "SET_BRUSH_COLOR",
-// "color": { "r": 255, "g": 0, "b": 0 },
-//
-// 3. Use stroke width
-//
+// 2. Position sketches at the center on load 
+// 3. Use stroke width (?)
 // 4. Embed https://amphiluke.github.io/lindsvg/
-//
-// 5. Embroidery (?)
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -188,7 +172,17 @@ function onSetChange() {
   makeEvents();
 }
 
+// Translate color from HEX/Name to RGBA
+function toRGBA(name) {
+    var canvas = document.createElement('canvas');
+    var context = canvas.getContext('2d');
+    context.fillStyle = name;
+    context.fillRect(0,0,1,1);
+    return context.getImageData(0,0,1,1).data;
+}
+
 // Traverse object recursively
+let color;
 function traverse(obj) {
   for (const key in obj) {
     if (Object.prototype.hasOwnProperty.call(obj, key)) {
@@ -196,7 +190,12 @@ function traverse(obj) {
       if (typeof value === 'object' && value !== null) {
         traverse(value);
       } else {
-        if((key=='d') ){
+        if((value=='path') ){ // Color
+          const stroke = obj.properties.stroke;
+          color = toRGBA(stroke);
+          events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
+        } else
+        if((key=='d') ){ // Path
           const segments = parsePath(value);
           segments.forEach(function(s, i) {
             // console.log(`${i}: ${s.key} ${s.data}`); // DEBUG
