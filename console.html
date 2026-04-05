@@ -7,8 +7,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="expires" content="timestamp">
 
-    <!-- Codemirror -->
-    <script src="node_modules/codemirror/lib/codemirror.js"></script>
+    <!-- Codemirror -->    <script src="node_modules/codemirror/lib/codemirror.js"></script>
     <script src="node_modules/codemirror/mode/clike/clike.js"></script>
     <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="node_modules/codemirror/theme/abcdef.css">
@@ -31,13 +30,14 @@
   <div>
     <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
     <div id="text" onclick="window.location.reload()" style="color: white">Console</div>
+    <img id="download" class="control" src="./data/images/save_48x48.png" title="Send [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
     <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Send [Ctrl-S]" style="right:60px" alt="Upload" onclick="window.paint()">
     <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
   </div>
   <hr>
   
+  <!-- CodeMirror -->
   <textarea id="code" name="code" wrap="off"></textarea>
-  <!-- CodeMirror editor -->
   <script>
     window.editor = CodeMirror.fromTextArea(code, {
       lineNumbers: true,
@@ -49,22 +49,19 @@
   <script>
     // Send by 'Ctrl-S'
     document.addEventListener("keydown", function keydown (event) {
-        if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey && event.key === "s") {
+        if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
             event.preventDefault()
-            window.setStatus("Sending events");
-            window.paint();
+            if(event.key === "p") {
+              window.setStatus("Sending events");
+              window.paint();
+           } else if(event.key === "s") {
+              window.setStatus("Saving ...");
+              window.save();
+              window.setStatus("Saved");
+           }
         }
     })
   </script>
-
-  <!-- Menu -->
-  <div class="buttons">
-    <button id="1" onclick="loadScript('quicktest.json')" title="Quick test">Quick test</button>
-    <button id="2" onclick="loadScript('test.json')"      title="Test">Test</button>
-    <button id="3" onclick="loadScript('bull.json')",     title="Bull">Bull</button>
-    <button id="4" onclick="loadScript('liana_1.json')",  title="Liana 1">Liana 1</button>
-    <button id="5" onclick="loadScript('liana_2.json')",  title="Liana 2">Liana 2</button>
-  </div>
 
   <script>
     function loadScript(url) {
@@ -82,10 +79,19 @@
         });
       });
     }
-
   </script>
 
+  <!-- Buttons -->
+  <div class="buttons">
+    <button id="1" onclick="loadScript('quicktest.json')" title="Quick test">Quick test</button>
+    <button id="2" onclick="loadScript('longtest.json')"  title="Long test">Long test</button>
+    <button id="3" onclick="loadScript('bull.json')",     title="Bull">Bull</button>
+    <button id="4" onclick="loadScript('liana_1.json')",  title="Liana 1">Liana 1</button>
+    <button id="5" onclick="loadScript('liana_2.json')",  title="Liana 2">Liana 2</button>
+  </div>
+
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>
+
   <script>
     window.onload = function() {
       const params = new URLSearchParams(window.location.search);
