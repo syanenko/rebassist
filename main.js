@@ -1,8 +1,10 @@
 // TODO
 //
 // -- GUI: Move controls up
-// -- Position sketches at center on load
-// 0. Remove duplicated enents
+// -- GUI switches for NEW_ARTWORK, SET_PAPER, SET_BRUSH  
+// -- Position sketches at the center on load
+//
+// 0. Remove duplicated events
 // 1. Remove unwanted lines (check)
 //
 // 2. Set color (as option)
@@ -80,17 +82,10 @@ const set = {
   // Buttons
   paint() {paint()},
   save()  {save()}
-  // download() {download()},
-  // upload()   {upload()},
 };
 
 const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
 gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
-
-// Buttons
-// gui.add( set, 'upload' ).name( 'Upload' );
-// gui.add( set, 'download' ).name( 'Download' );
-// gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
@@ -139,14 +134,24 @@ brush.add( set, 'smudge').name( 'Smudge' );
 brush.add( set, 'spacing', 1, 100, 1 ).name( 'Spacing' );
 brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
 
+// Sketch
+const sketch = gui.addFolder( 'Sketch' );
+sketch.domElement.querySelector('.title').style.color = colorTitle;
+sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
+sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
+sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
+sketch.add( gui.reset(), 'reset' ).name( 'Reset' );
+
 // Controls
-gui.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
-gui.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
-gui.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
-gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 gui.add( set, 'paint' ).name( 'Paint' );
 gui.add( set, 'save' ).name( 'Save' );
 
+// Controls
+/*
+gui.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onFinishChange( onSetChange );
+gui.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' ).onFinishChange( onSetChange );
+gui.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' ).onFinishChange( onSetChange );
+*/
 
 // Set preview paper color 
 function setBackgroundColor() {
@@ -295,7 +300,7 @@ document.body.appendChild( link );
 
 function save() {
   makeContent();
-  let filename = "MotioIO.json"
+  let filename = "events.json"
   const blob = new Blob( [ content ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
   link.download = filename;
