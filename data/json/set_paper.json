@@ -1,8 +1,10 @@
+[
 {
-    "event_type": "SET_PAPER",
-    "preset": "Default/HM01 Handmade",
-    "color": { "r": 28, "g": 255, "b": 128 },
-    "deckled_edges": false,
-    "paper_scale":  150,
-    "visible": false
+  "event_type": "SET_PAPER",
+  "preset": "Default/RH00 Aquarelle",
+  "color": { "r": 200, "g": 250, "b": 250 },
+  "deckled_edges": false,
+  "paper_scale":  50,
+  "visible": true
 }
+]
