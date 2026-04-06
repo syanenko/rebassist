@@ -88,8 +88,8 @@
           import(dataUri)
             .then((module) => {
               console.log(module);
-              document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
-              //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
+              // document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
+              document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
           })
             .catch((err) => {
               console.error(err);
@@ -107,8 +107,8 @@
       import(dataUri)
         .then((module) => {
           console.log(module);
-          document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
-          //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
+          // document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
+          document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
       })
         .catch((err) => {
           console.error(err);
@@ -118,8 +118,8 @@
 
   <!-- Buttons -->
   <div class="buttons">
-    <button id="1" onclick="lsLoad('test_single.js')" title="Test single">Single test</button>
-    <button id="2" onclick="lsLoad('test_multy.js')"  title="Test multy">Multy test</button>
+    <button id="1" onclick="lsLoad('test_single.mjs')" title="Test single">Single test</button>
+    <button id="2" onclick="lsLoad('test_multy.mjs')"  title="Test multy">Multy test</button>
   </div>
 
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>
@@ -131,7 +131,7 @@
       if(id) {
         document.getElementById(id).click();
       } else {
-        document.getElementById("1").click();
+        document.getElementById("2").click();
       }
     };
   </script>

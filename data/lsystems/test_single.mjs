@@ -1,5 +1,6 @@
 // L-System parameters
-export let ls = {
+export let ls =
+{
     axiom: "X",
     rules: {
         F: "FF",
@@ -18,7 +19,7 @@ export let svg =
     height: 535,
     padding: 10,
     pathAttributes: {
-        fill: "skyblue",
+        // fill: "skyblue",
         stroke: "#69983a",
     },
 };

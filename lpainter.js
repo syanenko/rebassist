@@ -16,7 +16,7 @@ document.body.appendChild( link );
 function save() {
   const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
-  link.download = "lsystem.js"
+  link.download = "lsystem.mjs"
   link.click();
 }
 window.save = save;

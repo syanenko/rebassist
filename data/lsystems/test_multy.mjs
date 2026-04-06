@@ -1,4 +1,5 @@
-[
+// L-System parameters
+export let ls =
 {
     axiom: "FFF+FFFF-FF+FF-[-Y][+Y][!Z!][+Z]",
     rules: {
@@ -10,7 +11,10 @@
     theta: 10 * Math.PI / 180,
     iterations: 7,
     step: 5,
-},
+};
+
+// SVG parameters
+export let svg =
 {
     width: 420,
     height: 325,
@@ -21,5 +25,5 @@
         "stroke-width": ["11", "5", "3", "1"],
         "stroke-linecap": ["square", "square", "round"],
         transform: ["skewY(-35)", "n/a"],
+    }
 }
-]
