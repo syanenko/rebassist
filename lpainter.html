@@ -8,12 +8,12 @@
     <meta http-equiv="expires" content="timestamp">
 
      <!-- Codemirror -->
-    <script src="node_modules/codemirror/lib/codemirror.js"></script>
-    <script src="node_modules/codemirror/mode/clike/clike.js"></script>
-    <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
-    <link rel="stylesheet" href="node_modules/codemirror/theme/abcdef.css">
-
-    <link type="text/css" rel="stylesheet" href="lpainter.css">
+    <script src="/node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="/node_modules/codemirror/mode/clike/clike.js"></script>
+    <script src="/node_modules/codemirror/mode/javascript/javascript.js"></script>
+    <link rel="stylesheet" href="/node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="cm_abcdef.css">
+    <link rel="stylesheet" href="lpainter.css">
   </head>
   <body>
 
@@ -31,43 +31,69 @@
   <div>
     <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
     <div id="text" onclick="window.location.reload()" style="color: white">L-Painter</div>
-    <img id="download" class="control" src="./data/images/save_48x48.png" title="Send [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
-    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Send [Ctrl-S]" style="right:60px" alt="Upload" onclick="window.paint()">
+    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Render [Ctrl-R]" style="right:180px" alt="Render" onclick="lsRender()">
+    <img id="download" class="control" src="./data/images/save_48x48.png" title="Save [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
+    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Paint [Ctrl-P]" style="right:60px" alt="Upload" onclick="window.paint()">
     <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
   </div>
   <hr>
-  
+
+  <div id="container" style="position: absolute; top: 50%; left: 50%; transform: translate(-90%, -50%)"></div>
+
   <!-- CodeMirror -->
   <textarea id="code" name="code" wrap="off"></textarea>
   <script>
     window.editor = CodeMirror.fromTextArea(code, {
-      lineNumbers: true,
+      mode:  "javascript", // "clike"
       theme: 'abcdef',
-      mode:  "clike"
+      lineNumbers: true
+      // lineWrapping: true
     });
   </script>
  
   <script>
     // Send by 'Ctrl-S'
     document.addEventListener("keydown", function keydown (event) {
-        if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
-            event.preventDefault()
-            if(event.key === "p") {
-              // window.setStatus("Sending events");
-              // window.paint(); // DEBUG
-              lsRender();
-           } else if(event.key === "s") {
-              window.setStatus("Saving ...");
-              window.save();
-              window.setStatus("Saved");
-           }
+      if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
+        event.preventDefault()
+        if(event.key === "r") {
+          window.setStatus("Rendering ...");
+          lsRender();
+          window.setStatus("Rendered");
+        } if(event.key === "p") {
+          window.setStatus("Sending events");
+          // window.paint(); // DEBUG
+        } else if(event.key === "s") {
+          window.setStatus("Saving ...");
+          window.save();
+          window.setStatus("Saved");
         }
+      }
     })
   </script>
 
   <script src="/node_modules/lindsvg/dist/lindsvg.min.js"></script>
-  <script> let {getSVGCode, getMultiPathSVGCode} = window.lindsvg; </script>
   <script>
+    let {getSVGCode, getMultiPathSVGCode} = window.lindsvg; 
+
+    // Render L-system from editor
+    function lsRender() {
+      const encodedCode = btoa(editor.getValue());
+      const dataUri = `data:text/javascript;base64,${encodedCode}`;
+      import(dataUri)
+        .then((module) => {
+          // console.log(module);
+          const c = document.getElementById('container');
+          c.replaceChildren();
+          // c.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg)); // TODO: Check difference
+          c.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
+      })
+        .catch((err) => {
+          console.error(err);
+      });
+    }
+
+    // Load L-system into editor and render then
     function lsLoad(url) {
     url = "./data/lsystems/" + url;
     const options = {
@@ -78,40 +104,10 @@
     fetch(url, options)
       .then(function(response) {
         response.text().then(function(text) {
-          // Load to editor
           editor.getDoc().setValue(text);
           code.scrollTo(0, 0);
-          
-          // Render
-          const encodedCode = btoa(editor.getValue());
-          const dataUri = `data:text/javascript;base64,${encodedCode}`;
-          import(dataUri)
-            .then((module) => {
-              console.log(module);
-              // document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
-              document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
-          })
-            .catch((err) => {
-              console.error(err);
-          });
+          lsRender();
         });
-      });
-    }
-  </script>
-
-  <script>
-    function lsRender(url) {
-      // Render
-      const encodedCode = btoa(editor.getValue());
-      const dataUri = `data:text/javascript;base64,${encodedCode}`;
-      import(dataUri)
-        .then((module) => {
-          console.log(module);
-          // document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
-          document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
-      })
-        .catch((err) => {
-          console.error(err);
       });
     }
   </script>
