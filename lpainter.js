@@ -1,8 +1,8 @@
 // TODO
 //
-// 1. Icons
-// 2.  JSON validation (alert)
-// 3. Validate JSON before save (?)
+// 1. Actions: Load LS, Save LS, Save SVG, Save MIO, Paint (send to Rebelle).
+// 2. Validate JS in editor window (?).
+// 4. Make set of LSs
 //
 const PORT = "8265";
 const SLEEP_TIME = 2000;
