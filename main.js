@@ -1,11 +1,29 @@
 // TODO
 //
-// 1. Position sketches at the center on load 
-// 2. Artworks presets
+// -- SVG Painter
+// 1. Artworks presets as in Rebelle:
+//    Size: A4 200 DPI (2339x1654), A4 300 DPI (3508x2480), A3 200 DPI (3307x2339), ... (Set Width/Height)
+//    Orientation: Portrait/Landscape (Swap Width/Height)
+//    Remove DPI
+//
+// 2. Position sketches at the center on load
+//
 // 3. Remove duplicated events (check)
 // 4. Remove unwanted lines (check)
-// 5. Use stroke width (?)
+// 5. Use stroke width:
+//  {
+//     "event_type": "SET_BRUSH_PARAMS",
+//     "size": 40,
+//     "size_px" : 20, // use either size or size_px
+//     "water": 50,
+//     "opacity": 80,
+//     "pressure": 100,
+//     "dirty_brush": true
+// }
+//
+// -- L-Systems
 // 6. Embed https://amphiluke.github.io/lindsvg/
+// 7. Switch editor/painter m-exclusive
 //
 import { GUI } from './node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { parse } from './node_modules/svg-parser/dist/svg-parser.esm.js';
@@ -24,10 +42,12 @@ let content;
 const set = {
   // Artwork
   artwork_send: true,
-  width: 1024,
-  height: 1024,
-  units: "px",
-  dpi: 200,
+  size: "A4, 200 DPI",
+  width: 2339,
+  height: 1654,
+  orientation: 'Portrait',
+  units: "px", // TODO: remove
+  dpi: 200, // TODO: remove
 
   // Paper
   paper_send: true,
@@ -71,19 +91,22 @@ const set = {
   save()  {save()}
 };
 
-const gui = new GUI( {width: 350, title:"Control", closeFolders:true} );
-gui.domElement.querySelector('.title').style.color = "hsl(205 61% 65%)";
+const gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
+gui.domElement.querySelector('.title').style.color = colorTitle;
 
 // Artwork 
 const artwork = gui.addFolder( 'Artwork' );
 artwork.domElement.querySelector('.title').style.color = colorTitle;
 artwork.add( set, 'artwork_send' ).name( 'Send' );
-artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
-artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
+                           'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',  // TODO: set at setSize()
+                            'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
+const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+const guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
 
-//  Only 'px' supported, need to check scale in Inkscape 
-artwork.add( set, 'units', [ 'px' ] ).name( 'Units' ); // [ 'px', 'cm', 'in' ]
-artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
+// artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
+// artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
 
 // Paper
 const paper = gui.addFolder( 'Paper' );
@@ -136,6 +159,26 @@ sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
 gui.add( gui.reset(), 'reset' ).name( 'Reset' );
 gui.add( set, 'paint' ).name( 'Paint' );
 gui.add( set, 'save' ).name( 'Save' );
+
+// Set size
+function setSize(val) {
+  console.log(val);
+  if(val == "A4, 200 DPI") {
+    set.width = 2339; set.height = 1654; 
+  } if(val == "A4, 300 DPI") {
+    set.width = 3508; set.height = 2480;
+  } if(val == "A3, 200 DPI") {
+    set.width = 3307; set.height = 2339;
+  }
+
+  guiWidth.updateDisplay();
+  guiHeight.updateDisplay();
+}
+
+// Set orientation
+function setOrientation(val) {
+  console.log(val);
+}
 
 // Set preview paper color 
 function setBackgroundColor() {
