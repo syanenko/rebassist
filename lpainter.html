@@ -88,8 +88,8 @@
           import(dataUri)
             .then((module) => {
               console.log(module);
+              document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
               //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
-              document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls[0], module.ls[1]));
           })
             .catch((err) => {
               console.error(err);
@@ -107,8 +107,8 @@
       import(dataUri)
         .then((module) => {
           console.log(module);
+          document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg));
           //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
-          document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls[0], module.ls[1]));
       })
         .catch((err) => {
           console.error(err);
