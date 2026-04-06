@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Console</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="timestamp">
+
+     <!-- Codemirror -->
+    <script src="node_modules/codemirror/lib/codemirror.js"></script>
+    <script src="node_modules/codemirror/mode/clike/clike.js"></script>
+    <link rel="stylesheet" href="node_modules/codemirror/lib/codemirror.css">
+    <link rel="stylesheet" href="node_modules/codemirror/theme/abcdef.css">
+
+    <link type="text/css" rel="stylesheet" href="lpainter.css">
+  </head>
+  <body>
+
+  <dialog id="about" style="width:420px;">
+    <div style="font-size: 24px; color:#fff; font-style: italic;">L-Painter - Rebelle L-systems extension</div><br>
+    Edit <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events send them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
+      <form method="dialog" style="text-align:center">
+      <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
+      </form>
+  </dialog>
+
+  <script type="module" src="lpainter.js"></script>
+
+  <div>
+    <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
+    <div id="text" onclick="window.location.reload()" style="color: white">L-Painter</div>
+    <img id="download" class="control" src="./data/images/save_48x48.png" title="Send [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
+    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Send [Ctrl-S]" style="right:60px" alt="Upload" onclick="window.paint()">
+    <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
+  </div>
+  <hr>
+  
+  <!-- CodeMirror -->
+  <textarea id="code" name="code" wrap="off"></textarea>
+  <script>
+    window.editor = CodeMirror.fromTextArea(code, {
+      lineNumbers: true,
+      theme: 'abcdef',
+      mode:  "clike"
+    });
+  </script>
+ 
+  <script>
+    // Send by 'Ctrl-S'
+    document.addEventListener("keydown", function keydown (event) {
+        if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
+            event.preventDefault()
+            if(event.key === "p") {
+              // window.setStatus("Sending events");
+              // window.paint(); // DEBUG
+              lsRender();
+           } else if(event.key === "s") {
+              window.setStatus("Saving ...");
+              window.save();
+              window.setStatus("Saved");
+           }
+        }
+    })
+  </script>
+
+  <script src="/node_modules/lindsvg/dist/lindsvg.min.js"></script>
+  <script> let {getSVGCode, getMultiPathSVGCode} = window.lindsvg; </script>
+  <script>
+    function lsLoad(url) {
+    url = "./data/lsystems/" + url;
+    const options = {
+      headers: {
+      }
+    };
+
+    fetch(url, options)
+      .then(function(response) {
+        response.text().then(function(text) {
+          // Load to editor
+          editor.getDoc().setValue(text);
+          code.scrollTo(0, 0);
+          
+          // Render
+          const encodedCode = btoa(editor.getValue());
+          const dataUri = `data:text/javascript;base64,${encodedCode}`;
+          import(dataUri)
+            .then((module) => {
+              console.log(module);
+              //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
+              document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls[0], module.ls[1]));
+          })
+            .catch((err) => {
+              console.error(err);
+          });
+        });
+      });
+    }
+  </script>
+
+  <script>
+    function lsRender(url) {
+      // Render
+      const encodedCode = btoa(editor.getValue());
+      const dataUri = `data:text/javascript;base64,${encodedCode}`;
+      import(dataUri)
+        .then((module) => {
+          console.log(module);
+          //document.body.insertAdjacentHTML("beforeend", getMultiPathSVGCode(multiPathLSParams, multiPathSVGParams));
+          document.body.insertAdjacentHTML("beforeend", getSVGCode(module.ls[0], module.ls[1]));
+      })
+        .catch((err) => {
+          console.error(err);
+      });
+    }
+  </script>
+
+  <!-- Buttons -->
+  <div class="buttons">
+    <button id="1" onclick="lsLoad('test_single.js')" title="Test single">Single test</button>
+    <button id="2" onclick="lsLoad('test_multy.js')"  title="Test multy">Multy test</button>
+  </div>
+
+  <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>
+
+  <script>
+    window.onload = function() {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+      if(id) {
+        document.getElementById(id).click();
+      } else {
+        document.getElementById("1").click();
+      }
+    };
+  </script>
+
+  </body>
+</html>

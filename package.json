@@ -4,11 +4,12 @@
   "description": "SVG to Rebelle Motion IO converter",
   "main": "main.js",
   "dependencies": {
-    "lil-gui": "^0.19.2",
-    "path-data-parser": "^0.1.0",
-    "svg-parser": "^2.0.4",
     "codemirror": "^5.65.16",
-    "servez": "^2.4.0"
+    "lil-gui": "^0.19.2",
+    "lindsvg": "^1.5.0",
+    "path-data-parser": "^0.1.0",
+    "servez": "^2.4.0",
+    "svg-parser": "^2.0.4"
   },
   "scripts": {
     "start": "npm run dev",
