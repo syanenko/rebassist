@@ -52,80 +52,84 @@ export const set = {
 };
 
 // Init
-export function guiInit(paint, save) {
+export function guiInit(paint, save, open) {
+  // Actions
+  set.save = save;
+  set.paint = paint;
 
-// Actions
-set.save = save;
-set.paint = paint;
+  const gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
+  gui.domElement.querySelector('.title').style.color = colorTitle;
 
-const gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
-gui.domElement.querySelector('.title').style.color = colorTitle;
+  // Artwork 
+  const artwork = gui.addFolder( 'Artwork' );
+  artwork.domElement.querySelector('.title').style.color = colorTitle;
+  artwork.add( set, 'artwork_send' ).name( 'Send' );
+  artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
+                            'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',  // TODO: set at setSize()
+                              'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
+  const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+  const guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+  artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
 
-// Artwork 
-const artwork = gui.addFolder( 'Artwork' );
-artwork.domElement.querySelector('.title').style.color = colorTitle;
-artwork.add( set, 'artwork_send' ).name( 'Send' );
-artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
-                           'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',  // TODO: set at setSize()
-                            'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
-const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
-const guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
-artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
+  // artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
+  // artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
 
-// artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
-// artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
+  // Paper
+  const paper = gui.addFolder( 'Paper' );
+  paper.domElement.querySelector('.title').style.color = colorTitle;
+  paper.add( set, 'paper_send' ).name( 'Send' );
+  paper.add( set, 'paper_preset', [ 'Default/EX00 White Simple', 'Default/CA01 Canvas Artist', 'Default/HP01 Hot Pressed', 'Default/RH00 Aquarelle', 'Default/WK01 Washi' ] ).name( 'Preset' );
+  const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
+  pc.domElement.querySelector('input[type="text"]').style.display = 'none';
+  paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
+  paper.add( set, 'paper_scale', 10, 400, 10 ).name( 'Scale' );
+  paper.add( set, 'paper_visible' ).name( 'Visible' );
 
-// Paper
-const paper = gui.addFolder( 'Paper' );
-paper.domElement.querySelector('.title').style.color = colorTitle;
-paper.add( set, 'paper_send' ).name( 'Send' );
-paper.add( set, 'paper_preset', [ 'Default/EX00 White Simple', 'Default/CA01 Canvas Artist', 'Default/HP01 Hot Pressed', 'Default/RH00 Aquarelle', 'Default/WK01 Washi' ] ).name( 'Preset' );
-const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
-pc.domElement.querySelector('input[type="text"]').style.display = 'none';
-paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
-paper.add( set, 'paper_scale', 10, 400, 10 ).name( 'Scale' );
-paper.add( set, 'paper_visible' ).name( 'Visible' );
+  // Brush
+  const brush = gui.addFolder( 'Brush' );
+  brush.domElement.querySelector('.title').style.color = colorTitle;
+  brush.add( set, 'brush_send' ).name( 'Send' );
+  brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
+  brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Watercolor/Watercolor/Fan', 'Watercolor/Filbert Dry',
+                                    'Watercolor/Flat 2', 'Watercolor/Flat Dry', 'Watercolor/Flat', 'Watercolor/Liner 2',
+                                    'Watercolor/Liner', 'Watercolor/Mop', 'Watercolor/Round 2', 'Watercolor/Round 3', 
+                                    'Watercolor/Round 4', 'Watercolor/Round', 'Watercolor/Wash Flat', 'Watercolor/Wash Round' ] ).name( 'Preset' );
+  brush.add( set, 'brush_size', 1, 100, 1 ).name( 'Size' );
+  brush.add( set, 'brush_water', 1, 100, 1 ).name( 'Water' );
+  brush.add( set, 'brush_opacity', 1, 100, 1 ).name( 'Opacity' ).onChange( setOpacity );
+  brush.add( set, 'brush_pressure', 1, 100, 1 ).name( 'Pressure' );
+  brush.add( set, 'brush_dirty_brush').name( 'Dirty brush' );
+  brush.add( set, 'smudge_only_wet').name( 'Smudge only wet' );
+  brush.add( set, 'keep_layer_wet').name( 'Keep layer wet' );
+  brush.add( set, 'keep_water').name( 'Keep water' );
+  brush.add( set, 'only_water').name( 'Only water' );
+  brush.add( set, 'brush_paint_type', ["PAINT", "BLEND", "PAINT_BLEND" , "PAINT_MIX", "ERASE"] ).name( 'Paint type' );
+  brush.add( set, 'brush_glaze_mode', [ "TRANSPARENT", "SEMI-OPAQUE", "OPAQUE"] ).name( 'Glaze mode' );
+  const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
+  bc.domElement.querySelector('input[type="text"]').style.display = 'none';
+  brush.add( set, 'multi_color_brush').name( 'Multi color brush' );
+  brush.add( set, 'rotate_multi_color_brush').name( 'Rotate multi color brush' );
+  brush.add( set, 'smudge').name( 'Smudge' );
+  brush.add( set, 'spacing', 1, 100, 1 ).name( 'Spacing' );
+  brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
 
-// Brush
-const brush = gui.addFolder( 'Brush' );
-brush.domElement.querySelector('.title').style.color = colorTitle;
-brush.add( set, 'brush_send' ).name( 'Send' );
-brush.add( set, 'brush_tool', ["WATERCOLOR"] ).name( 'Tool' );
-brush.add( set, 'brush_preset', [ 'Watercolor/Bristle', 'Watercolor/Watercolor/Fan', 'Watercolor/Filbert Dry',
-                                  'Watercolor/Flat 2', 'Watercolor/Flat Dry', 'Watercolor/Flat', 'Watercolor/Liner 2',
-                                  'Watercolor/Liner', 'Watercolor/Mop', 'Watercolor/Round 2', 'Watercolor/Round 3', 
-                                  'Watercolor/Round 4', 'Watercolor/Round', 'Watercolor/Wash Flat', 'Watercolor/Wash Round' ] ).name( 'Preset' );
-brush.add( set, 'brush_size', 1, 100, 1 ).name( 'Size' );
-brush.add( set, 'brush_water', 1, 100, 1 ).name( 'Water' );
-brush.add( set, 'brush_opacity', 1, 100, 1 ).name( 'Opacity' ).onChange( setOpacity );
-brush.add( set, 'brush_pressure', 1, 100, 1 ).name( 'Pressure' );
-brush.add( set, 'brush_dirty_brush').name( 'Dirty brush' );
-brush.add( set, 'smudge_only_wet').name( 'Smudge only wet' );
-brush.add( set, 'keep_layer_wet').name( 'Keep layer wet' );
-brush.add( set, 'keep_water').name( 'Keep water' );
-brush.add( set, 'only_water').name( 'Only water' );
-brush.add( set, 'brush_paint_type', ["PAINT", "BLEND", "PAINT_BLEND" , "PAINT_MIX", "ERASE"] ).name( 'Paint type' );
-brush.add( set, 'brush_glaze_mode', [ "TRANSPARENT", "SEMI-OPAQUE", "OPAQUE"] ).name( 'Glaze mode' );
-const bc = brush.addColor( set, 'brush_color', 255 ).name('Color').onChange( setStrokeColor );
-bc.domElement.querySelector('input[type="text"]').style.display = 'none';
-brush.add( set, 'multi_color_brush').name( 'Multi color brush' );
-brush.add( set, 'rotate_multi_color_brush').name( 'Rotate multi color brush' );
-brush.add( set, 'smudge').name( 'Smudge' );
-brush.add( set, 'spacing', 1, 100, 1 ).name( 'Spacing' );
-brush.add( set, 'opacity_multiplier', 1, 10, 1 ).name( 'Opacity multiplier' );
+  // Sketch
+  const sketch = gui.addFolder( 'Sketch' );
+  sketch.domElement.querySelector('.title').style.color = colorTitle;
+  sketch.add( set, 'sketch_send_colors').name( 'Send colors' );
+  sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
+  sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
+  sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
 
-// Sketch
-const sketch = gui.addFolder( 'Sketch' );
-sketch.domElement.querySelector('.title').style.color = colorTitle;
-sketch.add( set, 'sketch_send_colors').name( 'Send colors' );
-sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
-sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
-sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
+  // Controls
+  gui.add( gui.reset(), 'reset' ).name( 'Reset' );
+  gui.add( set, 'paint' ).name( 'Paint' );
+  gui.add( set, 'save' ).name( 'Save' );
 
-// Controls
-gui.add( gui.reset(), 'reset' ).name( 'Reset' );
-gui.add( set, 'paint' ).name( 'Paint' );
-gui.add( set, 'save' ).name( 'Save' );
+  if(open)
+    gui.open();
+  else
+    gui.close();
 }
 
 

@@ -27,4 +27,4 @@
 import { guiInit } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
-guiInit(paint, saveEvents);
+guiInit(paint, saveEvents, true);
