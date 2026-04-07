@@ -1,3 +1,8 @@
+//
+// TODO
+//
+// 1. Disable buttons if 'null' in guiInit
+//
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
 const colorTitle = "hsl(205 61% 65%)";
@@ -51,12 +56,11 @@ export const set = {
   trans_y: 0,
 };
 
+let guiWidth, guiHeight;
+
 // Init
 export let gui;
-export function guiInit(paint, save, open) {
-  // Actions
-  set.save = save;
-  set.paint = paint;
+export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
 
   gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
@@ -68,8 +72,8 @@ export function guiInit(paint, save, open) {
   artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
                             'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',  // TODO: set at setSize()
                               'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
-  const guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
-  const guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+  guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+  guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
   artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
 
   // artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
@@ -124,8 +128,24 @@ export function guiInit(paint, save, open) {
 
   // Controls
   gui.add( gui.reset(), 'reset' ).name( 'Reset' );
+
+  if(saveEvents != null) {
+    set.save_events = saveEvents;
+    gui.add( set, 'save_events' ).name( 'Save Events' );
+  }
+
+  if(saveSVG != null) {
+    set.save_svg = saveSVG;
+    gui.add( set, 'save_svg' ).name( 'Save SVG' );
+  }
+
+  if(saveLS != null) {
+    set.save_ls = saveLS;
+    gui.add( set, 'save_ls' ).name( 'Save L-System' );
+  }
+
+  set.paint = paint;
   gui.add( set, 'paint' ).name( 'Paint' );
-  gui.add( set, 'save' ).name( 'Save' );
 
   if(open)
     gui.open();

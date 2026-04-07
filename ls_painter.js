@@ -1,15 +1,17 @@
 // TODO
 //
-// 1. Actions: Load, Save, Export SVG, Export events, Render, Paint.
-// 2. Show overlay on Load, make set of LS.
-// 3. Set brush size by stroke_width
-// 4. Validate JS in editor window (?).
+// 0. Write "Save SVG".
+// 1. Ass "Render" to menu.
+// 2. Position sketches at the center on load.
+// 3. Show overlay on Load, make set of LS.
+// 4. Set brush size by stroke_width.
+// 5. Validate JS in editor window (?).
 //
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
-guiInit(paint, saveEvents, false);
-// Customize GUI here
+guiInit(paint, saveEvents, saveSVG, saveLS, false);
+// Turn on "Save SVG" here
 // gui.reset();
 //
 
@@ -18,13 +20,17 @@ const link = document.createElement( 'a' );
 link.style.display = 'none';
 document.body.appendChild( link );
 
-function save() {
+function saveLS() {
   const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
   link.download = "lsystem.mjs"
   link.click();
 }
-window.save = save;
+window.saveLS = saveLS;
+
+function saveSVG() {
+  console.log("saveSVG()");
+}
 
 // Set status
 let stat = document.getElementById("status");
