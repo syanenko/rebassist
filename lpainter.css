@@ -198,7 +198,7 @@ progress {color: white;}
   position: absolute;
   top: 72px;
   right: 10px; 
-  width: 700px;
+  width: 600px;
   height: calc(100% - 105px);
   font-family: Monospace;
   font-size: 16px;
@@ -210,9 +210,9 @@ progress {color: white;}
 .buttons
 {
   position: absolute;
-  bottom: 20px;
-  left:  10px;
-  width: 1250px;
+  top: 60px;
+  left:  0px;
+  width: 140px;
   padding: 10px;
   box-sizing: border-box;
   text-align: left;
@@ -226,7 +226,7 @@ progress {color: white;}
 
 button {
   height: 35px;
-  font-size: 18px;
+  font-size: 15px;
   background-color: #333;
   border-color: #0e0;
   border-radius: 6px;

@@ -1,8 +1,9 @@
 // TODO
 //
-// 1. Actions: Load LS, Save LS, Save SVG, Save MIO, Paint (send to Rebelle).
-// 2. Validate JS in editor window (?).
-// 4. Make set of LSs
+// 1. Actions: Load, Save, Export SVG, Export events, Render, Paint.
+// 2. Show overlay on Load, make set of LS.
+// 3. Get menu and paint module from SVG Painter
+// 4. Validate JS in editor window (?).
 //
 const PORT = "8265";
 const SLEEP_TIME = 2000;
