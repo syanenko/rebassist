@@ -1,3 +1,8 @@
+//
+// TODO
+//
+// 1. Set brush size by stroke_width
+//
 import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
 
@@ -160,6 +165,12 @@ function loadSVG(file) {
     });
 }
 window.loadSVG = loadSVG;
+
+// Set SVG
+function setSVG(s) {
+  svg = s;  
+}
+window.setSVG = setSVG;
 
 // Sleep for websocket
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));

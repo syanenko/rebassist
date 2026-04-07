@@ -84,11 +84,11 @@
       const dataUri = `data:text/javascript;base64,${encodedCode}`;
       import(dataUri)
         .then((module) => {
-          // console.log(module);
-          const c = document.getElementById('container');
-          c.replaceChildren();
-          // c.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg)); // TODO: Check difference
-          c.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
+          const cont = document.getElementById('container');
+          cont.replaceChildren();
+          // cont.insertAdjacentHTML("beforeend", getSVGCode(module.ls, module.svg)); // TODO: Check difference
+          cont.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
+          setSVG(cont.firstElementChild);
       })
         .catch((err) => {
           console.error(err);
