@@ -1,9 +1,8 @@
 // TODO
 //
-// 0. Check loadSVG()
 // 1. Actions: Load, Save, Export SVG, Export events, Render, Paint.
 // 2. Show overlay on Load, make set of LS.
-// 3. Get menu and paint module from SVG Painter
+// 3. Set brush size by stroke_width
 // 4. Validate JS in editor window (?).
 //
 import { guiInit, gui } from './modules/gui.js';

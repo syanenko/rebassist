@@ -1,6 +1,6 @@
 // TODO
 //
-// -- Show overlay on load 
+// -- Show overlay on load (?) or make vertical scroll at the left
 // -- Separate paint module
 //
 // 1. Artworks presets as in Rebelle:
