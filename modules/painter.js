@@ -132,7 +132,7 @@ const link = document.createElement( 'a' );
 link.style.display = 'none';
 document.body.appendChild( link );
 
-export function save() {
+export function saveEvents() {
   makeEvents();
   makeContent();
   let filename = "events.json"

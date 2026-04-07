@@ -25,6 +25,6 @@
 //
 
 import { guiInit } from './modules/gui.js';
-import { save, paint } from './modules/painter.js';
+import { saveEvents, paint } from './modules/painter.js';
 
-guiInit(paint, save);
+guiInit(paint, saveEvents);
