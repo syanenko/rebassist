@@ -52,12 +52,13 @@ export const set = {
 };
 
 // Init
+export let gui;
 export function guiInit(paint, save, open) {
   // Actions
   set.save = save;
   set.paint = paint;
 
-  const gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
+  gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
 
   // Artwork 

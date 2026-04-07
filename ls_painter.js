@@ -6,10 +6,13 @@
 // 3. Get menu and paint module from SVG Painter
 // 4. Validate JS in editor window (?).
 //
-import { guiInit } from './modules/gui.js';
+import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
 guiInit(paint, saveEvents, false);
+// Customize GUI here
+// gui.reset();
+//
 
 // Save
 const link = document.createElement( 'a' );

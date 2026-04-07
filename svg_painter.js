@@ -23,8 +23,10 @@
 //     "dirty_brush": true
 // }
 //
-
-import { guiInit } from './modules/gui.js';
+import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
 guiInit(paint, saveEvents, true);
+// Customize GUI here
+// gui.reset();
+//
