@@ -1,12 +1,22 @@
 // TODO
 //
-// 0. Write "Save SVG".
-// 1. Add "Render" to GUI.
-// 2. Position sketches at the center on load.
-// 3. Show overlay on Load, make set of LS.
+// -- Test ws connection after loading app from yesbird.online
+// -- Read file with readFile();
+//    https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
+//
+// 1. Write "Save SVG" method.
+// 2. Add "Refresh" to GUI: https://fonts.google.com/icons?icon.query=refresh&icon.size=24&icon.color=000000
+// 3. Position sketches at the center on load.
 // 4. Set brush size by stroke_width.
 // 5. Validate JS in editor window (?).
 //
+// -- Pro version:
+//  https://github.com/nylki/lindenmayer
+//  https://codepen.io/nylki/pen/bpzrex
+//  http://nylki.github.io/lindenmayer/examples/interactive_lsystem_builder/index.html
+//
+// 1. Create LSystem object from params object in editor
+// 
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 

@@ -114,12 +114,41 @@
     }
   </script>
 
+ <script>
+  //
+  // FS functions
+  //
+  async function accessDirectory() {
+    const dirHandle = await window.showDirectoryPicker();
+    
+    // List all entries in the directory
+    for await (const entry of dirHandle.values()) {
+      console.log(entry.kind, entry.name);
+    }
+  }
+
+  async function readFile() {
+    // 1. Open the file picker
+    const [fileHandle] = await window.showOpenFilePicker();
+
+    // 2. Get the file object from the handle
+    const file = await fileHandle.getFile();
+
+    // 3. Read the contents (as text in this example)
+    const contents = await file.text();
+    console.log(contents);
+  }
+ </script>
+
   <!-- Buttons -->
   <div class="buttons">
     <button id="1" onclick="lsLoad('test_single.mjs')" title="test_single">1</button>
-    <button id="1" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
-    <button id="1" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>
-    <button id="2" onclick="lsLoad('test_multy.mjs')"  title="test_multy">4</button>
+    <button id="2" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
+    <button id="3" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>
+    <button id="4" onclick="lsLoad('test_multy.mjs')"  title="test_multy">4</button>
+    <!-- List directory --> 
+    <button id="5" onclick="accessDirectory()"  title="test_multy">Dir</button>
+    <button id="6" onclick="readFile()"  title="test_multy">File</button>
   </div>
 
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>
