@@ -39,10 +39,3 @@ window.saveLS = saveLS;
 function saveSVG() {
   console.log("saveSVG()");
 }
-
-// Set status
-let stat = document.getElementById("status");
-function setStatus(s) {
-    stat.innerHTML = s;
-}
-window.setStatus = setStatus;

@@ -16,6 +16,9 @@ let x = 0, y = 0, last_x = 0, last_y = 0;
 let events = [];
 let content;
 
+const container = document.getElementById('container');
+const parser = new DOMParser();
+
 // Translate color from HEX/Name to RGBA
 function toRGBA(name) {
     var canvas = document.createElement('canvas');
@@ -149,11 +152,9 @@ export function saveEvents() {
 
 // Load SVG
 function loadSVG(file) {
-  const container = document.getElementById('container');
   fetch(file)
     .then(response => response.text())
     .then(svgText => {
-      const parser = new DOMParser();
       const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
       svg = svgDoc.querySelector('svg');
       if (svg && container) {
@@ -167,8 +168,14 @@ function loadSVG(file) {
 window.loadSVG = loadSVG;
 
 // Set SVG
-function setSVG(s) {
-  svg = s;  
+function setSVG(text) {
+  const svgDoc = parser.parseFromString(text, 'image/svg+xml');
+  svg = svgDoc.querySelector('svg');
+  svg.setAttribute("fill", "#fff");
+  svg.setAttribute("stroke", "#000");
+
+  container.replaceChildren();
+  container.appendChild(svg);
 }
 window.setSVG = setSVG;
 
@@ -191,7 +198,7 @@ export async function paint() {
          await sleep(SLEEP_TIME);
       }
     }
-    socket.close(1000, "sending complete");
+    socket.close(1000, "Sending complete");
   };
 
   socket.onmessage = (event) => {
@@ -211,3 +218,10 @@ export async function paint() {
   };
 }
 window.paint = paint;
+
+// Set status
+let stat = document.getElementById("status");
+function setStatus(s) {
+    stat.innerHTML = s;
+}
+window.setStatus = setStatus;
