@@ -38,11 +38,7 @@
         const [fileHandle] = await window.showOpenFilePicker();
         const file = await fileHandle.getFile();
         const text = await file.text();
-        setSVG(text);
-
-        // editor.getDoc().setValue(text);
-        // code.scrollTo(0, 0);
-        // lsRender();
+        setTextSVG(text);
       } catch(err) {
       }
     }

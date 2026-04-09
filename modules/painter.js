@@ -179,8 +179,14 @@ function loadSVG(file) {
 }
 window.loadSVG = loadSVG;
 
-// Set SVG
-function setSVG(text) {
+// Set SVG element
+function setSVG(element) {
+  svg = element;
+}
+window.setSVG = setSVG;
+
+// Set SVG from text
+function setTextSVG(text) {
   const svgDoc = parser.parseFromString(text, 'image/svg+xml');
   svg = svgDoc.querySelector('svg');
   svg.setAttribute("fill", "#fff");
@@ -189,7 +195,7 @@ function setSVG(text) {
   container.replaceChildren();
   container.appendChild(svg);
 }
-window.setSVG = setSVG;
+window.setTextSVG = setTextSVG;
 
 // Sleep for websocket
 const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
