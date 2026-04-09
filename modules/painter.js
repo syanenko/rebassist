@@ -4,8 +4,8 @@
 // - Move loadSVG() to svg_painter, use setSVG()
 // - Set brush size by stroke_width
 //
-import { parse } from '/node_modules/svg-parser/dist/svg-parser.esm.js';
-import { parsePath } from '/node_modules/path-data-parser/lib/index.js';
+import { parse } from '../node_modules/svg-parser/dist/svg-parser.esm.js';
+import { parsePath } from '../node_modules/path-data-parser/lib/index.js';
 import { set } from './gui.js';
 
 const PORT = "8265";
@@ -210,3 +210,4 @@ export async function paint() {
     }
   };
 }
+window.paint = paint;

@@ -52,25 +52,6 @@
       // lineWrapping: true
     });
   </script>
- 
-  <script>
-    // Send by 'Ctrl-S'
-    document.addEventListener("keydown", function keydown (event) {
-      if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
-        event.preventDefault()
-        if(event.key === "r") {
-          window.setStatus("Rendering ...");
-          lsRender();
-          window.setStatus("Rendered");
-        } if(event.key === "p") {
-          window.setStatus("Sending events");
-          // window.paint(); // DEBUG
-        } else if(event.key === "s") {
-          window.saveLS();
-        }
-      }
-    })
-  </script>
 
   <script src="/node_modules/lindsvg/dist/lindsvg.min.js"></script>
   <script>
@@ -121,11 +102,33 @@
       } catch(err) {
       }
     }
+
+    // Shortcuts
+    document.addEventListener("keydown", function keydown (event) {
+      if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
+        event.preventDefault()
+
+        if(event.key === "o") {
+          lsPickerLoad();
+        } else if(event.key === "r") {
+          window.setStatus("Rendering ...");
+          lsRender();
+          window.setStatus("Rendered");
+        } if(event.key === "p") {
+          window.setStatus("Sending events ...");
+          window.paint(); // DEBUG
+          window.setStatus("Sending completed");
+        } else if(event.key === "s") {
+          window.saveLS();
+        }
+      }
+    })
+
   </script>
 
   <!-- Buttons -->
   <div class="buttons">
-    <button id="6" onclick="lsPickerLoad()"  title="Load L-System">Load</button>
+    <button id="6" onclick="lsPickerLoad()"  title="Open L-System file">Open</button>
     <button id="1" onclick="lsLoad('test_single.mjs')" title="test_single">1</button>
     <button id="2" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
     <button id="3" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>
