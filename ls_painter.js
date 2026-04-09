@@ -15,7 +15,7 @@
 //  https://codepen.io/nylki/pen/bpzrex
 //  http://nylki.github.io/lindenmayer/examples/interactive_lsystem_builder/index.html
 //
-// 1. Create LSystem object from params object in editor
+// 1. Push 'finals' in object after editing - before iterate() and final().
 // 
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
