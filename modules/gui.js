@@ -14,7 +14,7 @@ export const set = {
   size: "A4, 200 DPI",
   width: 2339,
   height: 1654,
-  orientation: 'Portrait',
+  orientation: 'Landscape',
   units: "px", // TODO: remove
   dpi: 200, // TODO: remove
 
@@ -56,7 +56,7 @@ export const set = {
   trans_y: 0,
 };
 
-let guiWidth, guiHeight;
+let guiWidth, guiHeight, guiOrient;
 
 // Init
 export let gui;
@@ -70,11 +70,11 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
   artwork.domElement.querySelector('.title').style.color = colorTitle;
   artwork.add( set, 'artwork_send' ).name( 'Send' );
   artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
-                            'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',  // TODO: set at setSize()
+                            'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',
                               'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
-  guiWidth = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
-  guiHeight =artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
-  artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
+  guiWidth  = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
+  guiHeight = artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+  guiOrient = artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
 
   // artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
   // artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
@@ -153,25 +153,47 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
     gui.close();
 }
 
-
 // Set size
 function setSize(val) {
-  console.log(val);
   if(val == "A4, 200 DPI") {
     set.width = 2339; set.height = 1654; 
   } if(val == "A4, 300 DPI") {
     set.width = 3508; set.height = 2480;
   } if(val == "A3, 200 DPI") {
     set.width = 3307; set.height = 2339;
+  } if(val == "B4, 300 DPI, [4170 x 2940]") {
+    set.width = 4170; set.height = 2940;
+  } if(val == "B3, 200 DPI, [3940 x 2780]") {
+    set.width = 3940; set.height = 2780;
+  } if(val == "Latter, 300 DPI, [3300 x 2550]") {
+    set.width = 3300; set.height = 2550;
+  } if(val == "Quarter Sheet 200, 200 DPI, [3000 x 2200]") {
+    set.width = 3000; set.height = 2200;
+  } if(val == "Half Sheet, 200 DPI, [4400, 3000]") {
+    set.width = 4400; set.height = 3000;
   }
-
   guiWidth.updateDisplay();
   guiHeight.updateDisplay();
+
+  set.orientation = 'Landscape';
+  guiOrient.updateDisplay();
 }
 
 // Set orientation
 function setOrientation(val) {
-  console.log(val);
+  const max = Math.max(set.width, set.height);
+  const min = Math.min(set.width, set.height);
+
+  if(val == "Landscape") {
+    set.width = max;
+    set.height = min;
+  } else {
+    set.width = min;
+    set.height = max;
+  }
+
+  guiWidth.updateDisplay();
+  guiHeight.updateDisplay();
 }
 
 // Set preview paper color 
