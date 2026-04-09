@@ -44,6 +44,5 @@ function saveSVG() {
 let stat = document.getElementById("status");
 function setStatus(s) {
     stat.innerHTML = s;
-    console.log(s);
 }
 window.setStatus = setStatus;

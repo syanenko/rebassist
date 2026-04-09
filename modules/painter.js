@@ -180,7 +180,7 @@ export async function paint() {
   makeEvents();
   const socket = new WebSocket('ws://localhost:' + PORT);
   socket.onopen = async (event) => {
-    console.log('Connected to server');
+    setStatus('Connected to server');
     for(let i=0; i<events.length; i++){
       // console.log(events[i]); // DEBUG
       socket.send(events[i]);
@@ -191,22 +191,22 @@ export async function paint() {
          await sleep(SLEEP_TIME);
       }
     }
-    socket.close(1000, "Sending complete");
+    socket.close(1000, "sending complete");
   };
 
   socket.onmessage = (event) => {
-    console.log('Message from server:', event.data);
+    setStatus('Message from server: ' + event.data);
   };
 
   socket.onerror = (error) => {
-    console.error('WebSocket Error:', error);
+    setStatus('WebSocket Error: ' + error);
   };
 
   socket.onclose = (event) => {
     if (event.wasClean) {
-      console.log(`Closed cleanly, code=${event.code} reason=${event.reason}`);
+      setStatus(`Connection closed cleanly, Code:${event.code}, Reason: ${event.reason}`);
     } else {
-      console.log('Connection died');
+      setStatus('Connection died');
     }
   };
 }
