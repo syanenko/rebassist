@@ -1,7 +1,7 @@
 // TODO
 //
 // 1. "Save SVG" method.
-// 2. Control icons
+// 2. Control icons.
 // 3. Position sketches at the center on load.
 // 4. Set brush size by stroke_width.
 // 5. Test ws connection after loading app from yesbird.online.
@@ -13,8 +13,10 @@
 //  https://codepen.io/nylki/pen/bpzrex
 //  http://nylki.github.io/lindenmayer/examples/interactive_lsystem_builder/index.html
 //
-// 1. Push 'finals' in object after editing - before iterate() and final().
-// 
+// 1. Make 'finals' for HTML canvas (2D - default), Three.js (3D), Rebelle (Painter),
+//    push 'finals' in object after editing - before iterate() and final().
+// 2. Interface: Load, Save, 2D, 3D, Painter (GUI), Preview Thumbnails.
+//
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
