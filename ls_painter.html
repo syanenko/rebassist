@@ -128,7 +128,10 @@
 
   <!-- Buttons -->
   <div class="buttons">
-    <button id="6" onclick="lsPickerLoad()"  title="Open L-System file">Open</button>
+    <button id="0" onclick="lsPickerLoad()" title="Open L-System [Ctrl+O]">Open</button>  
+    <button id="0" onclick="saveLS()" title="Save L-System [Ctrl+S]">Save</button>
+    <button id="0" onclick="lsRender()" title="Render L-System [Ctrl+R]">Refresh</button>
+
     <button id="1" onclick="lsLoad('test_single.mjs')" title="test_single">1</button>
     <button id="2" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
     <button id="3" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>
@@ -144,7 +147,7 @@
       if(id) {
         document.getElementById(id).click();
       } else {
-        document.getElementById("2").click();
+        document.getElementById("1").click();
       }
     };
   </script>

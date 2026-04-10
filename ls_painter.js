@@ -1,14 +1,12 @@
 // TODO
 //
-// -- Test ws connection after loading app from yesbird.online
-// -- Read file with readFile();
-//    https://developer.mozilla.org/en-US/docs/Web/API/File_System_API
-//
-// 1. Write "Save SVG" method.
-// 2. Add "Refresh" to GUI: https://fonts.google.com/icons?icon.query=refresh&icon.size=24&icon.color=000000
+// 1. "Save SVG" method.
+// 2. Control icons
 // 3. Position sketches at the center on load.
 // 4. Set brush size by stroke_width.
-// 5. Validate JS in editor window (?).
+// 5. Test ws connection after loading app from yesbird.online.
+// 6. Check shotcuts.
+// 7. Validate JS in editor window (?).
 //
 // -- Pro version:
 //  https://github.com/nylki/lindenmayer
@@ -20,7 +18,7 @@
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
-guiInit(paint, saveEvents, saveSVG, saveLS, false);
+guiInit(paint, saveEvents, saveSVG, null, false);
 
 // Save L-System
 const link = document.createElement( 'a' );
@@ -39,3 +37,4 @@ window.saveLS = saveLS;
 function saveSVG() {
   console.log("saveSVG()");
 }
+window.saveSVG = saveSVG;
