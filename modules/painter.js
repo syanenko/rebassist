@@ -11,10 +11,9 @@
 //     "pressure": 100,
 //     "dirty_brush": true
 //  }
-//
 // 3. Check shotcuts, (P)rint ?
-// 5. Remove duplicated events (check)
-// 6. Remove unwanted lines (check)
+// 4. Remove duplicated events (check)
+// 5. Remove unwanted lines (check)
 //
 import { parse } from '../node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '../node_modules/path-data-parser/lib/index.js';
