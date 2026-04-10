@@ -13,7 +13,6 @@
 //  }
 //
 // 3. Check shotcuts, (P)rint ?
-// 4. Move loadSVG() to svg_painter, use setSVG() (?)
 // 5. Remove duplicated events (check)
 // 6. Remove unwanted lines (check)
 //
@@ -28,8 +27,6 @@ let svg;
 let x = 0, y = 0, last_x = 0, last_y = 0;
 let events = [];
 let content;
-
-const container = document.getElementById('container');
 const parser = new DOMParser();
 
 // Translate color from HEX/Name to RGBA
@@ -163,23 +160,6 @@ export function saveEvents() {
   link.click();
 }
 
-// Load SVG
-function loadSVG(file) {
-  fetch(file)
-    .then(response => response.text())
-    .then(svgText => {
-      const svgDoc = parser.parseFromString(svgText, 'image/svg+xml');
-      svg = svgDoc.querySelector('svg');
-      if (svg && container) {
-        container.replaceChildren();
-        container.appendChild(svg);
-        svg.setAttribute("fill", "#fff");
-        svg.setAttribute("stroke", "#000");
-      }
-    });
-}
-window.loadSVG = loadSVG;
-
 // Set SVG element
 function setSVG(element) {
   svg = element;
@@ -193,6 +173,7 @@ function setTextSVG(text) {
   svg.setAttribute("fill", "#fff");
   svg.setAttribute("stroke", "#000");
 
+  const container = document.getElementById('container');
   container.replaceChildren();
   container.appendChild(svg);
 }
