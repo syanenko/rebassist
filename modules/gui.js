@@ -131,12 +131,12 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
 
   if(saveSVG != null) {
     set.save_svg = saveSVG;
-    gui.add( set, 'save_svg' ).name( 'Save SVG' );
+    gui.add( set, 'save_svg' ).name( 'Export SVG' );
   }
 
   if(saveEvents != null) {
     set.save_events = saveEvents;
-    gui.add( set, 'save_events' ).name( 'Save Events' );
+    gui.add( set, 'save_events' ).name( 'Export Events' );
   }
 
   if(saveLS != null) {

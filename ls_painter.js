@@ -20,11 +20,12 @@ import { saveEvents, paint } from './modules/painter.js';
 
 guiInit(paint, saveEvents, saveSVG, null, false);
 
-// Save L-System
+// Link
 const link = document.createElement( 'a' );
 link.style.display = 'none';
 document.body.appendChild( link );
 
+// Save L-System
 function saveLS() {
   const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
@@ -35,6 +36,10 @@ window.saveLS = saveLS;
 
 // Save SVG
 function saveSVG() {
-  console.log("saveSVG()");
+  const svg = document.getElementById('container').firstElementChild;
+  const blob = new Blob( [svg.outerHTML], { type: 'text/plain' } );
+  link.href = URL.createObjectURL( blob );
+  link.download = "lsystem.svg"
+  link.click();
 }
 window.saveSVG = saveSVG;
