@@ -1,3 +1,7 @@
+// TODO
+//
+// 1. Add celtic knots
+//
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
