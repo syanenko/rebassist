@@ -90,7 +90,7 @@
     }
 
     // Load file with picker
-    async function lsPickerLoad() {
+    async function lsLoadPicker() {
       try {
         const [fileHandle] = await window.showOpenFilePicker();
         const file = await fileHandle.getFile();
@@ -109,7 +109,7 @@
         event.preventDefault()
 
         if(event.key === "o") {
-          lsPickerLoad();
+          lsLoadPicker();
         } else if(event.key === "r") {
           window.setStatus("Rendering ...");
           lsRender();
@@ -128,7 +128,7 @@
 
   <!-- Buttons -->
   <div class="buttons">
-    <button id="0" onclick="lsPickerLoad()" title="Open L-System [Ctrl+O]">Open</button>  
+    <button id="0" onclick="lsLoadPicker()" title="Open L-System [Ctrl+O]">Open</button>  
     <button id="0" onclick="saveLS()" title="Save L-System [Ctrl+S]">Save</button>
     <button id="0" onclick="lsRender()" title="Render L-System [Ctrl+R]">Refresh</button>
 
