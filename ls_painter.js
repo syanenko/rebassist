@@ -1,6 +1,6 @@
 // TODO
 //
-// 1. "Save SVG" method.
+// 1. Set SVG background as in 'svg_painter'
 // 2. Control icons.
 // 3. Position sketches at the center on load.
 // 4. Set brush size by stroke_width.

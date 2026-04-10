@@ -161,7 +161,13 @@ export function saveEvents() {
 
 // Calculate default position
 function calcPosition(svg) {
-   set.scale = 4; // TODO: Calc them
+   console.log(svg);
+   console.log(svg.viewBox.baseVal.x);
+   console.log(svg.viewBox.baseVal.y);
+   console.log(svg.viewBox.baseVal.width);
+   console.log(svg.viewBox.baseVal.height);
+
+   set.scale = 4;  // TODO: Calc from min-x, min-y, width, height of svg.viewBox
    set.trans_x = 800;
    set.trans_y = 1024;
 
