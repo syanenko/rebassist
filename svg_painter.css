@@ -63,8 +63,8 @@ a, button, input, select {
   --input-font-size: 16px;
   --font-family: Monospace;
   z-index: 2 !important;
-  top: 67px !important;
-  right: 12px !important;
+  top: 8px !important;
+  right: 8px !important;
 }
 
 .lil-gui.color.input {
