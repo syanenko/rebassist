@@ -8,18 +8,21 @@ export let ls =
     },
     alpha: 90 * Math.PI / 180,
     theta: 20 * Math.PI / 180,
-    iterations: 7,
-    step: 2,
+    iterations: 6,
+    step: 4
 };
 
 // SVG parameters
 export let svg =
 {
-    width: 360,
-    height: 535,
+//  width: 560,
+//  height: 535,
     padding: 10,
     pathAttributes: {
         // fill: "skyblue",
-        stroke: "#69983a",
-    },
+        stroke: ["#005f00", "#00ac00", "#bba300", "rgba(250, 50, 0, 1)", "rgba(250, 100, 0, 1)", "rgba(250, 0, 0, 1)"],
+        "stroke-width": ["4", "2", "2", "1"],
+        "stroke-linecap": ["square", "square", "round"],
+         //transform: ["skewY(-35)", "n/a"]
+    }
 };
