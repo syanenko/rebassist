@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Console</title>
+    <title>MIO Painter</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <meta http-equiv="Pragma" content="no-cache">
@@ -12,13 +12,13 @@
     <script src="./node_modules/codemirror/mode/clike/clike.js"></script>
     <link rel="stylesheet" href="./node_modules/codemirror/lib/codemirror.css">
     <link rel="stylesheet" href="./node_modules/codemirror/theme/abcdef.css">
-    <link type="text/css" rel="stylesheet" href="console.css">
+    <link type="text/css" rel="stylesheet" href="mio_painter.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
   <body>
 
   <dialog id="about" style="width:420px;">
-    <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle Console</div><br>
+    <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle MotionIO Painter</div><br>
     Edit <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events send them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
     <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
       <form method="dialog" style="text-align:center">
@@ -26,11 +26,11 @@
       </form>
   </dialog>
 
-  <script type="module" src="console.js"></script>
+  <script type="module" src="mio_painter.js"></script>
 
   <div>
     <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
-    <div id="text" onclick="window.location.reload()" style="color: white">Console</div>
+    <div id="text" onclick="window.location.reload()" style="color: white">MotionIO Painter</div>
     <img id="download" class="control" src="./data/images/save_48x48.png" title="Save [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
     <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Paint [Ctrl-P]" style="right:60px" alt="Upload" onclick="window.paint()">
     <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
