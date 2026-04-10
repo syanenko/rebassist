@@ -1,6 +1,6 @@
 // TODO
 //
-// 1. Position sketches at the center on load
+// 1. Position sketches at the center and scale on load
 // 2. Set brush size by stroke_width:
 //  {
 //     "event_type": "SET_BRUSH_PARAMS",
@@ -17,7 +17,7 @@
 //
 import { parse } from '../node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '../node_modules/path-data-parser/lib/index.js';
-import { set } from './gui.js';
+import { set, guiScale, guiTransX, guiTransY } from './gui.js';
 
 const PORT = "8265";
 const SLEEP_TIME = 2000;
@@ -159,9 +159,21 @@ export function saveEvents() {
   link.click();
 }
 
+// Calculate default position
+function calcPosition(svg) {
+   set.scale = 4; // TODO: Calc them
+   set.trans_x = 800;
+   set.trans_y = 1024;
+
+   guiScale.updateDisplay();
+   guiTransX.updateDisplay();
+   guiTransY.updateDisplay();
+}
+
 // Set SVG element
 function setSVG(element) {
   svg = element;
+  calcPosition(svg); // DEBUG
 }
 window.setSVG = setSVG;
 
@@ -176,6 +188,8 @@ function setTextSVG(text) {
   const container = document.getElementById('container');
   container.replaceChildren();
   container.appendChild(svg);
+
+  calcPosition(svg); // DEBUG
 }
 window.setTextSVG = setTextSVG;
 

@@ -56,10 +56,9 @@ export const set = {
   trans_y: 0,
 };
 
+// GUI
 let guiWidth, guiHeight, guiOrient;
-
-// Init
-export let gui;
+export let gui, guiScale, guiTransX, guiTransY;
 export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
 
   gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
@@ -122,9 +121,10 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
   const sketch = gui.addFolder( 'Sketch' );
   sketch.domElement.querySelector('.title').style.color = colorTitle;
   sketch.add( set, 'sketch_send_colors').name( 'Send colors' );
-  sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
-  sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
-  sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
+
+  guiScale = sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
+  guiTransX = sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
+  guiTransY = sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
 
   // Controls
   gui.add( gui.reset(), 'reset' ).name( 'Reset' );
