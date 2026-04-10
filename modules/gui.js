@@ -205,8 +205,7 @@ function setBackgroundColor() {
   const color = "rgb(" + set.paper_color.r + "," + 
                        + set.paper_color.g + "," + 
                        + set.paper_color.b + ")";
-  document.body.style.backgroundColor = color;
-  svg.setAttribute("fill", document.body.style.backgroundColor);
+  document.documentElement.style.setProperty('--svg-background-color', color);
 }
 
 // Set preview stroke color 

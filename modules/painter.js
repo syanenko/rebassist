@@ -170,8 +170,9 @@ window.setSVG = setSVG;
 function setTextSVG(text) {
   const svgDoc = parser.parseFromString(text, 'image/svg+xml');
   svg = svgDoc.querySelector('svg');
-  svg.setAttribute("fill", "#fff");
   svg.setAttribute("stroke", "#000");
+  svg.setAttribute("fill", "var(--svg-background-color, #fff");
+  svg.style = "background-color: var(--svg-background-color, #fff";
 
   const container = document.getElementById('container');
   container.replaceChildren();
