@@ -1,9 +1,10 @@
 // TODO
 //
+// 0. Upload with picker
 // 1. Icons
-// 2.  JSON validation (alert)
+// 2. JSON validation (alert)
 // 3. Validate JSON before save (?)
-//
+// 
 const PORT = "8265";
 const SLEEP_TIME = 2000;
 let events = [];
@@ -43,7 +44,7 @@ function paint() {
     let e;
     for(let i=0; i<events.length; i++) {
       e = JSON.stringify(events[i]);
-      console.log(e); // DEBUG
+      // console.log(e); // DEBUG
       socket.send(e);
       if(e.includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
          e.includes("SET_PAPER") ||
