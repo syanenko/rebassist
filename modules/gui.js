@@ -42,7 +42,7 @@ export const set = {
 
   brush_paint_type: "PAINT",
   brush_glaze_mode: "OPAQUE",
-  brush_color: { r: 48, g: 136, b: 199},
+  brush_color: { r: 0, g: 0, b: 0},
   multi_color_brush: true,
   rotate_multi_color_brush: true,
   smudge: true,  
