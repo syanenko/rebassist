@@ -52,7 +52,8 @@ function traverse(obj) {
           events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
           
           // Width
-          const width = obj.properties["stroke-width"] * set.brush_width_mul;
+          const width = (obj.properties["stroke-width"] == undefined ? 1 : obj.properties["stroke-width"] ) * set.brush_width_mul;
+          console.log(width);
           events.push(`{ "event_type": "SET_BRUSH_PARAMS", "size": ${width} }`);
          
         } else if((key=='d') ){
