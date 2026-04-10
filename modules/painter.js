@@ -152,7 +152,7 @@ document.body.appendChild( link );
 export function saveEvents() {
   makeEvents();
   makeContent();
-  let filename = "events.json"
+  let filename = "events.mio"
   const blob = new Blob( [ content ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
   link.download = filename;

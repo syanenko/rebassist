@@ -1,6 +1,6 @@
 // TODO
 //
-// 0. Upload with picker
+// 0. 'Open' with picker
 // 1. Icons
 // 2. JSON validation (alert)
 // 3. Validate JSON before save (?)
@@ -17,7 +17,7 @@ document.body.appendChild( link );
 function save() {
   const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
   link.href = URL.createObjectURL( blob );
-  link.download = "events.json"
+  link.download = "events.mio"
   link.click();
 }
 window.save = save;
