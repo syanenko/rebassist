@@ -47,9 +47,14 @@ function traverse(obj) {
         traverse(value);
       } else {
         if((value=='path') && set.sketch_send_colors){
-          const stroke = obj.properties.stroke; // Color
-          color = toRGBA(stroke);
+          // Color
+          color = toRGBA(obj.properties.stroke);
           events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
+          
+          // Width
+          const width = obj.properties["stroke-width"] * set.brush_width_mul;
+          events.push(`{ "event_type": "SET_BRUSH_PARAMS", "size": ${width} }`);
+         
         } else if((key=='d') ){
           const segments = parsePath(value); // Path
           segments.forEach(function(s, i) {
@@ -167,7 +172,7 @@ function calcPosition(svg) {
    console.log(svg.viewBox.baseVal.width);
    console.log(svg.viewBox.baseVal.height);
 
-   set.scale = 4;  // TODO: Calc from min-x, min-y, width, height of svg.viewBox
+   set.scale = 1;  // TODO: Calc from min-x, min-y, width, height of svg.viewBox
    set.trans_x = 800;
    set.trans_y = 1024;
 

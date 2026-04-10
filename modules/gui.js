@@ -54,6 +54,7 @@ export const set = {
   scale: 1,
   trans_x: 0,
   trans_y: 0,
+  brush_width_mul: 4
 };
 
 // GUI
@@ -125,6 +126,7 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
   guiScale = sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
   guiTransX = sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
   guiTransY = sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
+  sketch.add( set, 'brush_width_mul', 1, 100, 1 ).name( 'Brush width mul.' );
 
   // Controls
   gui.add( gui.reset(), 'reset' ).name( 'Reset' );

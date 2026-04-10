@@ -1,28 +1,27 @@
 // L-System parameters
-export let ls =
-{
+export let ls = {
     axiom: "X",
     rules: {
         F: "FF",
-        X: "F[+X]F[-X]+X"
+        X: "F[+X]F[-X]++X"
     },
     alpha: 90 * Math.PI / 180,
     theta: 20 * Math.PI / 180,
-    iterations: 6,
-    step: 4
+    iterations: 9,
+    step: 2,
 };
 
 // SVG parameters
 export let svg =
 {
-//  width: 560,
-//  height: 535,
+    width: 360,
+    height: 535,
     padding: 10,
     pathAttributes: {
+        stroke: ["#aabc00", "#abac00", "#bba300", "rgba(250, 50, 0, 1)", "rgba(250, 200, 0, 1)", "rgba(250, 100, 0, 1)", "rgba(250, 70, 0, 1)"],
+        "stroke-width": ["6", "4", "3", "2"],
         // fill: "skyblue",
-        stroke: ["#005f00", "#00ac00", "#bba300", "rgba(250, 50, 0, 1)", "rgba(250, 100, 0, 1)", "rgba(250, 0, 0, 1)"],
-        "stroke-width": ["4", "2", "2", "1"],
-        "stroke-linecap": ["square", "square", "round"],
-         //transform: ["skewY(-35)", "n/a"]
+        // "stroke-linecap": ["square", "square", "round"],
+        //transform: ["skewY(-35)", "n/a"]
     }
 };
