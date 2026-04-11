@@ -1,5 +1,6 @@
 // TODO
 //
+// - Use painter.js module  
 // 0. 'Open' with picker
 // 1. Icons
 // 2. JSON validation (alert)
@@ -60,15 +61,21 @@ function paint() {
     setStatus(`Message from server: ${event.data}`);
   };
 
-  socket.onerror = (error) => {
-    setStatus(`WebSocket Error: ${error}`);
+  socket.onerror = (event) => {
+    console.error(event);
+    const message = `WebSocket '${event.target.url}' error`;
+    setStatus(message);
   };
 
   socket.onclose = (event) => {
     if (event.wasClean) {
+      console.log(event);
       setStatus(`Connection closed cleanly, code: ${event.code}, reason: ${event.reason}`);
     } else {
-      setStatus(`Connection died, code=${event.code}`);
+      console.error(event);
+      const message = `Connection to '${event.target.url}' died, code=${event.code}`;
+      setStatus(message);
+      alert(message);
     }
   };
 }
