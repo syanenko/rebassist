@@ -1,2 +1,2 @@
-# svg2mio
- SVG to MotionIO converter
+# Rebelle assistant
+ 
