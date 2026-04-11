@@ -109,7 +109,7 @@
       if (navigator.platform === "MacIntel" ? event.metaKey : event.ctrlKey) {
         event.preventDefault()
 
-        if(event.key === "o") {
+        if(event.key === "l") {
           lsLoadPicker();
         } else if(event.key === "r") {
           window.setStatus("Rendering ...");
@@ -128,12 +128,17 @@
     })
   </script>
 
+  <img id="refresh" class="control" src="./data/images/refresh_48.svg" title="Refresh [Ctrl-R]" style="right:483px; width:46px" alt="Refresh" onclick="lsRender()">
+  <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:430px; width:42px" alt="Load" onclick="lsLoadPicker()">
+  <img id="save" class="control" src="./data/images/save_48.svg" title="Save [Ctrl-S]" style="right:377px; width:42px" alt="Save" onclick="saveLS()">
+  
   <!-- Buttons -->
   <div class="buttons">
+<!--
     <button id="0" onclick="lsLoadPicker()" title="Open L-System [Ctrl+O]">Open</button>  
     <button id="0" onclick="saveLS()" title="Save L-System [Ctrl+S]">Save</button>
     <button id="0" onclick="lsRender()" title="Render L-System [Ctrl+R]">Refresh</button>
-
+-->
     <button id="1" onclick="lsLoad('test_single.mjs')" title="test_single">1</button>
     <button id="2" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
     <button id="3" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>

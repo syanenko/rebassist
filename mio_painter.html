@@ -31,9 +31,10 @@
   <div>
     <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
     <div id="text" onclick="window.location.reload()" style="color: white">MotionIO Painter</div>
-    <img id="download" class="control" src="./data/images/save_48x48.png" title="Save [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
-    <img id="paint" class="control" src="./data/images/palette_24.svg" title="Paint [Ctrl-P]" style="right:60px;filter: invert(100%);width:44px" alt="Paint" onclick="window.paint()">
-    <img id="help" class="control" src="./data/images/help_white_36x36.png" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
+    <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:172px; width:42px" alt="Load" onclick="window.load()">
+    <img id="save" class="control" src="./data/images/save_48.svg" title="Save [Ctrl-S]" style="right:117px; width:42px" alt="Save" onclick="window.save()">
+    <img id="paint" class="control" src="./data/images/paint_48.svg" title="Paint [Ctrl-P]" style="right:63px; width:42px" alt="Paint" onclick="window.paint()">
+    <img id="help" class="control" src="./data/images/help_48.svg" title="Paint [Ctrl-P]" style="right:10px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
   </div>
   <hr>
   
@@ -55,6 +56,10 @@
             if(event.key === "p") {
               window.setStatus("Sending events");
               window.paint();
+           } else if(event.key === "l") {
+              window.setStatus("Loading ...");
+              window.load();
+              window.setStatus("Loaded");
            } else if(event.key === "s") {
               window.setStatus("Saving ...");
               window.save();

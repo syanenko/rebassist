@@ -1,5 +1,7 @@
 // TODO
 //
+// - Control icons: Open (todo), Save, Paint
+// - Icons: Debug, All events, Presets
 // - Use painter.js module  
 // 0. 'Open' with picker
 // 1. Icons
@@ -9,6 +11,12 @@
 const PORT = "8265";
 const SLEEP_TIME = 2000;
 let events = [];
+
+// Load
+function load() {
+  console.log("load()");
+}
+window.load = load;
 
 // Save
 const link = document.createElement( 'a' );

@@ -1,7 +1,7 @@
 // TODO
 //
-// 1. Set SVG background as in 'svg_painter'
-// 2. Control icons.
+// 1. Control icons: Open, Save, Refresh, Paint
+// 2. Set SVG background as in 'svg_painter'
 // 3. Position sketches at the center on load.
 // 4. Set brush size by stroke_width.
 // 5. Test ws connection after loading app from yesbird.online.

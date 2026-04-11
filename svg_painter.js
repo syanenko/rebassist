@@ -1,6 +1,6 @@
 // TODO
 //
-// 1. Add celtic knots
+// 1. Transparent preview background on Paper/Visible = false
 //
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
