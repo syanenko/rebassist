@@ -201,17 +201,12 @@ progress {color: white;}
 }
 
 .control {
-  margin: 1px;
-  background-color: #000000;
-  padding: 7px 10px;
-  border-radius: 4px;
-  border:2px solid #aaaaaa;
-  margin-top: 6px;
-  font-size: 16px;
-  cursor: pointer;
-  text-align: center;
-  color:#ff9127;
- }
+  position:absolute;
+  top:6px;
+  right:6px;
+  opacity:0.8;
+	cursor: pointer;
+}
 
 #download_dlg
 {
