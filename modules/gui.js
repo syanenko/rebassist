@@ -84,11 +84,11 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
   paper.domElement.querySelector('.title').style.color = colorTitle;
   paper.add( set, 'paper_send' ).name( 'Send' );
   paper.add( set, 'paper_preset', [ 'Default/EX00 White Simple', 'Default/CA01 Canvas Artist', 'Default/HP01 Hot Pressed', 'Default/RH00 Aquarelle', 'Default/WK01 Washi' ] ).name( 'Preset' );
-  const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackgroundColor );
+  const pc = paper.addColor( set, 'paper_color', 255 ).name('Color').onChange( setBackground );
   pc.domElement.querySelector('input[type="text"]').style.display = 'none';
   paper.add( set, 'paper_deckled_edges', 64, 1024, 1 ).name( 'Deckled edges' );
   paper.add( set, 'paper_scale', 10, 400, 10 ).name( 'Scale' );
-  paper.add( set, 'paper_visible' ).name( 'Visible' );
+  paper.add( set, 'paper_visible' ).name( 'Visible' ).onChange( setBackground );
 
   // Brush
   const brush = gui.addFolder( 'Brush' );
@@ -199,18 +199,19 @@ function setOrientation(val) {
 }
 
 // Set preview paper color 
-function setBackgroundColor() {
-  const svg = document.getElementById("container").children[0];
-  if(!svg)
-    return;
+function setBackground() {
+  let opacity = 0;
+  if(set.paper_visible)
+    opacity = 1;
 
-  const color = "rgb(" + set.paper_color.r + "," + 
-                       + set.paper_color.g + "," + 
-                       + set.paper_color.b + ")";
+  const color = "rgba(" + set.paper_color.r + "," + 
+                        + set.paper_color.g + "," + 
+                        + set.paper_color.b + "," +
+                        + opacity + ")";
   document.documentElement.style.setProperty('--svg-background-color', color);
 }
 
-// Set preview stroke color 
+// Set preview stroke color
 function setStrokeColor() {
   const svg = document.getElementById("container").children[0];
   if(!svg)
@@ -219,7 +220,6 @@ function setStrokeColor() {
                        + set.brush_color.g + "," + 
                        + set.brush_color.b + ")";
   svg.setAttribute("stroke", color);
-  svg.setAttribute("fill", document.body.style.backgroundColor);
 }
 
 // Set stroke opacity

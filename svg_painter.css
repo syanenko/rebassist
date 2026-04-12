@@ -234,7 +234,7 @@ progress {color: white;}
   width: 90px;
   border-radius: 4px 4px 4px 4px;
   border: 1px solid #aaa;
-  background-color: var(--svg-background-color, rgb(255, 255, 255));
+  background-color: var(--svg-background-color, rgba(255, 255, 255, 1));
 }
 
 .CodeMirror{
