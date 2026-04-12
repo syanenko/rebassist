@@ -32,11 +32,6 @@
   <div>
     <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
     <div id="text" onclick="window.location.reload()" style="color: white">L-System Painter</div>
-<!--
-    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Render [Ctrl-R]" style="right:180px" alt="Render" onclick="lsRender()">
-    <img id="download" class="control" src="./data/images/save_48x48.png" title="Save [Ctrl-S]" style="right:120px" alt="Save" onclick="window.save()">
-    <img id="upload" class="control" src="./data/images/upload_48x48.png" title="Paint [Ctrl-P]" style="right:60px" alt="Upload" onclick="window.paint()">
--->
   </div>
   <hr>
 
@@ -92,7 +87,20 @@
     // Load file with picker
     async function lsLoadPicker() {
       try {
-        const [fileHandle] = await window.showOpenFilePicker();
+        const options = {
+          types: [
+            {
+              description: 'L-System',
+              accept: {
+                'text/javascript': ['.ls']
+              }
+            },
+          ],
+          excludeAcceptAllOption: false,
+          multiple: false,
+        };
+
+        const [fileHandle] = await window.showOpenFilePicker(options);
         const file = await fileHandle.getFile();
         const text = await file.text();
 
@@ -134,15 +142,10 @@
   
   <!-- Buttons -->
   <div class="buttons">
-<!--
-    <button id="0" onclick="lsLoadPicker()" title="Open L-System [Ctrl+O]">Open</button>  
-    <button id="0" onclick="saveLS()" title="Save L-System [Ctrl+S]">Save</button>
-    <button id="0" onclick="lsRender()" title="Render L-System [Ctrl+R]">Refresh</button>
--->
-    <button id="1" onclick="lsLoad('test_single.mjs')" title="test_single">1</button>
-    <button id="2" onclick="lsLoad('test_single_01.mjs')" title="test_single_01">2</button>
-    <button id="3" onclick="lsLoad('test_single_02.mjs')" title="test_single_02">3</button>
-    <button id="4" onclick="lsLoad('test_multy.mjs')"  title="test_multy">4</button>
+    <button id="1" onclick="lsLoad('test_single.ls')" title="test_single">1</button>
+    <button id="2" onclick="lsLoad('test_single_01.ls')" title="test_single_01">2</button>
+    <button id="3" onclick="lsLoad('test_single_02.ls')" title="test_single_02">3</button>
+    <button id="4" onclick="lsLoad('test_multy.ls')"  title="test_multy">4</button>
   </div>
 
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>

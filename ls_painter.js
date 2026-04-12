@@ -1,12 +1,8 @@
 // TODO
 //
-// 1. Control icons: Open, Save, Refresh, Paint
-// 2. Set SVG background as in 'svg_painter'
-// 3. Position sketches at the center on load.
-// 4. Set brush size by stroke_width.
-// 5. Test ws connection after loading app from yesbird.online.
-// 6. Check shotcuts.
-// 7. Validate JS in editor window (?).
+// 1. Set SVG background as in 'svg_painter'
+// 2. Position sketches at the center on load.
+// 3. Check shotcuts.
 //
 // -- Pro version:
 //  https://github.com/nylki/lindenmayer
@@ -29,9 +25,9 @@ document.body.appendChild( link );
 
 // Save L-System
 function saveLS() {
-  const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
+  const blob = new Blob( [ editor.getValue() ], { type: 'text/javascript' } );
   link.href = URL.createObjectURL( blob );
-  link.download = "lsystem.mjs"
+  link.download = "lsystem.ls"
   link.click();
 }
 window.saveLS = saveLS;
