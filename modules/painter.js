@@ -185,6 +185,8 @@ function calcPosition(svg) {
 // Set SVG element
 function setSVG(element) {
   svg = element;
+  svg.style = "background-color: var(--svg-background-color, #fff";
+
   calcPosition(svg); // DEBUG
 }
 window.setSVG = setSVG;
