@@ -15,9 +15,10 @@
 //    push 'finals' in object after editing - before iterate() and final().
 // 2. Interface: Load, Save, 2D, 3D, Painter (GUI), Preview Thumbnails.
 //
-import { guiInit, gui } from './modules/gui.js';
+import { guiInit, set } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
+set.paper_visible = false;
 guiInit(paint, saveEvents, saveSVG, null, false);
 
 // Link
