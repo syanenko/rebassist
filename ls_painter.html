@@ -19,7 +19,7 @@
   <body>
 
   <dialog id="about" style="width:420px;">
-    <div style="font-size: 24px; color:#fff; font-style: italic;">L-System Painter - Rebelle L-systems extension</div><br>
+    <div style="font-size: 24px; color:#fff; font-style: italic;">L-System Painter</div><br>
     Edit <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events send them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
     <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
       <form method="dialog" style="text-align:center">
@@ -119,9 +119,9 @@
         if(event.key === "l") {
           lsLoadPicker();
         } else if(event.key === "r") {
-          window.setStatus("Rendering ...");
+          window.setStatus("Refreshing ...");
           lsRender();
-          window.setStatus("Rendered");
+          window.setStatus("Refreshed");
         } if(event.key === "p") {
           window.setStatus("Sending events ...");
           window.paint(); // DEBUG
