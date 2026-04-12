@@ -8,12 +8,6 @@ const PORT = "8265";
 const SLEEP_TIME = 2000;
 let events = [];
 
-// Load
-function load() {
-  console.log("load()");
-}
-window.load = load;
-
 // Save
 const link = document.createElement( 'a' );
 link.style.display = 'none';
@@ -41,7 +35,12 @@ const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 // Paint
 function paint() {
   events.length = 0;
-  events = JSON.parse(editor.getValue());
+  try {
+    events = JSON.parse(editor.getValue());
+  } catch (err) {
+    alert("Error parsing MIO script - " + err);
+    return;
+  }
 
   const socket = new WebSocket('ws://localhost:' + PORT);
   socket.onopen = async (event) => {
