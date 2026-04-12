@@ -1,10 +1,9 @@
 // TODO
 //
-// 1. Set SVG background as in 'svg_painter'
-// 2. Position sketches at the center on load.
-// 3. SVG thumbnails as in SVG painter.
-// 4. Check shotcuts.
-// 5. About
+// 1. Position sketches at the center on load.
+// 2. SVG thumbnails as in SVG painter.
+// 3. Check shotcuts.
+// 4. About
 //
 // -- Pro version:
 //  https://github.com/nylki/lindenmayer
