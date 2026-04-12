@@ -1,12 +1,8 @@
 // TODO
 //
-// - Control icons: Open (todo), Save, Paint
-// - Icons: Debug, All events, Presets
-// - Use painter.js module  
-// 0. 'Open' with picker
-// 1. Icons
-// 2. JSON validation (alert)
-// 3. Validate JSON before save (?)
+// - Use painter.js module
+// - Alert on paint and validation of JSON as in LS-Painter (and before save (?).
+// - Presets: Debug, All events, Examples
 // 
 const PORT = "8265";
 const SLEEP_TIME = 2000;
