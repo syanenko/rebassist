@@ -14,7 +14,7 @@ link.style.display = 'none';
 document.body.appendChild( link );
 
 function save() {
-  const blob = new Blob( [ editor.getValue() ], { type: 'text/plain' } );
+  const blob = new Blob( [ editor.getValue() ], { type: 'text/json' } );
   link.href = URL.createObjectURL( blob );
   link.download = "events.mio"
   link.click();

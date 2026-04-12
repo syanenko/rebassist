@@ -58,7 +58,6 @@
               window.paint();
            } else if(event.key === "l") {
               window.setStatus("Loading ...");
-              // window.load();
               loadPicker();
               window.setStatus("Loaded");
            } else if(event.key === "s") {
@@ -90,7 +89,19 @@
     // Load file with picker
     async function loadPicker() {
       try {
-        const [fileHandle] = await window.showOpenFilePicker();
+        const options = {
+          types: [
+            {
+              description: 'Motion IO',
+              accept: {
+                'text/json': ['.mio']
+              }
+            },
+          ],
+          excludeAcceptAllOption: false,
+          multiple: false,
+        };
+        const [fileHandle] = await window.showOpenFilePicker(options);
         const file = await fileHandle.getFile();
         const text = await file.text();
 
