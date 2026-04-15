@@ -16,7 +16,7 @@ export let ls = {
 export let svg =
 {
   pathAttributes: {
-    stroke: "forestgreen",
-    "stroke-width": ["2", "1"],
+    stroke: ["forestgreen", "forestgreen", "forestgreen", "yellow"],
+    "stroke-width": ["1.4", "1"],
   }
 };
