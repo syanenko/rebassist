@@ -1,9 +1,27 @@
+Привет !
+
+Вот подборка ссылок на материалы о системах Линденмайера (L-Systems) о которых я рассказывал:
+
+1. Общие сведения: L-Systems.
+
+2. Основополагающий труд: https://algorithmicbotany.org/papers/abop/abop.pdf
+
+3. Канонический софт: https://algorithmicbotany.org/virtual_laboratory/
+
+4. Мой проект: https://yesbird.online/rebelle/assistant/ls_painter.html
+
+Это первая, пока 2D-версия, меню 'Painter' можно использовать только совместно с программой Rebelle. Поиграйте с правилами ('rules'), цветами ("stroke") и толщиной штриха ("stroke-width") - всё в общем должно быть интуитивно понятно.
+
+Пишите, если будут вопросы ).
+
+
 -- Papers
-CA01 Canvas Artist
-EX00 White Simple
-HP01 Hot Pressed
-RH00 Aquarelle
-WK01 Washi
+- Chladni patterns:
+https://www.dynamicmath.xyz/chladni-patterns/
+https://paulbourke.net/geometry/chladni/
+https://archive.bridgesmathart.org/2016/bridges2016-481.pdf
+https://neumanncondition.com/
+
 
 -- GUI
 https://lil-gui.georgealways.com/examples/kitchen-sink/

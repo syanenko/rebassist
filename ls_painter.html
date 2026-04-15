@@ -60,6 +60,7 @@
         .then((module) => {
           const cont = document.getElementById('container');
           cont.replaceChildren();
+          // TODO: Convert from LSVG here
           cont.insertAdjacentHTML("beforeend", getMultiPathSVGCode(module.ls, module.svg));
           setSVG(cont.firstElementChild);
       }).catch((err) => {
@@ -140,18 +141,20 @@
   <img id="refresh" class="control" src="./data/images/refresh_48.svg" title="Refresh [Ctrl-R]" style="right:425px; width:46px" alt="Refresh" onclick="lsRender()">
   <img id="help" class="control" src="./data/images/help_48.svg" title="Help [Ctrl-H]" style="right:377px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
 
-  <div style='position: absolute; top:65px; left:10px; width:310px; z-index:4;'>
-    <input id="1" type="image" src='data/svg/plant_01.svg' class='icon' onclick="lsLoad('plant_01.ls')">
+  <div style='position: absolute; top:65px; left:10px; width:210px; z-index:4;'>
+    <input id="2" type="image" src='data/svg/final/plant_1.svg' class='icon' onclick="lsLoad('final/plant_1.ls')">
+    <input id="2" type="image" src='data/svg/final/algae.svg' class='icon' onclick="lsLoad('final/algae.ls')">
+
     <input id="2" type="image" src='data/svg/sketch_06.svg' class='icon' onclick="lsLoad('test_single_01.ls')">   
     <input id="3" type="image" src='data/svg/sketch_01.svg' class='icon' onclick="lsLoad('test_single_02.ls')">
+    <input id="1" type="image" src='data/svg/plant_01.svg' class='icon' onclick="lsLoad('plant_01.ls')">
     <input id="4" type="image" src='data/svg/sketch_02.svg' class='icon' onclick="lsLoad('test_multy.ls')">
-    <input id="5" type="image" src='data/svg/sketch_04.svg' class='icon' onclick="lsLoad('test_single.ls')">
     <input id="6" type="image" src='data/svg/sketch_11.svg' class='icon' onclick="lsLoad('test_single.ls')">
-    <input id="7" type="image" src='data/svg/sketch_08.svg' class='icon' onclick="lsLoad('test_single.ls')">
     <input id="8" type="image" src='data/svg/sketch_09.svg' class='icon' onclick="lsLoad('test_single.ls')">
-    <input id="9" type="image" src='data/svg/sketch_07.svg' class='icon' onclick="lsLoad('test_single.ls')">
-    <input id="10" type="image" src='data/svg/sketch_05.svg' class='icon' onclick="lsLoad('test_single.ls')">
     <input id="11" type="image" src='data/svg/sketch_03.svg' class='icon' onclick="lsLoad('test_single.ls')">
+    <input id="9" type="image" src='data/svg/sketch_07.svg' class='icon' onclick="lsLoad('test_single.ls')">
+    <input id="7" type="image" src='data/svg/sketch_08.svg' class='icon' onclick="lsLoad('test_single.ls')">
+    <input id="10" type="image" src='data/svg/sketch_05.svg' class='icon' onclick="lsLoad('test_multy.ls')">
   </div>
 
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>

@@ -190,7 +190,7 @@ progress {color: white;}
   width: 90px;
   border-color:rgb(0, 0, 0);
   border-radius: 4px 4px 4px 4px;
-  border: 1px solid black;
+  border: 1px solid rgb(128, 128, 128);
   background-color: var(--svg-background-color, rgba(255, 255, 255, 1));
 }
 
