@@ -17,6 +17,7 @@ export let ls = {
 // SVG parameters
 export let svg =
 {
+  // width: "500px",
   pathAttributes: {
     stroke: ["olivedrab", "forestgreen", "seagreen", "#cb0", "#f80"],
     "stroke-width": ["3", "2", "1"]
