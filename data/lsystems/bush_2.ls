@@ -8,7 +8,7 @@ export let ls = {
   alpha: 90 * Math.PI / 180,
   theta: 22.5 * Math.PI / 180,
   iterations: 4,
-  step: 9
+  step: 12
 };
 
 // SVG parameters

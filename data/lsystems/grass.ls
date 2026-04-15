@@ -10,14 +10,14 @@ export let ls = {
   },
   alpha: 110 * Math.PI / 180,
   theta: 5 * Math.PI / 180,
-  step: 10,
+  step: 8,
   iterations: 4
 };
 
 // SVG parameters
 export let svg =
 {
-  // width: "500px",
+  //width: "650px",
   pathAttributes: {
     stroke: ["olivedrab", "forestgreen", "seagreen", "#cb0", "#f80"],
     "stroke-width": ["3", "2", "1"]

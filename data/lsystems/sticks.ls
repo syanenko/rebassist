@@ -1,5 +1,6 @@
 // L-System parameters
 export let ls = {
+    lid: "sticks",
     axiom: "X",
     rules: {
         F: "FF",
@@ -14,9 +15,7 @@ export let ls = {
 // SVG parameters
 export let svg =
 {
-  width: 360,
-  height: 535,
-  padding: 10,
+  width: 450,
   pathAttributes: {
     stroke: ["#aabc00", "#abac00", "#bba300", "rgba(250, 50, 0, 1)", "rgba(250, 200, 0, 1)", "rgba(250, 100, 0, 1)", "rgba(250, 70, 0, 1)"],
     "stroke-width": ["6", "4", "3", "2"]
