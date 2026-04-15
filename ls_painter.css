@@ -260,3 +260,14 @@ button {
   
 	cursor: pointer;
 }
+
+.list {
+  position: absolute;
+  top:95px;
+  left:10px;
+  width:230px;
+  height:87%;
+  direction: rtl;
+  overflow:auto;
+  z-index:4;
+}

@@ -141,7 +141,15 @@
   <img id="refresh" class="control" src="./data/images/refresh_48.svg" title="Refresh [Ctrl-R]" style="right:425px; width:46px" alt="Refresh" onclick="lsRender()">
   <img id="help" class="control" src="./data/images/help_48.svg" title="Help [Ctrl-H]" style="right:377px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
 
-  <div style='position: absolute; top:65px; left:10px; width:230px; height:90%; direction: rtl; overflow:auto; z-index:4;'>
+  <div id="curves" class="list" style="visibility: hidden">
+    <input id="5" type="image" src='data/svg/ls/algae.svg' class='icon' onclick="lsLoad('algae.ls')">
+    <input id="5" type="image" src='data/svg/ls/algae.svg' class='icon' onclick="lsLoad('algae.ls')">
+  </div>
+  <div id="shapes" class="list" style="visibility: hidden">
+    <input id="5" type="image" src='data/svg/ls/plant_3.svg' class='icon' onclick="lsLoad('plant_3.ls')">
+    <input id="5" type="image" src='data/svg/ls/plant_3.svg' class='icon' onclick="lsLoad('plant_3.ls')">
+  </div>
+  <div id="plants" class="list" style="visibility: visible">
     <input id="1" type="image" src='data/svg/ls/plant_2.svg' class='icon' onclick="lsLoad('plant_2.ls')">
     <input id="2" type="image" src='data/svg/ls/weed.svg' class='icon' onclick="lsLoad('weed.ls')">
     <input id="3" type="image" src='data/svg/ls/plant_1.svg' class='icon' onclick="lsLoad('plant_1.ls')">
@@ -157,6 +165,25 @@
     <input id="5" type="image" src='data/svg/ls/algae.svg' class='icon' onclick="lsLoad('algae.ls')">
     <input id="5" type="image" src='data/svg/ls/plant_3.svg' class='icon' onclick="lsLoad('plant_3.ls')">
   </div>
+
+  <select id="collections", style="z-index:999; position: absolute; top:65px; left:10px">
+    <option value="plants">Plants&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>
+    <option value="curves">Curves</option>
+    <option value="shapes">Shapes</option>
+  </select>
+  <script>
+    let curCollection = document.getElementById("plants");
+    const list = document.getElementById("collections");
+    list.addEventListener('change', (event) => {
+      const selectedValue = event.target.value;
+      const selectedText = event.target.options[event.target.selectedIndex].text;
+      console.log(`Value: ${selectedValue}, Text: ${selectedText}`);
+      const col = document.getElementById(selectedValue);
+      curCollection.style.visibility = "hidden";
+      curCollection = col;
+      curCollection.style.visibility = "visible";
+    });
+  </script>
 
   <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">Ready</div>
 
