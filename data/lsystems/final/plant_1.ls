@@ -7,13 +7,10 @@ export let ls =
     F: "FF",
     X: "F-[[X]+X]+F[+FX]-X",
   },
-  alpha: 90  * Math.PI / 180,
-  theta: 25  * Math.PI / 180,
+  alpha: 90 * Math.PI / 180,
+  theta: 25 * Math.PI / 180,
   iterations: 6,
-  step: 4,
-  attributes: {
-    stroke: ["#080", "#080", "#080", "#080", "#080", "#080", "#8a0"],
-  }
+  step: 4
 }
 
 // SVG parameters
