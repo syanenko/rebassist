@@ -166,20 +166,23 @@ export function saveEvents() {
 }
 
 // Calculate default position
-function calcPosition(svg) {
-   console.log(svg);
-   console.log(svg.viewBox.baseVal.x);
-   console.log(svg.viewBox.baseVal.y);
-   console.log(svg.viewBox.baseVal.width);
-   console.log(svg.viewBox.baseVal.height);
+// TODO: Recalc on change size and orientation
+export function calcPosition(svg) {
+  console.log(svg);
+  console.log(svg.viewBox.baseVal.x);
+  console.log(svg.viewBox.baseVal.y);
+  console.log(svg.viewBox.baseVal.width);
+  console.log(svg.viewBox.baseVal.height);
 
-   set.scale = 1; // TODO: Calc from min-x, min-y, width, height of svg.viewBox
-   set.trans_x = set.width  / 2 - (svg.viewBox.baseVal.x + svg.viewBox.baseVal.width / 2);
-   set.trans_y = set.height / 2 - (svg.viewBox.baseVal.y + svg.viewBox.baseVal.height / 2);
+  // TODO: Check for all cases (!)
+  set.scale = Math.min ((set.width / svg.viewBox.baseVal.width),
+                        (set.height / svg.viewBox.baseVal.height)) * 0.8;
+  set.trans_x = set.width / 2;
+  set.trans_y = set.height * 0.9;
 
-   guiScale.updateDisplay();
-   guiTransX.updateDisplay();
-   guiTransY.updateDisplay();
+  guiScale.updateDisplay();
+  guiTransX.updateDisplay();
+  guiTransY.updateDisplay();
 }
 
 // Set SVG element
