@@ -17,7 +17,7 @@ export let svg =
 {
   // width: "500px",
   pathAttributes: {
-    stroke: ["forestgreen", "forestgreen", "forestgreen", "yellow"],
+    stroke: ["forestgreen", "forestgreen", "forestgreen", "#e80", "yellow"],
     "stroke-width": ["1.4", "1"]
   }
 };
