@@ -54,7 +54,7 @@ export const set = {
   scale: 1,
   trans_x: 0,
   trans_y: 0,
-  brush_width_mul: 4
+  brush_width_mul: 2
 };
 
 // GUI
