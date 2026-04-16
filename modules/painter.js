@@ -53,7 +53,7 @@ function traverse(obj) {
           
           // Width
           const width = (obj.properties["stroke-width"] == undefined ? 1 : obj.properties["stroke-width"] ) * set.brush_width_mul;
-          console.log(width);
+          // console.log(width);
           events.push(`{ "event_type": "SET_BRUSH_PARAMS", "size": ${width} }`);
          
         } else if((key=='d') ){
@@ -173,9 +173,9 @@ function calcPosition(svg) {
    console.log(svg.viewBox.baseVal.width);
    console.log(svg.viewBox.baseVal.height);
 
-   set.scale = 1;  // TODO: Calc from min-x, min-y, width, height of svg.viewBox
-   set.trans_x = 800;
-   set.trans_y = 1024;
+   set.scale = 1; // TODO: Calc from min-x, min-y, width, height of svg.viewBox
+   set.trans_x = set.width  / 2 - (svg.viewBox.baseVal.x + svg.viewBox.baseVal.width / 2);
+   set.trans_y = set.height / 2 - (svg.viewBox.baseVal.y + svg.viewBox.baseVal.height / 2);
 
    guiScale.updateDisplay();
    guiTransX.updateDisplay();
