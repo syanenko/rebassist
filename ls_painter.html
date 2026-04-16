@@ -136,10 +136,11 @@
     })
   </script>
 
-  <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:480px; width:42px" alt="Load" onclick="lsLoadPicker()">
-  <img id="save" class="control" src="./data/images/save_48.svg" title="Save [Ctrl-S]" style="right:530px; width:42px" alt="Save" onclick="saveLS()">
-  <img id="refresh" class="control" src="./data/images/refresh_48.svg" title="Refresh [Ctrl-R]" style="right:425px; width:46px" alt="Refresh" onclick="lsRender()">
-  <img id="help" class="control" src="./data/images/help_48.svg" title="Help [Ctrl-H]" style="right:377px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
+
+  <img id="refresh" class="control" src="./data/images/refresh_48.svg" title="Refresh [Ctrl-R]" style="right:161px; width:46px" alt="Refresh" onclick="lsRender()">
+  <img id="save" class="control" src="./data/images/save_48.svg" title="Save [Ctrl-S]" style="right:112px; width:42px" alt="Save" onclick="saveLS()">
+  <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:60px; width:42px" alt="Load" onclick="lsLoadPicker()">
+  <img id="help" class="control" src="./data/images/help_48.svg" title="Help [Ctrl-H]" style="right:8px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
 
   <div id="curves" class="list" style="visibility: hidden">
     <input id="5" type="image" src='data/svg/ls/algae.svg' class='icon' onclick="lsLoad('algae.ls')">
@@ -166,7 +167,7 @@
     <input id="5" type="image" src='data/svg/ls/plant_3.svg' class='icon' onclick="lsLoad('plant_3.ls')">
   </div>
 
-  <select id="collections", style="z-index:999; position: absolute; top:65px; left:10px">
+  <select id="collections", style="z-index:999; position: absolute; top:65px; left:10px;">
     <option value="plants">Plants&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</option>
     <option value="curves">Curves</option>
     <option value="shapes">Shapes</option>
