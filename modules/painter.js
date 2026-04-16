@@ -1,16 +1,7 @@
 // TODO
 //
-// 1. Position sketches at the center and scale on load
-// 2. Set brush size by stroke_width:
-//  {
-//     "event_type": "SET_BRUSH_PARAMS",
-//     "size": 40,
-//     "size_px" : 20, // use either size or size_px
-//     "water": 50,
-//     "opacity": 80,
-//     "pressure": 100,
-//     "dirty_brush": true
-//  }
+// 1. Position sketches at the center and scale on load (+/-)
+// 2. Turn off engine by default
 // 3. Check shotcuts, (P)rint ?
 // 4. Remove duplicated events (check)
 // 5. Remove unwanted lines (check)
@@ -174,7 +165,7 @@ export function calcPosition(svg) {
   console.log(svg.viewBox.baseVal.width);
   console.log(svg.viewBox.baseVal.height);
 
-  // TODO: Check for all cases (!)
+  // TODO: Check for all cases ("plant 4")
   set.scale = Math.min ((set.width / svg.viewBox.baseVal.width),
                         (set.height / svg.viewBox.baseVal.height)) * 0.8;
   set.trans_x = set.width / 2;
