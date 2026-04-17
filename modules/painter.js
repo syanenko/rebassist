@@ -1,5 +1,6 @@
 // TODO
 //
+// 0. Alert on ws error (move from mio_painter.js to painter.js)
 // 1. Position sketches at the center and scale on load (+/-)
 // 2. Turn off engine by default
 // 3. Check shotcuts, (P)rint ?

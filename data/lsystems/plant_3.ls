@@ -3,10 +3,10 @@ export let ls = {
   lid: "plant 3",
   axiom: "X",
   rules: {
-    F: "FF",
-    X: "F[+X][-X]FX",
+    F: "FX",
+    X: "F[+X][-X]-F+X",
   },
-  alpha: 90 * Math.PI / 180,
+  alpha: 70 * Math.PI / 180,
   theta: 25.71 * Math.PI / 180,
   iterations: 7,
   step: 2.5
@@ -17,7 +17,7 @@ export let svg =
 {
   // width: "500px",
   pathAttributes: {
-    stroke: ["forestgreen", "forestgreen", "forestgreen", "#e80", "yellow"],
+    stroke: ["forestgreen", "forestgreen", "forestgreen", "orange"],
     "stroke-width": ["1.4", "1"]
   }
 };

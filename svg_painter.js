@@ -1,6 +1,7 @@
 // TODO
 //
 // 1. Transparent preview background on Paper/Visible = false
+// 2. Move icons right
 //
 import { guiInit, gui } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
