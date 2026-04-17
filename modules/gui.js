@@ -1,8 +1,3 @@
-//
-// TODO
-//
-// 1. Disable buttons if 'null' in guiInit
-//
 import { GUI } from '../node_modules/lil-gui/dist/lil-gui.esm.min.js';
 
 const colorTitle = "hsl(205 61% 65%)";

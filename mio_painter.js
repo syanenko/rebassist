@@ -1,7 +1,5 @@
 // TODO
 //
-// - Use painter.js module
-// - Alert on paint and validation of JSON as in LS-Painter (and before save (?).
 // - Presets: Debug, All events, Examples
 // 
 const PORT = "8265";

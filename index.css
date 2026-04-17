@@ -63,8 +63,8 @@ a, button, input, select {
   --input-font-size: 16px;
   --font-family: Monospace;
   z-index: 2 !important;
-  top: 67px !important;
-  right: 12px !important;
+  top: 12px !important;
+  right: 262px !important;
 }
 
 .lil-gui.color.input {
@@ -86,7 +86,7 @@ a, button, input, select {
   border-width: 0px;
   font-size: 16px;
   color:rgba(255, 255, 255, 1.0);
-  background-color:rgba(75, 75, 75, 1.0);
+  background-color:rgba(75, 75, 75, 0.8);
 
   padding: 20px;
   padding-top: 30px;
@@ -125,7 +125,7 @@ background-color:white;
 	user-select: none;
   font-size: 195%;
   font-style: italic;
-  color: #000;
+  color: #fff;
   z-index: 2;
   cursor: pointer;
 }
@@ -190,7 +190,8 @@ progress {color: white;}
   width: 90px;
   border-color:rgb(0, 0, 0);
   border-radius: 4px 4px 4px 4px;
-  border: 1px solid black;
+  border: 1px solid rgb(128, 128, 128);
+  background-color: var(--svg-background-color, rgba(255, 255, 255, 1));
 }
 
 .CodeMirror{
@@ -198,7 +199,7 @@ progress {color: white;}
   position: absolute;
   top: 72px;
   right: 10px; 
-  width: 900px;
+  width: 600px;
   height: calc(100% - 105px);
   font-family: Monospace;
   font-size: 16px;
@@ -210,8 +211,8 @@ progress {color: white;}
 .buttons
 {
   position: absolute;
-  top: 68px;
-  left:  10px;
+  top: 60px;
+  left:  0px;
   width: 1250px;
   padding: 10px;
   box-sizing: border-box;
@@ -226,7 +227,7 @@ progress {color: white;}
 
 button {
   height: 35px;
-  font-size: 18px;
+  font-size: 15px;
   background-color: #333;
   border-color: #0e0;
   border-radius: 6px;
@@ -258,4 +259,15 @@ button {
 */
   
 	cursor: pointer;
+}
+
+.list {
+  position: absolute;
+  top:95px;
+  left:10px;
+  width:230px;
+  height:87%;
+  direction: rtl;
+  overflow:auto;
+  z-index:4;
 }

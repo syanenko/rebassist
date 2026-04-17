@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="expires" content="timestamp">
-    <link type="text/css" rel="stylesheet" href="svg_painter.css">
+    <link type="text/css" rel="stylesheet" href="index.css">
     <link rel="icon" href="./favicon.ico" type="image/x-icon">
   </head>
 
@@ -14,8 +14,9 @@
     <div>
       <img id="logo" src="data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
       <div id="text" onclick="window.location.reload()">SVG Painter</div>
-      <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:420px; width:42px" alt="Load" onclick="loadSVGPicker()">
-      <img id="help" class="control" src="data/images/help_48.svg" title="Help [Ctrl-H]" style="right:374px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
+      <img id="paint" class="control" src="./data/images/paint_48.svg" title="Paint [Ctrl-P]" style="right:110px; width:42px" alt="Paint" onclick="window.paint()">
+      <img id="load" class="control" src="./data/images/load_48.svg" title="Load [Ctrl-L]" style="right:60px; width:42px" alt="Load" onclick="loadSVGPicker()">
+      <img id="help" class="control" src="data/images/help_48.svg" title="Help [Ctrl-H]" style="right:8px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
     </div>
     <hr>
 
@@ -53,6 +54,9 @@
     <script>
       // On load
       window.onload = function() {
+        const gui = document.querySelectorAll('[class*="lil-gui"]'); // GUI position
+        gui[0].style.setProperty('right', '169px', 'important');
+
         loadSVG("./data/svg/rebelle_logo.svg");
       };
 

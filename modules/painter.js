@@ -1,11 +1,8 @@
 // TODO
 //
-// 0. Alert on ws error (move from mio_painter.js to painter.js)
 // 1. Position sketches at the center and scale on load (+/-)
 // 2. Turn off engine by default
-// 3. Check shotcuts, (P)rint ?
 // 4. Remove duplicated events (check)
-// 5. Remove unwanted lines (check)
 //
 import { parse } from '../node_modules/svg-parser/dist/svg-parser.esm.js';
 import { parsePath } from '../node_modules/path-data-parser/lib/index.js';
