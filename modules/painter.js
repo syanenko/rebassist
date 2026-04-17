@@ -228,15 +228,21 @@ export async function paint() {
     setStatus('Message from server: ' + event.data);
   };
 
-  socket.onerror = (error) => {
-    setStatus('WebSocket Error: ' + error);
+  socket.onerror = (event) => {
+    console.error(event);
+    const message = `WebSocket '${event.target.url}' error`;
+    setStatus(message);
   };
 
   socket.onclose = (event) => {
     if (event.wasClean) {
-      setStatus(`Connection closed cleanly, Code:${event.code}, Reason: ${event.reason}`);
+      console.log(event);
+      setStatus(`Connection closed cleanly, code: ${event.code}, reason: ${event.reason}`);
     } else {
-      setStatus('Connection died');
+      console.error(event);
+      const message = `Connection to '${event.target.url}' died, code=${event.code}`;
+      setStatus(message);
+      alert(message);
     }
   };
 }
