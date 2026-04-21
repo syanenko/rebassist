@@ -17,7 +17,8 @@
 import { guiInit, set } from './modules/gui.js';
 import { saveEvents, paint } from './modules/painter.js';
 
-set.paper_visible = false;
+set.paper_visible = true
+set.paper_deckled_edges = false;
 guiInit(paint, saveEvents, saveSVG, null, false);
 
 // Link
