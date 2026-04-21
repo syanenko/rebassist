@@ -44,7 +44,7 @@ async function init() {
 
   renderer = new THREE.WebGLRenderer({alpha: true, antialias: true});
   renderer.setSize(window.innerWidth, window.innerHeight);
-  renderer.setClearColor( 0x0 );
+  renderer.setClearColor(0x000000, 0);
 
   svgRenderer = new SVGRenderer();
   svgRenderer.setSize(640, 480);
