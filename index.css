@@ -6,7 +6,7 @@ html, body {
   background-repeat: no-repeat;
   background-size: cover;
 	background-color: #fff;
-	color: #000;
+	color: #fff;
   font-family: Monospace;
 	font-size: 13px;
 	line-height: 24px;
@@ -15,8 +15,9 @@ html, body {
 }
 
 a {
-  color: #eee;
-  /*text-decoration: none;*/
+  color: #fff;
+  font-style: italic;
+  text-decoration: none;
 }
 
 a:hover {

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Rebelle assystant</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="expires" content="timestamp">
+
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="./favicon.ico" type="image/x-icon">
+  </head>
+  <body>
+
+  <dialog id="about" style="width:420px;">
+    <div style="font-size: 24px; color:#fff; font-style: italic;">Rebelle Assistant</div><br>
+    Transforms <a href=" https://en.wikipedia.org/wiki/L-system" target="_blank" rel="noopener noreferrer"><i>L-System</i></a> to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events and sends them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
+      <form method="dialog" style="text-align:center">
+      <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
+      </form>
+  </dialog>
+
+  <div>
+    <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
+    <div id="text" onclick="window.location.reload()" style="color: white">Rebelle Assistant</div>
+  </div>
+  <hr>
+  <p>Rebelle Assistant description</p>
+  <hr>
+  <div>
+    <div id="text" onclick="window.location.reload()" style="color: white">SVG Painter</div>
+    <p>SVG Painter description</p>
+    <button id="svg" onclick="window.open('svg_painter.html', '_blank')">Open</button>
+  </div>
+  <hr>
+  <div>
+    <div id="text" onclick="window.location.reload()" style="color: white">L-Systems Painter</div>
+    <p>L-Systems Painter description</p>
+    <button id="svg" onclick="window.open('ls_painter.html', '_blank')">Open</button>
+  </div>
+
+  <hr>
+  <div>
+    <div id="text" onclick="window.location.reload()" style="color: white">MotionIO Painter</div>
+    <p>MotionIO Painter description</p>
+    <button id="svg" onclick="window.open('mio_painter.html', '_blank')">Open</button>
+  </div>
+  <hr>
+
+  <div id="status" style="position: absolute; bottom:3px; color:#fff; background-color: #333; width:100%; padding-left: 8px; font-size: 18px;">
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a>
+  </div>
+
+  <script>
+    window.onload = function() {
+    };
+  </script>
+
+  </body>
+</html>
