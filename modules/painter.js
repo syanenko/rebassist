@@ -1,6 +1,7 @@
 // TODO
 //
-// 1. Position sketches at the center and scale on load (+/-)
+// 0. Calc scale
+// 1. Recalc trans/scale on artwork/paper change
 // 2. Turn off engine by default
 // 4. Remove duplicated events (check)
 //
@@ -164,10 +165,12 @@ export function calcPosition(svg) {
   console.log(svg.viewBox.baseVal.height);
 
   // TODO: Check for all cases ("plant 4")
-  set.scale = Math.min ((set.width / svg.viewBox.baseVal.width),
-                        (set.height / svg.viewBox.baseVal.height)) * 0.8;
-  set.trans_x = set.width / 2;
-  set.trans_y = set.height * 0.9;
+  set.scale = 1;
+  // set.scale = Math.min ((set.width / svg.viewBox.baseVal.width),
+  //                       (set.height / svg.viewBox.baseVal.height)) * 0.8;
+
+  set.trans_x = -svg.viewBox.baseVal.x + (set.width / 2 - svg.viewBox.baseVal.width / 2);
+  set.trans_y = -svg.viewBox.baseVal.y + (set.height / 2 - svg.viewBox.baseVal.height / 2);
 
   guiScale.updateDisplay();
   guiTransX.updateDisplay();
