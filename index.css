@@ -52,8 +52,8 @@ a, button, input, select {
   --background-color: #393939;
   --title-background-color: #262626;
   --widget-color: #4B4B4B;
-  --number-color: #ddd;
-  --title-text-color: #fff;
+  --number-color:  hsl(205 61% 65%);
+  --title-text-color: hsl(205 61% 65%);
   --text-color: #ddd;
   --name-width: 20%;
   --widget-height: 24px;

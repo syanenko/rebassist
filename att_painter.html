@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>three.js webgpu - attractors particles</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link type="text/css" rel="stylesheet" href="index.css">
+  </head>
+  <body>
+
+    <!-- "three/webgpu": "/node_modules/three/build/three.webgpu.js",
+    "three/tsl": "/node_modules/three/build/three.tsl.js", -->
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/node_modules/three/build/three.module.min.js",
+          "three/addons/": "/node_modules/three/examples/jsm/"
+        }
+      }
+    </script>
+    <script type="module" src="att_painter.js"></script>
+
+    <div id="container" style="position:absolute; top:8px; left:8px; width:640px"></div>
+
+    <script>
+      // On load
+      window.onload = function() {
+        const gui = document.querySelectorAll('[class*="lil-gui"]'); // GUI position
+        gui[0].style.setProperty('right', '8px', 'important');
+      };
+    </script>
+  </body>
+</html>
