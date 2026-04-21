@@ -182,7 +182,7 @@ let set = { env: 3,
 
 // On controls changed
 function  onSetChanged() {
-  console.log(set);
+  // console.log(set); // DEBUG
   makeAttractor();
 }
 

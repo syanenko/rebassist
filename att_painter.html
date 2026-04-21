@@ -1,33 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>three.js webgpu - attractors particles</title>
+    <title>Attractors</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link type="text/css" rel="stylesheet" href="index.css">
   </head>
   <body>
 
-    <!-- "three/webgpu": "/node_modules/three/build/three.webgpu.js",
-    "three/tsl": "/node_modules/three/build/three.tsl.js", -->
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "/node_modules/three/build/three.module.min.js",
-          "three/addons/": "/node_modules/three/examples/jsm/"
-        }
+  <!-- "three/webgpu": "/node_modules/three/build/three.webgpu.js",
+  "three/tsl": "/node_modules/three/build/three.tsl.js", -->
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "/node_modules/three/build/three.module.min.js",
+        "three/addons/": "/node_modules/three/examples/jsm/"
       }
-    </script>
-    <script type="module" src="att_painter.js"></script>
+    }
+  </script>
 
-    <div id="container" style="position:absolute; top:8px; left:8px; width:640px"></div>
+  <dialog id="about" style="width:420px;">
+    <div style="font-size: 24px; color:#fff; font-style: italic;">Attractors Painter</div><br>
+    Transforms <a href=" https://en.wikipedia.org/wiki/L-system" target="_blank" rel="noopener noreferrer"><i>L-System</i></a> to <a href="https://www.escapemotions.com/products/rebelle/motionio_doc/" target="_blank" rel="noopener noreferrer"><i>MotionIO</i></a> events and sends them to <a href="https://www.escapemotions.com/products/rebelle/about" target="_blank" rel="noopener noreferrer"><i>Rebelle 8 Pro</i></a> via websocket.<br><br>
+    <a href="https://yesbird.online/" target="_blank" rel="noopener noreferrer">(c) Yesbird studio 2026</a><br><br>
+      <form method="dialog" style="text-align:center">
+      <button>&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;</button>
+      </form>
+  </dialog>
 
-    <script>
-      // On load
-      window.onload = function() {
-        const gui = document.querySelectorAll('[class*="lil-gui"]'); // GUI position
-        gui[0].style.setProperty('right', '8px', 'important');
-      };
-    </script>
-  </body>
+  <script type="module" src="att_painter.js"></script>
+
+  <div>
+    <img id="logo" src="./data/images/rebelle_logo_white.png" alt="Logo" height="45" onclick="window.location.reload()">
+    <div id="text" onclick="window.location.reload()" style="color: white">Attractors Painter</div>
+    <img id="paint" class="control" src="./data/images/paint_48.svg" title="Paint [Ctrl-P]" style="right:60px; width:42px" alt="Paint" onclick="window.paint()">
+    <img id="help" class="control" src="data/images/help_48.svg" title="Help [Ctrl-H]" style="right:8px; width:42px" alt="Help" onclick="about.inert=true; about.showModal(); about.inert=false;">
+  </div>
+  <hr>
+  <div id="container" style="position:absolute; top:80px; left:8px; width:640px"></div>
+
+  <script>
+    // On load
+    window.onload = function() {
+      const gui = document.querySelectorAll('[class*="lil-gui"]'); // GUI position
+      gui[0].style.setProperty('right', '120px', 'important');
+    };
+  </script>
+</body>
 </html>
