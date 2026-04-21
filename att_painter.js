@@ -7,6 +7,7 @@ import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { SVGRenderer } from 'three/addons/renderers/SVGRenderer.js';
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
+import { presets } from './modules/attractors.js';
 
 // Helpers
 let help = false;
@@ -77,10 +78,6 @@ async function init() {
 // Attractors
 function makeAttractor() {
 
-  // Lorenz
-  // https://paulbourke.net/fractals/lorenz/
-
-  // let colors = new Float32Array();
   const points = [];
   const N = 20000;
 
@@ -89,18 +86,19 @@ function makeAttractor() {
 
   let i=0;
   let  x0,y0,z0,x1,y1,z1;
-  let  H = set.H; // H = 0.002;
-  let  a = set.A;  // 10.0;
-  let  b = set.B;  // 28.0; 21.7;
-  let  c = set.C;  // 8.0 / 3.0;
+  let  H = presets[0].H;
+  let  a = presets[0].A;
+  let  b = presets[0].B;
+  let  c = presets[0].C;
 
   x0 = 0.1;
   y0 = 0;
   z0 = 0;
   for (i=0; i<N; i++) {
-    x1 = x0 + H * a * (y0 - x0);
-    y1 = y0 + H * (x0 * (b - z0) - y0);
-    z1 = z0 + H * (x0 * y0 - c * z0);
+    x1 = presets[0].x(x0, H, a, y0);
+    y1 = presets[0].y(y0, H, x0, b, z0);
+    z1 = presets[0].z(z0, H, x0, y0, c);
+
     x0 = x1;
     y0 = y1;
     z0 = z1;
@@ -135,21 +133,21 @@ function initGUI()
   gui = new GUI( {width: 300, title:"Lorenz attractor", closeFolders:false} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
 /*
-  gui.add( set, 'env', 1, 6, 1 ).name( 'Env' ).onChange(  onSetChanged );
-  gui.add( set, 'r', 0, 1, 0.01 ).name( 'Red' ).onChange(  onSetChanged );
-  gui.add( set, 'g', 0, 1, 0.01 ).name( 'Green' ).onChange(  onSetChanged );
-  gui.add( set, 'b', 0, 1, 0.01 ).name( 'Blue' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'env', 1, 6, 1 ).name( 'Env' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'r', 0, 1, 0.01 ).name( 'Red' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'g', 0, 1, 0.01 ).name( 'Green' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'b', 0, 1, 0.01 ).name( 'Blue' ).onChange(  onSetChanged );
 */
-  gui.add( set, 'A', 1, 20, 0.01).name( 'A' ).onChange(  onSetChanged );
-  gui.add( set, 'B', 1, 50, 0.01).name( 'B' ).onChange(  onSetChanged );
-  gui.add( set, 'C', 0, 10, 0.01).name('C').onChange(  onSetChanged );
-  gui.add( set, 'H', 0, 0.015, 0.0001).name( 'H' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'A', 1, 20, 0.01).name( 'A' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'B', 1, 50, 0.01).name( 'B' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'C', 0, 10, 0.01).name('C').onChange(  onSetChanged );
+  gui.add( presets[0], 'H', 0, 0.015, 0.0001).name( 'H' ).onChange(  onSetChanged );
 /*
-  gui.add( set, 'fastChroma').name( 'Fast CA' ).onChange(  onSetChanged );
-  gui.add( set, 'antialias').name( 'Antialis SMAA' ).onChange(  onSetChanged );
-  gui.add( set, 'gamma').name( 'Gamma correction' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'fastChroma').name( 'Fast CA' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'antialias').name( 'Antialis SMAA' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'gamma').name( 'Gamma correction' ).onChange(  onSetChanged );
 */
-  gui.add( set, 'speed', -5, 5, 1 ).name( 'Rotate' );
+  gui.add( presets[0], 'speed', -5, 5, 1 ).name( 'Rotate' );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ocontrols.reset()});
   gui.add( { exportSVG }, 'exportSVG' ).name( 'Export SVG' );
   gui.add( { exportMIO }, 'exportMIO' ).name( 'Export MIO' );
@@ -161,28 +159,20 @@ function initGUI()
   // gui.controllers[12].$name.style.color = "#ff9127";
 }
 
-let set = { env: 3,
-  r: 0.0,
-  g: 0.0,
-  b: 0.0,
+// Load presets
+function loadPreset(index) {
+  Object.assign(presets[0], presets[index]);
 
-  A: 10.0,
-  B: 21.7,
-  C: 8.0 / 3.0,
-  H: 0.002,
-  correctMips: true,
-  fastChroma: false,
-  antialias: true,
-  gamma: false,
-  anx: false,
-  any: false,
-  anz: false,
-  speed: 0
+  onSetChanged();
+
+  for (var i in gui.controllers)
+    gui.controllers[i].updateDisplay();
 }
+window.loadPreset = loadPreset;
 
 // On controls changed
 function  onSetChanged() {
-  // console.log(set); // DEBUG
+  // console.log(presets[0]); // DEBUG
   makeAttractor();
 }
 
@@ -256,7 +246,7 @@ function onWindowResize() {
 //
 function animate() {
   renderer.setAnimationLoop( render );
-  // ocontrols.autoRotateSpeed = set.speed;
+  // ocontrols.autoRotateSpeed = presets[0].speed;
   // ocontrols.update();
 
   // // Use SVGRenderer instead of WebGLRenderer
@@ -268,7 +258,7 @@ function animate() {
 // Render
 //
 function render() {
-  ocontrols.autoRotateSpeed = set.speed;
+  ocontrols.autoRotateSpeed = presets[0].speed;
   ocontrols.update();
   renderer.render(scene, camera);
 }
