@@ -1,7 +1,8 @@
 // TODO
 //
-// 1. Setup color gradient as set of lines (SVG paths)
-// 2. Export via custom SVG renderer
+// 0. Add Paint GUI
+// 1. Paint directly to MIO
+// 2. Export SVG via custom exporter (without colors ?)
 //
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
@@ -149,7 +150,7 @@ function initGUI()
 */
   gui.add( presets[0], 'speed', -5, 5, 1 ).name( 'Rotate' );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ocontrols.reset()});
-  gui.add( { exportSVG }, 'exportSVG' ).name( 'Export SVG' );
+  gui.add( { exportSVG }, 'exportSVG' ).name( 'Export SVG' ); // TODO
   gui.add( { exportMIO }, 'exportMIO' ).name( 'Export MIO' );
 
   // Set colors
