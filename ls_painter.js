@@ -1,9 +1,6 @@
 // TODO
 //
-// 1. Position sketches at the center on load.
-// 2. SVG thumbnails as in SVG painter.
-// 3. Check shotcuts.
-// 4. About
+// 1. Check shotcuts.
 //
 // -- Pro version:
 //  https://github.com/nylki/lindenmayer
