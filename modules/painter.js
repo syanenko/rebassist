@@ -58,8 +58,8 @@ function traverse(obj) {
               events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
               events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
             } else if(s.key == 'L') {
-              x = Math.round(s.data[0] * set.scale) +  set.trans_x;
-              y = Math.round(s.data[1] * set.scale) +  set.trans_y;
+              x = Math.round(s.data[0] * set.scale) + set.trans_x;
+              y = Math.round(s.data[1] * set.scale) + set.trans_y;
               events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
             }
           });
@@ -164,13 +164,8 @@ export function calcPosition(svg) {
   console.log(svg.viewBox.baseVal.width);
   console.log(svg.viewBox.baseVal.height);
 
-  // TODO: Check for all cases ("plant 4")
-  set.scale = 1;
-  // set.scale = Math.min ((set.width / svg.viewBox.baseVal.width),
-  //                       (set.height / svg.viewBox.baseVal.height)) * 0.8;
-
-  set.trans_x = -svg.viewBox.baseVal.x + (set.width / 2 - svg.viewBox.baseVal.width / 2);
-  set.trans_y = -svg.viewBox.baseVal.y + (set.height / 2 - svg.viewBox.baseVal.height / 2);
+  set.trans_x = (set.width  / 2 - svg.viewBox.baseVal.width  * set.scale / 2) - (svg.viewBox.baseVal.x * set.scale);
+  set.trans_y = (set.height / 2 - svg.viewBox.baseVal.height * set.scale / 2) - (svg.viewBox.baseVal.y * set.scale);
 
   guiScale.updateDisplay();
   guiTransX.updateDisplay();
