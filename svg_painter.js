@@ -1,12 +1,11 @@
 // TODO
-//
-// 1. Transparent preview background on Paper/Visible = false
-// 2. Move icons right
+// 
+// 2. Transparent preview background on Paper/Visible = false
 //
 import { guiInit, gui } from './modules/gui.js';
-import { saveEvents, paint } from './modules/painter.js';
+import { saveEvents, paint, calcPosition } from './modules/painter.js';
 
-guiInit(paint, saveEvents, null, null, false);
+guiInit(paint, saveEvents, null, null, calcPosition, false);
 
 // Load SVG
 function loadSVG(file) {
