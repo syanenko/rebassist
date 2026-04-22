@@ -56,7 +56,6 @@ export const set = {
 let guiWidth, guiHeight, guiOrient, gCalcPosition;
 export let gui, guiScale, guiTransX, guiTransY;
 export function guiInit(paint, saveEvents, saveSVG, saveLS, calcPosition, open) {
-  gCalcPosition = calcPosition;
   gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
 
@@ -67,9 +66,27 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, calcPosition, open) 
   artwork.add( set, 'size', ['A4, 200 DPI', 'A4, 300 DPI', 'A3, 200 DPI',
                             'B4, 300 DPI, [4170 x 2940]', 'B3, 200 DPI, [3940 x 2780]', 'Latter, 300 DPI, [3300 x 2550]',
                               'Quarter Sheet 200, 200 DPI, [3000 x 2200]', 'Half Sheet, 200 DPI, [4400, 3000]'] ).name( 'Size' ).onFinishChange(setSize);
+
   guiWidth  = artwork.add( set, 'width', 1, 32000, 1 ).name( 'Width' );
   guiHeight = artwork.add( set, 'height', 1, 32000, 1 ).name( 'Heght' );
+
   guiOrient = artwork.add( set, 'orientation', ['Portrait', 'Landscape'] ).name( '' ).onFinishChange(setOrientation);
+  function setOrientation(val) { // Set orientation
+    const max = Math.max(set.width, set.height);
+    const min = Math.min(set.width, set.height);
+
+    if(val == "Landscape") {
+      set.width = max;
+      set.height = min;
+    } else {
+      set.width = min;
+      set.height = max;
+    }
+
+    guiWidth.updateDisplay();
+    guiHeight.updateDisplay();
+    calcPosition();
+  }
 
   // artwork.add( set, 'units', [ 'px' ] ).name( 'Units' );
   // artwork.add( set, 'dpi', [ '72', '96', '100', '150', '200', '250', '300', '400', '600' ] ).name( 'DPI' );
@@ -174,24 +191,6 @@ function setSize(val) {
 
   set.orientation = 'Landscape';
   guiOrient.updateDisplay();
-}
-
-// Set orientation
-function setOrientation(val) {
-  const max = Math.max(set.width, set.height);
-  const min = Math.min(set.width, set.height);
-
-  if(val == "Landscape") {
-    set.width = max;
-    set.height = min;
-  } else {
-    set.width = min;
-    set.height = max;
-  }
-
-  guiWidth.updateDisplay();
-  guiHeight.updateDisplay();
-  gCalcPosition();
 }
 
 // Set preview paper color 
