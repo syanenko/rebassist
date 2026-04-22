@@ -1,6 +1,6 @@
 export let presets = [
 // 0. Current
-{ env: 3,
+{ name: "None",
   r: 0.0,
   g: 0.0,
   b: 0.0,
@@ -24,7 +24,7 @@ export let presets = [
   speed: 0
 },
 // 1. Lorenz: https://paulbourke.net/fractals/lorenz/
-{ env: 3,
+{ name: "Lorenz 1",
   r: 0.0,
   g: 0.0,
   b: 0.0,
@@ -48,7 +48,7 @@ export let presets = [
   speed: 0
 },
 // 2. Lorenz custom 
-{ env: 3,
+{ name: "Lorenz 2",
   r: 0.0,
   g: 0.0,
   b: 0.0,
@@ -72,7 +72,7 @@ export let presets = [
   speed: 0
 },
 // 3
-{ env: 3,
+{ name: "Lorenz 3",
   r: 0.0,
   g: 0.0,
   b: 0.0,
@@ -96,7 +96,7 @@ export let presets = [
   speed: 0
 },
 // 4
-{ env: 3,
+{ name: "Lorenz 4",
   r: 0.0,
   g: 0.0,
   b: 0.0,

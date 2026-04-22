@@ -70,7 +70,7 @@ async function init() {
 
   initGUI();
   initLights(5.5);
-  makeAttractor();
+  loadPreset(1);
 
   window.addEventListener( 'resize', onWindowResize );
 }
@@ -133,19 +133,19 @@ function initGUI()
   gui = new GUI( {width: 300, title:"Lorenz attractor", closeFolders:false} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
 /*
-  gui.add( presets[0], 'env', 1, 6, 1 ).name( 'Env' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'r', 0, 1, 0.01 ).name( 'Red' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'g', 0, 1, 0.01 ).name( 'Green' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'b', 0, 1, 0.01 ).name( 'Blue' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'env', 1, 6, 1 ).name( 'Env' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'r', 0, 1, 0.01 ).name( 'Red' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'g', 0, 1, 0.01 ).name( 'Green' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'b', 0, 1, 0.01 ).name( 'Blue' ).onChange(  makeAttractor );
 */
-  gui.add( presets[0], 'A', 1, 20, 0.01).name( 'A' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'B', 1, 50, 0.01).name( 'B' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'C', 0, 10, 0.01).name('C').onChange(  onSetChanged );
-  gui.add( presets[0], 'H', 0, 0.015, 0.0001).name( 'H' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'A', 1, 20, 0.01).name( 'A' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'B', 1, 50, 0.01).name( 'B' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'C', 0, 10, 0.01).name('C').onChange(  makeAttractor );
+  gui.add( presets[0], 'H', 0, 0.015, 0.0001).name( 'H' ).onChange(  makeAttractor );
 /*
-  gui.add( presets[0], 'fastChroma').name( 'Fast CA' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'antialias').name( 'Antialis SMAA' ).onChange(  onSetChanged );
-  gui.add( presets[0], 'gamma').name( 'Gamma correction' ).onChange(  onSetChanged );
+  gui.add( presets[0], 'fastChroma').name( 'Fast CA' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'antialias').name( 'Antialis SMAA' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'gamma').name( 'Gamma correction' ).onChange(  makeAttractor );
 */
   gui.add( presets[0], 'speed', -5, 5, 1 ).name( 'Rotate' );
   gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ocontrols.reset()});
@@ -162,19 +162,13 @@ function initGUI()
 // Load presets
 function loadPreset(index) {
   Object.assign(presets[0], presets[index]);
-
-  onSetChanged();
-
+  gui.title(presets[0].name);
   for (var i in gui.controllers)
     gui.controllers[i].updateDisplay();
-}
-window.loadPreset = loadPreset;
 
-// On controls changed
-function  onSetChanged() {
-  // console.log(presets[0]); // DEBUG
   makeAttractor();
 }
+window.loadPreset = loadPreset;
 
 // Export SVG
 const link = document.createElement( 'a' );
