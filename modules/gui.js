@@ -53,10 +53,10 @@ export const set = {
 };
 
 // GUI
-let guiWidth, guiHeight, guiOrient;
+let guiWidth, guiHeight, guiOrient, gCalcPosition;
 export let gui, guiScale, guiTransX, guiTransY;
-export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
-
+export function guiInit(paint, saveEvents, saveSVG, saveLS, calcPosition, open) {
+  gCalcPosition = calcPosition;
   gui = new GUI( {width: 350, title:"Painter", closeFolders:true} );
   gui.domElement.querySelector('.title').style.color = colorTitle;
 
@@ -118,13 +118,13 @@ export function guiInit(paint, saveEvents, saveSVG, saveLS, open) {
   sketch.domElement.querySelector('.title').style.color = colorTitle;
   sketch.add( set, 'sketch_send_colors').name( 'Send colors' );
 
-  guiScale = sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' );
+  guiScale = sketch.add( set, 'scale', 0.1, 20, 0.1 ).name( 'Scale' ).onChange( calcPosition );
   guiTransX = sketch.add( set, 'trans_x', -2048, 2048, 1 ).name( 'X tanslate' );
   guiTransY = sketch.add( set, 'trans_y', -2048, 2048, 1 ).name( 'Y tanslate' );
   sketch.add( set, 'brush_width_mul', 1, 100, 1 ).name( 'Brush width mul.' );
 
   // Controls
-  gui.add( gui.reset(), 'reset' ).name( 'Reset' );
+  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange( calcPosition );
 
   if(saveSVG != null) {
     set.save_svg = saveSVG;
@@ -191,6 +191,7 @@ function setOrientation(val) {
 
   guiWidth.updateDisplay();
   guiHeight.updateDisplay();
+  gCalcPosition();
 }
 
 // Set preview paper color 

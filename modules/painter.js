@@ -157,15 +157,15 @@ export function saveEvents() {
 
 // Calculate default position
 // TODO: Recalc on change size and orientation
-export function calcPosition(svg) {
-  console.log(svg);
-  console.log(svg.viewBox.baseVal.x);
-  console.log(svg.viewBox.baseVal.y);
-  console.log(svg.viewBox.baseVal.width);
-  console.log(svg.viewBox.baseVal.height);
+export function calcPosition() {
+  // console.log(svg); // DEBUG
+  // console.log(svg.viewBox.baseVal.x);
+  // console.log(svg.viewBox.baseVal.y);
+  // console.log(svg.viewBox.baseVal.width);
+  // console.log(svg.viewBox.baseVal.height);
 
-  set.trans_x = (set.width  / 2 - svg.viewBox.baseVal.width  * set.scale / 2) - (svg.viewBox.baseVal.x * set.scale);
-  set.trans_y = (set.height / 2 - svg.viewBox.baseVal.height * set.scale / 2) - (svg.viewBox.baseVal.y * set.scale);
+  set.trans_x = (set.width  - svg.viewBox.baseVal.width  * set.scale) / 2 - (svg.viewBox.baseVal.x * set.scale);
+  set.trans_y = (set.height - svg.viewBox.baseVal.height * set.scale) / 2 - (svg.viewBox.baseVal.y * set.scale);
 
   guiScale.updateDisplay();
   guiTransX.updateDisplay();
@@ -177,7 +177,7 @@ function setSVG(element) {
   svg = element;
   svg.style = "background-color: var(--svg-background-color, #fff";
 
-  calcPosition(svg); // DEBUG
+  calcPosition();
 }
 window.setSVG = setSVG;
 
@@ -193,7 +193,7 @@ function setTextSVG(text) {
   container.replaceChildren();
   container.appendChild(svg);
 
-  calcPosition(svg); // DEBUG
+  calcPosition(); // DEBUG
 }
 window.setTextSVG = setTextSVG;
 
@@ -231,7 +231,6 @@ export async function paint() {
 
   socket.onclose = (event) => {
     if (event.wasClean) {
-      console.log(event);
       setStatus(`Connection closed cleanly, code: ${event.code}, reason: ${event.reason}`);
     } else {
       console.error(event);

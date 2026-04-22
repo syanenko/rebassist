@@ -15,11 +15,11 @@
 // 2. Interface: Load, Save, 2D, 3D, Painter (GUI), Preview Thumbnails.
 //
 import { guiInit, set } from './modules/gui.js';
-import { saveEvents, paint } from './modules/painter.js';
+import { saveEvents, paint, calcPosition } from './modules/painter.js';
 
 set.paper_visible = true
 set.paper_deckled_edges = false;
-guiInit(paint, saveEvents, saveSVG, null, false);
+guiInit(paint, saveEvents, saveSVG, null, calcPosition, false);
 
 // Link
 const link = document.createElement( 'a' );
