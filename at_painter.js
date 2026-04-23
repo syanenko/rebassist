@@ -282,6 +282,7 @@ function makeEvents() {
 
   let last_x, last_y;
   let last_r, last_g, last_b;
+  let r, g, b;
   for (let i = 0; i < pos.count; i++) {
       const vw = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
       //console.log(vw);
@@ -294,31 +295,33 @@ function makeEvents() {
       const col = new THREE.Color();
       col.fromBufferAttribute(line.geometry.attributes.color, i);
       
-      const r = Math.floor(col.r * 255);
-      const g = Math.floor(col.g * 255);
-      // const b = Math.floor(col.b * 255);
-      const b = 0; // DEBUG: check for NaN
+      r = Math.floor(col.r * 255);
+      g = Math.floor(col.g * 255);
+      b = Math.floor(col.b * 255);
+      if(Number.isNaN(b))
+        b = 0;  // DEBUG: check for NaN
 
-      console.log(r);
-      console.log(g); 
-      console.log(b);
-      console.log('----');
+      // console.log(r);
+      // console.log(g); 
+      // console.log(b);
+      // console.log('----');
 
-      // if (r != last_r || g != last_g || b != last_b)
-      //   events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${r}, "g": ${g}, "b": ${b}}}`);
-      // last_r = r;
-      // last_g = g;
-      // last_b = b;
+      if (r != last_r || g != last_g || b != last_b)
+        events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${r}, "g": ${g}, "b": ${b}}}`);
+      last_r = r;
+      last_g = g;
+      last_b = b;
 
       if(i == 0)
         events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
       events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
       last_x = vs.x;
       last_y = vs.y;
+      // events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
       //console.log(`Point ${i}: ${x}, ${y}, ${z}`);
       //console.log(`Color ${i}: ${r}, ${g}, ${b}`);
   }
-  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
+  // events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
 }
 
 // Sleep for websocket
@@ -334,9 +337,9 @@ export async function paint() {
       console.log(events[i]); // DEBUG
       socket.send(events[i]);
       if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
-         events[i].includes("SET_PAPER")   ||
-         events[i].includes("SET_BRUSH")   ||
-         events[i].includes("SET_BRUSH_COLOR")) {
+         events[i].includes("SET_PAPER") ||
+         (events[i].includes("SET_BRUSH") && !events[i].includes("SET_BRUSH_COLOR")) )
+      {
          await sleep(SLEEP_TIME);
       }
     }
