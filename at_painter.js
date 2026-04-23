@@ -217,6 +217,9 @@ function makeEvents() {
   events.length = 0;
 
   if(set.artwork_send) {
+  // set.width = 4096; // DEBUG
+  // set.height = 4096;
+
   events.push(`{
   "event_type": "NEW_ARTWORK",
   "width": ${set.width},
@@ -262,26 +265,60 @@ function makeEvents() {
 }`);
   }
 /* TODO
+
+  const vector = new THREE.Vector3(1, 2, 3);
+  vector.project(camera); // Result is now in NDC space
+
   events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
   events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
   events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
   events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
+  ...
+  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
 */
   const pos = line.geometry.attributes.position;
-  const col = line.geometry.attributes.color;
+  events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${0}, "g": ${0}, "b": ${0} }}`);
+  // return;
 
+  let last_x, last_y;
+  let last_r, last_g, last_b;
   for (let i = 0; i < pos.count; i++) {
-      const x = pos.getX(i);
-      const y = pos.getY(i);
-      const z = pos.getZ(i);
+      const vw = new THREE.Vector3(pos.getX(i), pos.getY(i), pos.getZ(i));
+      //console.log(vw);
+      const vs = vw.project(camera);
+      vs.addScalar(1);
+      vs.y = 2 - vs.y;
+      vs.multiplyScalar(1000);
+      // console.log(vs);
 
-      const r = col.getX(i);
-      const g = col.getY(i);
-      const b = col.getZ(i);
+      const col = new THREE.Color();
+      col.fromBufferAttribute(line.geometry.attributes.color, i);
       
-      console.log(`Point ${i}: ${x}, ${y}, ${z}`);
-      console.log(`Color ${i}: ${r}, ${g}, ${b}`);
+      const r = Math.floor(col.r * 255);
+      const g = Math.floor(col.g * 255);
+      // const b = Math.floor(col.b * 255);
+      const b = 0; // DEBUG: check for NaN
+
+      console.log(r);
+      console.log(g); 
+      console.log(b);
+      console.log('----');
+
+      // if (r != last_r || g != last_g || b != last_b)
+      //   events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${r}, "g": ${g}, "b": ${b}}}`);
+      // last_r = r;
+      // last_g = g;
+      // last_b = b;
+
+      if(i == 0)
+        events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
+      events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
+      last_x = vs.x;
+      last_y = vs.y;
+      //console.log(`Point ${i}: ${x}, ${y}, ${z}`);
+      //console.log(`Color ${i}: ${r}, ${g}, ${b}`);
   }
+  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
 }
 
 // Sleep for websocket
@@ -294,7 +331,7 @@ export async function paint() {
   socket.onopen = async (event) => {
     setStatus('Connected to server');
     for(let i=0; i<events.length; i++){
-      // console.log(events[i]); // DEBUG
+      console.log(events[i]); // DEBUG
       socket.send(events[i]);
       if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
          events[i].includes("SET_PAPER")   ||
