@@ -1,14 +1,17 @@
 // TODO
 //
-// 0. Add Paint GUI
-// 1. Paint directly to MIO
-// 2. Export SVG via custom exporter (without colors ?)
+// 1. Paint function
+// 2. Add Paint GUI
+// 3. Paint directly to MIO
+// 4. Export SVG via custom exporter (without colors ?)
 //
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { SVGRenderer } from 'three/addons/renderers/SVGRenderer.js';
 import { GUI } from '/node_modules/lil-gui/dist/lil-gui.esm.min.js';
 import { presets } from './modules/attractors.js';
+
+import { set } from './modules/gui.js';
 
 // Helpers
 let help = false;
@@ -22,12 +25,20 @@ let line;
 let gui;
 const colorTitle = "hsl(205 61% 65%)";
 
+// Preset
+let current = 1;
+
+// Paint
+let events = [];
+const PORT = "8265";
+const SLEEP_TIME = 2000;
+
 //
 // Init
 //
 async function init() {
   scene = new THREE.Scene();
-  camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 1, 100 );
+  camera = new THREE.PerspectiveCamera( 40, window.innerWidth / window.innerHeight, 0.01, 1000 );
   camera.position.set( 0, 2.5, 4.2 );
 
   scene.add( camera );
@@ -71,7 +82,7 @@ async function init() {
 
   initGUI();
   initLights(5.5);
-  loadPreset(1);
+  loadPreset(current);
 
   window.addEventListener( 'resize', onWindowResize );
 }
@@ -80,26 +91,25 @@ async function init() {
 function makeAttractor() {
 
   const points = [];
-  const N = 20000;
 
-  let colors = new Float32Array(N * 3);
+  let colors = new Float32Array(presets[0].N * 3);
   const divColors = 0.00002;
+  // const divColors = 0.0002;
 
-  let i=0;
-  let  x0,y0,z0,x1,y1,z1;
-  let  H = presets[0].H;
   let  a = presets[0].A;
   let  b = presets[0].B;
   let  c = presets[0].C;
+  let  h = presets[0].H;
 
-  x0 = 0.1;
-  y0 = 0;
-  z0 = 0;
-  for (i=0; i<N; i++) {
-    x1 = presets[0].x(x0, H, a, y0);
-    y1 = presets[0].y(y0, H, x0, b, z0);
-    z1 = presets[0].z(z0, H, x0, y0, c);
+  let x0 = presets[0].x0;
+  let y0 = presets[0].y0;
+  let z0 = presets[0].z0;
+  let x1, y1, z1;
 
+  for (let i=0; i<presets[0].N; i++) {
+    x1 = presets[0].x(x0, y0, z0, a, b, c, h);
+    y1 = presets[0].y(x0, y0, z0, a, b, c, h);
+    z1 = presets[0].z(x0, y0, z0, a, b, c, h);
     x0 = x1;
     y0 = y1;
     z0 = z1;
@@ -113,7 +123,8 @@ function makeAttractor() {
   const material = new THREE.LineBasicMaterial( { opacity: 1, transparent: false, vertexColors: true/*, color: 0x00ff00, linewidth: 1*/} );
   const geometry = new THREE.BufferGeometry().setFromPoints( points );
   geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-  geometry.scale(0.04, 0.04, 0.04);
+  // geometry.scale(0.04, 0.04, 0.04);
+  geometry.scale(presets[0].scale, presets[0].scale, presets[0].scale);
   geometry.translate(0,0,-1);
 
   if(line) {
@@ -140,16 +151,19 @@ function initGUI()
   gui.add( presets[0], 'b', 0, 1, 0.01 ).name( 'Blue' ).onChange(  makeAttractor );
 */
   gui.add( presets[0], 'A', 1, 20, 0.01).name( 'A' ).onChange(  makeAttractor );
-  gui.add( presets[0], 'B', 1, 50, 0.01).name( 'B' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'B', 0.001, 30, 0.001).name( 'B' ).onChange(  makeAttractor );
   gui.add( presets[0], 'C', 0, 10, 0.01).name('C').onChange(  makeAttractor );
   gui.add( presets[0], 'H', 0, 0.015, 0.0001).name( 'H' ).onChange(  makeAttractor );
+  gui.add( presets[0], 'N', 10, 50000, 1).name( 'N' ).onChange(  makeAttractor );
 /*
   gui.add( presets[0], 'fastChroma').name( 'Fast CA' ).onChange(  makeAttractor );
   gui.add( presets[0], 'antialias').name( 'Antialis SMAA' ).onChange(  makeAttractor );
   gui.add( presets[0], 'gamma').name( 'Gamma correction' ).onChange(  makeAttractor );
 */
+
+  gui.add( presets[0], 'scale', 0.001, 20, 0.001).name( 'Scale' ).onChange( makeAttractor );
   gui.add( presets[0], 'speed', -5, 5, 1 ).name( 'Rotate' );
-  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange(()=>{ocontrols.reset()});
+  gui.add( gui.reset(), 'reset' ).name( 'Reset' ).onChange( loadPreset );
   gui.add( { exportSVG }, 'exportSVG' ).name( 'Export SVG' ); // TODO
   gui.add( { exportMIO }, 'exportMIO' ).name( 'Export MIO' );
 
@@ -162,12 +176,17 @@ function initGUI()
 
 // Load presets
 function loadPreset(index) {
+  if(!Number.isInteger(index))
+    index = current;
+  current = index;
+
   Object.assign(presets[0], presets[index]);
   gui.title(presets[0].name);
   for (var i in gui.controllers)
     gui.controllers[i].updateDisplay();
 
   makeAttractor();
+  ocontrols.reset();
 }
 window.loadPreset = loadPreset;
 
@@ -192,6 +211,130 @@ function exportSVG() {
 function exportMIO() {
   console.log("Export MIO()");
 }
+
+// Make events
+function makeEvents() {
+  events.length = 0;
+
+  if(set.artwork_send) {
+  events.push(`{
+  "event_type": "NEW_ARTWORK",
+  "width": ${set.width},
+  "height": ${set.height},
+  "units": "${set.units}", 
+  "dpi": ${set.dpi}
+}`);
+  }
+
+  if(set.paper_send) {
+  events.push(`{
+  "event_type": "SET_PAPER",
+  "preset": "${set.paper_preset}",
+  "color": { "r": ${set.paper_color.r}, "g": ${set.paper_color.g}, "b": ${set.paper_color.b} },
+  "deckled_edges": ${set.paper_deckled_edges},
+  "paper_scale":  ${set.paper_scale},
+  "visible": ${set.paper_visible}
+}`);
+  }
+
+  if(set.brush_send) {
+  events.push(`{
+  "event_type": "SET_BRUSH",
+  "tool": "${set.brush_tool}",
+  "preset": "${set.brush_preset}",
+  "size" : ${set.brush_size},
+  "water": ${set.brush_water},
+  "opacity": ${set.brush_opacity},
+  "pressure": ${set.brush_pressure},
+  "brush_dirty_brush": ${set.brush_dirty_brush},
+  "smudge_only_wet": ${set.smudge_only_wet},
+  "keep_layer_wet": ${set.keep_layer_wet},
+  "keep_water": ${set.keep_water},
+  "only_water": ${set.only_water},
+  "paint_type": "${set.brush_paint_type}",
+  "glaze_mode": "${set.brush_glaze_mode}",
+  "color": { "r": ${set.brush_color.r}, "g": ${set.brush_color.g}, "b": ${set.brush_color.b} },
+  "multi_color_brush": ${set.multi_color_brush},
+  "rotate_multi_color_brush": ${set.rotate_multi_color_brush},
+  "smudge": ${set.smudge},
+  "spacing": ${set.spacing},
+  "opacity_multiplier": ${set.opacity_multiplier}
+}`);
+  }
+/* TODO
+  events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
+  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
+  events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
+  events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
+*/
+  const pos = line.geometry.attributes.position;
+  const col = line.geometry.attributes.color;
+
+  for (let i = 0; i < pos.count; i++) {
+      const x = pos.getX(i);
+      const y = pos.getY(i);
+      const z = pos.getZ(i);
+
+      const r = col.getX(i);
+      const g = col.getY(i);
+      const b = col.getZ(i);
+      
+      console.log(`Point ${i}: ${x}, ${y}, ${z}`);
+      console.log(`Color ${i}: ${r}, ${g}, ${b}`);
+  }
+}
+
+// Sleep for websocket
+const sleep = (ms) => new Promise(resolve => setTimeout(resolve, ms));
+
+// Paint
+export async function paint() {
+  makeEvents();
+  const socket = new WebSocket('ws://localhost:' + PORT);
+  socket.onopen = async (event) => {
+    setStatus('Connected to server');
+    for(let i=0; i<events.length; i++){
+      // console.log(events[i]); // DEBUG
+      socket.send(events[i]);
+      if(events[i].includes("NEW_ARTWORK") || // TODO: Remove after EM's fix
+         events[i].includes("SET_PAPER")   ||
+         events[i].includes("SET_BRUSH")   ||
+         events[i].includes("SET_BRUSH_COLOR")) {
+         await sleep(SLEEP_TIME);
+      }
+    }
+    socket.close(1000, "Sending complete");
+  };
+
+  socket.onmessage = (event) => {
+    setStatus('Message from server: ' + event.data);
+  };
+
+  socket.onerror = (event) => {
+    console.error(event);
+    const message = `WebSocket '${event.target.url}' error`;
+    setStatus(message);
+  };
+
+  socket.onclose = (event) => {
+    if (event.wasClean) {
+      setStatus(`Connection closed cleanly, code: ${event.code}, reason: ${event.reason}`);
+    } else {
+      console.error(event);
+      const message = `Connection to '${event.target.url}' died, code=${event.code}`;
+      setStatus(message);
+      alert(message);
+    }
+  };
+}
+window.paint = paint;
+
+// Set status
+let stat = document.getElementById("status");
+function setStatus(s) {
+    stat.innerHTML = s;
+}
+window.setStatus = setStatus;
 
 //
 // Init lights
