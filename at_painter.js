@@ -264,18 +264,7 @@ function makeEvents() {
   "opacity_multiplier": ${set.opacity_multiplier}
 }`);
   }
-/* TODO
 
-  const vector = new THREE.Vector3(1, 2, 3);
-  vector.project(camera); // Result is now in NDC space
-
-  events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${color[0]}, "g": ${color[1]}, "b": ${color[2]} }}`);
-  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
-  events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${x}, "y": ${y} }}`);
-  events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${x}, "y": ${y} }}`);
-  ...
-  events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
-*/
   const pos = line.geometry.attributes.position;
   events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${0}, "g": ${0}, "b": ${0} }}`);
   // return;
@@ -308,15 +297,14 @@ function makeEvents() {
 
       if (r != last_r || g != last_g || b != last_b)
         events.push(`{ "event_type": "SET_BRUSH_COLOR", "color": { "r": ${r}, "g": ${g}, "b": ${b}}}`);
-      last_r = r;
-      last_g = g;
-      last_b = b;
+      last_r = r; last_g = g; last_b = b;
 
       if(i == 0)
-        events.push(`{ "event_type": "POINTER_PRESS",   "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
-      events.push(`{ "event_type": "POINTER_MOVE",    "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
-      last_x = vs.x;
-      last_y = vs.y;
+        events.push(`{ "event_type": "POINTER_PRESS", "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
+      events.push(`{ "event_type": "POINTER_MOVE", "pos": { "x": ${vs.x}, "y": ${vs.y} }}`);
+
+      // last_x = vs.x;
+      // last_y = vs.y;
       // events.push(`{ "event_type": "POINTER_RELEASE", "pos": { "x": ${last_x}, "y": ${last_y} }}`);
       //console.log(`Point ${i}: ${x}, ${y}, ${z}`);
       //console.log(`Color ${i}: ${r}, ${g}, ${b}`);
